@@ -1,0 +1,73 @@
+@font-face {
+    font-family: Roboto;
+    src: url('Roboto-Regular.ttf');
+}
+
+.main-layout {
+	-fx-pref-width: 1280px;
+	-fx-pref-height: 720px;
+}
+
+.toolbar {
+	-fx-pref-height: 70px;
+	-fx-max-height: 70px;
+}
+
+/*
+ * Font sizes
+ */
+
+.fs-16 {
+	-fx-font-size: 16px;
+}
+.fs-24 {
+	-fx-font-size: 24px;
+}
+.fs-32 {
+	-fx-font-size: 32px;
+}
+.fs-48 {
+	-fx-font-size: 48px;
+}
+
+/*
+ * Padding
+ */
+ 
+ .padd-8 {
+ 	-fx-padding: 8 8 8 8;
+ }
+ 
+ .padd-16 {
+ 	-fx-padding: 16 16 16 16;
+ }
+ 
+ .padd-24 {
+ 	-fx-padding: 24 24 24 24;
+ }
+ 
+ .padd-left-8 {
+ 	-fx-padding: 0 0 0 8;
+ }
+ 
+ .padd-left-16 {
+ 	-fx-padding: 0 0 0 16;
+ }
+ 
+ .padd-left-24 {
+ 	-fx-padding: 0 0 0 24;
+ }
+ 
+ .padd-right-8 {
+ 	-fx-padding: 0 8 0 0;
+ }
+ 
+ .padd-right-16 {
+ 	-fx-padding: 0 16 0 0;
+ }
+ 
+ .padd-right-24 {
+ 	-fx-padding: 0 24 0 0;
+ }
+ 
+ 
