@@ -8,17 +8,21 @@ import com.jfoenix.effects.JFXDepthManager;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.VBox;
 
-public class MainLayoutController implements Initializable {
+public class MainViewController implements Initializable {
 
 	@FXML
 	private JFXListView<String> list;
+	@FXML
+	private VBox menuBox;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		list.getItems().addAll("One", "Two", "Three");
 		list.setDepth(0);
-		JFXDepthManager.setDepth(list, 1);
+		JFXDepthManager.setDepth(menuBox, 1);
+		
 	}
 
 }

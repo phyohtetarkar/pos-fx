@@ -21,7 +21,7 @@
 }
 
 .jfx-decorator {
-    -fx-decorator-color: #1976D2;
+    -fx-decorator-color: -blue-700;
 }
 
 .jfx-decorator .jfx-decorator-buttons-container {
@@ -43,7 +43,7 @@
 }
 
 .jfx-list-cell:odd:selected > .jfx-rippler > StackPane, .jfx-list-cell:even:selected > .jfx-rippler > StackPane  {
-    -fx-background-color: #2196F3;
+    -fx-background-color: -blue-500;
 }
 
 .jfx-list-cell {

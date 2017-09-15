@@ -3,10 +3,9 @@ package com.jsoft.pos;
 import java.io.IOException;
 
 import com.jfoenix.controls.JFXDecorator;
-import com.jsoft.pos.controller.MainLayoutController;
-import com.jsoft.pos.css.ApplicationCss;
 
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,13 +16,16 @@ public class ApplicationMain extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		try {
-			Parent root = FXMLLoader.load(MainLayoutController.class.getResource("MainLayout.fxml"));
-			String css = ApplicationCss.class.getResource("jfx-common.css").toExternalForm();
-			
+			Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainView.fxml"));
+
 			JFXDecorator decor = new JFXDecorator(stage, root, false, true, true);
 			decor.setCustomMaximize(true);
 			Scene scene = new Scene(decor);
-			scene.getStylesheets().add(css);
+			final ObservableList<String> stylesheets = scene.getStylesheets();
+			stylesheets.addAll(getClass().getResource("/css/jfoenix-fonts.css").toExternalForm(),
+					getClass().getResource("/css/jfoenix-design.css").toExternalForm(),
+					getClass().getResource("/css/jfx-common.css").toExternalForm());
+			
 			stage.setScene(scene);
 			stage.setTitle("Restaurant POS");
 			stage.show();
