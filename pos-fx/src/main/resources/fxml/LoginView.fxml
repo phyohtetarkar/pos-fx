@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jsoft.pos.controller.LoginViewController">
+   <children>
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="400.0" spacing="50.0" StackPane.alignment="CENTER">
+         <children>
+            <Label styleClass="fs-48" text="Login" />
+            <VBox spacing="50.0">
+               <children>
+                  <JFXTextField fx:id="loginId" focusColor="#0288d1" labelFloat="true" promptText="Login ID" styleClass="fs-16" unFocusColor="#434343" />
+                  <JFXPasswordField fx:id="password" focusColor="#0288d1" labelFloat="true" promptText="Password" styleClass="fs-16" unFocusColor="#434343" />
+               </children>
+            </VBox>
+            <JFXButton buttonType="RAISED" onAction="#login" prefHeight="50.0" prefWidth="400.0" styleClass="blue-500" text="Login" />
+         </children>
+         <styleClass>
+            <String fx:value="padd-16" />
+            <String fx:value="white" />
+            <String fx:value="back-radius-3" />
+         </styleClass>
+      </VBox>
+   </children>
+   <stylesheets>
+      <URL value="@../css/application.css" />
+      <URL value="@../css/jfoenix-design.css" />
+   </stylesheets>
+   <styleClass>
+      <String fx:value="main-layout" />
+      <String fx:value="blue-500" />
+   </styleClass>
+</StackPane>

@@ -1,6 +1,6 @@
 @font-face {
     font-family: Myanmar3;
-    src: url("../font/myanmar3/Myanmar3.ttf");
+    src: url("../font/myanmar/Myanmar3.ttf");
 }
 
 .main-layout {
@@ -29,6 +29,14 @@
 .fs-48 {
 	-fx-font-size: 48px;
 }
+
+/*
+ * Font Color
+ */
+ 
+ .text-white {
+ 	-fx-text-fill: white;
+ }
 
 /*
  * Padding
@@ -70,4 +78,11 @@
  	-fx-padding: 0 24 0 0;
  }
  
+ /*
+  * Background Radius
+  */
+  
+.back-radius-3 {
+  	-fx-background-radius: 3px;
+}
  

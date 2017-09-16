@@ -5,19 +5,23 @@
 <?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane styleClass="main-layout" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jsoft.pos.controller.MainViewController">
    <children>
+      <AnchorPane fx:id="container" layoutX="251.0" layoutY="70.0" styleClass="white" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0" />
       <JFXToolbar AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0">
          <left>
             <HBox alignment="CENTER_LEFT" spacing="15.0" styleClass="padd-left-24" BorderPane.alignment="CENTER">
                <children>
-                  <Label styleClass="title" text="Navigation" textFill="WHITE" />
+                  <Label fx:id="naviPath" styleClass="title" text="Navigation" textFill="WHITE" />
                </children></HBox>
          </left>
          <styleClass>
@@ -29,7 +33,17 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="70.0">
                <children>
-                  <Label styleClass="title" text="JPOS" textFill="#4a4a4a" />
+                  <Label graphicTextGap="20.0" text="JPOS" textFill="#4a4a4a">
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/point-of-service.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="32.0" />
+                     </font></Label>
                </children>
                <styleClass>
                   <String fx:value="padd-left-24" />
