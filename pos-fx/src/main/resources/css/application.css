@@ -11,7 +11,13 @@
 .toolbar {
 	-fx-pref-height: 70px;
 	-fx-max-height: 70px;
+	-fx-background-color: -color-primary;
 }
+
+.shadow {
+	-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.26) , 10, 0.12, -1,2);
+}
+
 
 /*
  * Font sizes
@@ -31,12 +37,29 @@
 }
 
 /*
- * Font Color
+ * TextField
  */
  
- .text-white {
- 	-fx-text-fill: white;
+ .operation-text-field {
+ 	-fx-text-fill: -text-default;
+ 	-fx-prompt-text-fill: -text-promote-default;
  }
+ 
+ /*
+  *  Button
+  */
+
+.operation-btn {
+	-fx-pref-width: 100px;
+	-fx-pref-height: 40px;
+	-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.26) , 10, 0.12, -1,2);
+} 
+
+.operation-icon-btn {
+	-fx-pref-width: 40px;
+	-fx-pref-height: 40px;
+	-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.26) , 10, 0.12, -1,2);
+}
 
 /*
  * Padding
@@ -79,10 +102,147 @@
  }
  
  /*
+  * Spacing
+  */
+  
+.space-8 {
+	-fx-spacing: 8px;
+}
+
+.space-12 {
+	-fx-spacing: 12px;
+}
+
+.space-16 {
+	-fx-spacing: 16px;
+}
+
+.space-24 {
+	-fx-spacing: 24px;
+}
+ 
+ /*
   * Background Radius
   */
   
+.back-radius-2 {
+  	-fx-background-radius: 2px;
+}
+
 .back-radius-3 {
   	-fx-background-radius: 3px;
 }
- 
+
+/*
+ * Pagination
+ */
+
+.pagination {
+    -fx-base: transparent;
+    -fx-arrow-button-gap: 10;
+    -fx-page-information-visible: false;
+}
+
+.pagination .toggle-button {
+    -fx-background-radius: 2px;
+    -fx-background-color: -color-transparent;
+    -fx-text-fill: black;
+}
+
+.pagination .toggle-button:hover {
+	-fx-background-radius: 2px;
+    -fx-background-color: #e2e2e2;
+	-fx-cursor: hand;
+}
+
+.pagination .toggle-button:selected {
+	-fx-background-radius: 2px;
+    -fx-background-color: -color-primary;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.26) , 10, 0.12, -1,2);
+}
+
+.pagination .button .left-arrow {
+	 /* This is used for making the Arrow Button Curve*/
+    -fx-background-color: #424242;
+    -fx-cursor: hand;
+}
+
+.pagination .button .right-arrow {
+	 /* This is used for making the Arrow Button Curve*/
+    -fx-background-color: #424242;
+    -fx-cursor: hand;
+}
+
+.pagination .label {
+    -fx-text-fill: #4a4a4a;
+}
+
+/*
+ * TableView
+ */
+
+TableView {
+	-fx-border-color: -color-primary;
+	-fx-border-radius: 2px;
+	-fx-background-radius: 2px;
+	-fx-padding: 0;
+	-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.26) , 10, 0.12, -1,2);
+}
+
+TableView .arrow {
+	-fx-background-color: white;
+}
+
+TableView:focused {
+	-fx-background-color: transparent , -fx-box-border, -fx-control-inner-background;
+}
+
+TableView .filler {
+	-fx-background-color: -color-primary;
+}
+
+TableView .column-header, .table-menu-button {
+	-fx-border-color: white;
+	-fx-border-width: 0.1;
+	-fx-background-color: -color-primary;
+	-fx-pref-height: 50px;
+}
+
+TableView .table-cell {
+	-fx-alignment: center-left;
+	-fx-min-height: 40px;
+}
+
+TableView .table-row-cell:selected {
+	-fx-background-color: #BBDEFB;
+}
+
+TableView .table-row-cell:selected Text {
+	-fx-fill: #212121;
+}
+
+TableView .table-row-cell:selected .table-cell {
+	-fx-text-fill: #212121;
+}
+
+TableView .table-row-cell .table-cell {
+	-fx-alignment: center-left;
+	-fx-fill: #212121;
+	-fx-padding: 0 15 0 15;
+}
+
+TableView .column-header SVGPath {
+	-fx-fill: white;
+}
+
+TableView .column-header Label {
+	-fx-text-fill: white;
+	-fx-alignment: center-left;
+	-fx-padding: 0 0 0 15;
+}
+
+TableView .column-header.header-left15 Label {
+	-fx-alignment: center-left;
+	-fx-padding: 0 15 0 15;
+}

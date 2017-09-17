@@ -1,0 +1,41 @@
+.root {
+	-color-primary: #2196F3;
+	-color-primary-dark: #1976D2;
+	-color-accent: #FFD740;
+	-color-white: #ffffff;
+	-color-transparent: rgba(0, 0, 0, 0);
+	-color-transparent-lo: rgba(0, 0, 0, 0.7);
+	-text-white: #fff;
+	-text-default: #4a4a4a;
+	-text-promote-default: #757575;
+}
+
+.color-primary {
+	-fx-background-color: #2196F3;
+	-fx-text-fill: #fff;
+}
+
+.color-primary-dark {
+	-fx-background-color: #1976D2;
+	-fx-text-fill: #fff;
+}
+
+.color-white {
+	-fx-background-color: #ffffff;
+}
+
+.color-transparent {
+	-fx-background-color: rgba(0, 0, 0, 0);
+}
+
+.text-white {
+	-fx-text-fill: #fff;
+}
+
+.text-default {
+	-fx-text-fill: #4a4a4a;
+}
+
+.text-promote-default {
+	-fx-prompt-text-fill: #757575;
+}

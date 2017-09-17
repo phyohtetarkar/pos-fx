@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <styleClass>
+      <String fx:value="main-layout" />
+      <String fx:value="padd-8" />
+      <String fx:value="space-8" />
+      <String fx:value="color-white" />
+   </styleClass>
+   <children>
+      <VBox fx:id="nodeItem" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+         <styleClass>
+            <String fx:value="shadow" />
+            <String fx:value="back-radius-2" />
+            <String fx:value="color-primary" />
+         </styleClass>
+      </VBox>
+      <VBox fx:id="nodePos" prefWidth="450.0">
+         <styleClass>
+            <String fx:value="shadow" />
+            <String fx:value="back-radius-2" />
+            <String fx:value="color-primary-dark" />
+         </styleClass>
+      </VBox>
+   </children>
+   <stylesheets>
+      <URL value="@../css/application.css" />
+      <URL value="@../css/color.css" />
+   </stylesheets>
+</HBox>
