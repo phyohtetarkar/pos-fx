@@ -1,4 +1,4 @@
-package com.jsoft.pos.controller;
+package com.jsoft.pos.view;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -11,7 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.StackPane;
 
-public class LoginViewController implements Initializable {
+public class LoginView implements Initializable {
 	
 	@FXML
     private JFXTextField loginId;
@@ -26,7 +26,7 @@ public class LoginViewController implements Initializable {
 	}
 
     public void login() {
-    		Navigator.login();;
+    		Navigator.login();
     }
 
 }

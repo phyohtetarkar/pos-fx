@@ -1,4 +1,4 @@
-package com.jsoft.pos.controller;
+package com.jsoft.pos.view;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-public class MainViewController implements Initializable {
+public class MainView implements Initializable {
 
 	@FXML
 	private JFXListView<String> list;
@@ -28,16 +28,17 @@ public class MainViewController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		list.getItems().addAll("Home", "Pos", "Items", "Logout");
 		list.setDepth(0);
-		list.getSelectionModel().select(0);
+		list.getSelectionModel().select(1);
 		JFXDepthManager.setDepth(menuBox, 1);
 		
 		Navigator.setContentView(container);
 		Navigator.setTitle(naviPath);
-		Navigator.navigate("Items");
 		
-		list.getSelectionModel().selectedItemProperty().addListener((a, b, c) -> {
+		/*list.getSelectionModel().selectedItemProperty().addListener((a, b, c) -> {
 			Navigator.navigate(c);
-		});
+		});*/
+		
+		Navigator.currentViewProperty().bind(list.getSelectionModel().selectedItemProperty());
 		
 	}
 

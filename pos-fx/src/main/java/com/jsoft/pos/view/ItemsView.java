@@ -1,11 +1,11 @@
-package com.jsoft.pos.controller;
+package com.jsoft.pos.view;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.fxml.Initializable;
 
-public class ItemsViewController implements Initializable {
+public class ItemsView implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

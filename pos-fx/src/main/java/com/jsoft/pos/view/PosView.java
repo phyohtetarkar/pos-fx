@@ -1,4 +1,4 @@
-package com.jsoft.pos.controller;
+package com.jsoft.pos.view;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.VBox;
 
-public class PosViewController implements Initializable {
+public class PosView implements Initializable {
 
 	@FXML
 	private VBox nodeItem;

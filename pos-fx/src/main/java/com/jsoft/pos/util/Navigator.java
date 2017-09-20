@@ -3,10 +3,13 @@ package com.jsoft.pos.util;
 import java.io.IOException;
 
 import javafx.application.Platform;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 public class Navigator {
@@ -16,6 +19,11 @@ public class Navigator {
 	private static Node currentOwner;
 	private static Label loading;
 	private static Label title;
+	private static ObjectProperty<String> currentView = new SimpleObjectProperty<>(); 
+	
+	static {
+		currentView.addListener((a, b, c) -> navigate(c));
+	}
 
 	public static void setContentView(StackPane contentView) {
 		Navigator.contentView = contentView;
@@ -36,6 +44,10 @@ public class Navigator {
 	public static void setCurrentOwner(Node currentOwner) {
 		Navigator.currentOwner = currentOwner;
 	}
+	
+	public static ObjectProperty<String> currentViewProperty() {
+		return currentView;
+	}
 
 	public static void navigate(String action) {
 
@@ -43,12 +55,11 @@ public class Navigator {
 		case "close":
 			Platform.exit();
 			break;
-		
 		case "logout":
 			logout();
 			break;
 		default:
-			handle(action);
+			handle(action, contentView);
 			break;
 		}
 	}
@@ -76,43 +87,31 @@ public class Navigator {
 	}
 	
 	public static void login() {
-		appInOut("Main");
+		handle("Main", primaryContainer);
 	}
 	
 	public static void logout() {
-		appInOut("Login");
+		handle("Login", primaryContainer);
 	}
-	
-	private static void appInOut(String action) {
+
+	private static void handle(String action, Pane view) {
+
 		try {
-			action = action.replace(" ", "").concat("View");
-			String viewName = String.format("%s.fxml", action.toUpperCase());
+			if (null != title) {
+				title.setText(action);
+			}
 			
-			FXMLLoader loader = new FXMLLoader(Navigator.class.getResource(String.format("/fxml/%s", viewName)));
-			primaryContainer.getChildren().clear();
-			primaryContainer.getChildren().add(loader.load());
-
-		} catch (IOException e) {
-			e.printStackTrace();
-			primaryContainer.getChildren().clear();
-		}
-	}
-
-	private static void handle(String action) {
-
-		try {
-			title.setText(action);
 			action = action.replace(" ", "").concat("View");
 			String viewName = String.format("%s.fxml", action.toUpperCase());
 
 			FXMLLoader loader = new FXMLLoader(Navigator.class.getResource(String.format("/fxml/%s", viewName)));
 
-			contentView.getChildren().clear();
-			contentView.getChildren().add(loader.load());
+			view.getChildren().clear();
+			view.getChildren().add(loader.load());
 
 		} catch (IOException e) {
 			e.printStackTrace();
-			contentView.getChildren().clear();
+			view.getChildren().clear();
 		}
 
 	}
