@@ -22,6 +22,7 @@ public class RetrofitSingleton {
 				.client(client)
 				.addConverterFactory(JacksonConverterFactory.create())
 				.build();
+		
 	}
 	
 	public static RetrofitSingleton getInstance() {
