@@ -1,5 +1,8 @@
 package com.jsoft.pos.util;
 
+import java.io.File;
+
+import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
@@ -12,9 +15,11 @@ public class RetrofitSingleton {
 	private OkHttpClient client;
 	
 	private RetrofitSingleton() {
-		//int cacheSize = 10 * 1024 * 1024;
+		long cacheSize = 10 * 1024 * 1024;
+		Cache cache = new Cache(new File("./cache"), cacheSize);
 		
 		client = new OkHttpClient.Builder()
+				.cache(cache)
 				.build();
 		
 		retrofit = new Retrofit.Builder()
@@ -38,6 +43,6 @@ public class RetrofitSingleton {
 	}
 	
 	public void cancelAll() {
-
+		client.dispatcher().cancelAll();
 	}
 }

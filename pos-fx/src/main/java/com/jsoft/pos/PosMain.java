@@ -3,6 +3,7 @@ package com.jsoft.pos;
 import java.io.IOException;
 
 import com.jfoenix.controls.JFXDecorator;
+import com.jsoft.pos.view.LoginView;
 
 import javafx.application.Application;
 import javafx.collections.ObservableList;
@@ -16,16 +17,15 @@ public class PosMain extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("/fxml/LoginView.fxml"));
-			//Parent root = FXMLLoader.load(MainViewController.class.getResource("MainView.fxml"));
+			Parent root = FXMLLoader.load(LoginView.class.getResource("LoginView.fxml"));
 			
 			JFXDecorator decor = new JFXDecorator(stage, root, false, true, true);
 			decor.setCustomMaximize(true);
 			Scene scene = new Scene(decor);
 			
 			final ObservableList<String> stylesheets = scene.getStylesheets();
-			stylesheets.addAll(getClass().getResource("/css/color.css").toExternalForm(),
-					getClass().getResource("/css/jfx-common.css").toExternalForm());
+			stylesheets.addAll(getClass().getResource("color.css").toExternalForm(),
+					getClass().getResource("jfx-common.css").toExternalForm());
 			
 			stage.setScene(scene);
 			stage.show();

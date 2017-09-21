@@ -2,6 +2,8 @@ package com.jsoft.pos.util;
 
 import java.io.IOException;
 
+import com.jsoft.pos.view.MainView;
+
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -102,9 +104,9 @@ public class Navigator {
 			}
 			
 			action = action.replace(" ", "").concat("View");
-			String viewName = String.format("%s.fxml", action.toUpperCase());
-
-			FXMLLoader loader = new FXMLLoader(Navigator.class.getResource(String.format("/fxml/%s", viewName)));
+			String viewName = String.format("%s.fxml", action);
+			
+			FXMLLoader loader = new FXMLLoader(MainView.class.getResource(viewName));
 
 			view.getChildren().clear();
 			view.getChildren().add(loader.load());

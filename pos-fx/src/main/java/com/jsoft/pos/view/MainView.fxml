@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXRippler?>
+<?import com.jfoenix.controls.JFXToolbar?>
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane styleClass="main-layout" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jsoft.pos.view.MainView">
+   <children>
+      <StackPane fx:id="container" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0" />
+      <JFXToolbar AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0">
+         <left>
+            <HBox alignment="CENTER_LEFT" spacing="15.0" styleClass="padd-left-24" BorderPane.alignment="CENTER">
+               <children>
+                  <Label fx:id="naviPath" styleClass="fs-16" text="Home" textFill="WHITE" />
+               </children></HBox>
+         </left>
+         <styleClass>
+            <String fx:value="toolbar" />
+            <String fx:value="blue-500" />
+         </styleClass>
+         <right>
+            <JFXRippler styleClass="icons-rippler" BorderPane.alignment="CENTER">
+               <children>
+                  <Label contentDisplay="RIGHT" graphicTextGap="10.0" text="Admin">
+                     <graphic>
+                        <SVGPath content="M12 19.219c2.484 0 4.688-1.313 6-3.234-0.047-1.969-4.031-3.094-6-3.094-2.016 0-5.953 1.125-6 3.094 1.313 1.922 3.516 3.234 6 3.234zM12 5.016c-1.641 0-3 1.359-3 3s1.359 3 3 3 3-1.359 3-3-1.359-3-3-3zM12 2.016c5.531 0 9.984 4.453 9.984 9.984s-4.453 9.984-9.984 9.984-9.984-4.453-9.984-9.984 4.453-9.984 9.984-9.984z" fill="WHITE" />
+                     </graphic>
+                     <padding>
+                        <Insets right="24.0" />
+                     </padding>
+                     <styleClass>
+                        <String fx:value="text-white" />
+                        <String fx:value="fs-16" />
+                     </styleClass>
+                  </Label>
+               </children>
+            </JFXRippler>
+         </right>
+      </JFXToolbar>
+      <VBox fx:id="menuBox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="70.0">
+               <children>
+                  <Label graphicTextGap="20.0" styleClass="text-default" text="JPOS" textFill="#4a4a4a">
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../point-of-service-128.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="32.0" />
+                     </font></Label>
+               </children>
+               <styleClass>
+                  <String fx:value="padd-left-24" />
+                  <String fx:value="color-white" />
+               </styleClass>
+            </HBox>
+            <Line endX="250.0" stroke="#c3c0c0" />
+            <JFXListView fx:id="list" prefWidth="250.0" styleClass="color-white" VBox.vgrow="ALWAYS" />
+         </children>
+      </VBox>
+   </children>
+   <stylesheets>
+      <URL value="@../application.css" />
+      <URL value="@../color.css" />
+      <URL value="@../jfx-common.css" />
+   </stylesheets>
+</AnchorPane>
