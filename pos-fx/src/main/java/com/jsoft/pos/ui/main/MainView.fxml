@@ -59,7 +59,7 @@
                      <graphic>
                         <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../image/point-of-service-128.png" />
+                              <Image url="@../../../../../../resources/image/point-of-service-128.png" />
                            </image>
                         </ImageView>
                      </graphic>

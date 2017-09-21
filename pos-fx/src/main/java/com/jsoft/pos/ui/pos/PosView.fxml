@@ -29,7 +29,8 @@
       </VBox>
    </children>
    <stylesheets>
-      <URL value="@../css/application.css" />
-      <URL value="@../css/color.css" />
+      <URL value="@../../application.css" />
+      <URL value="@../../jfx-common.css" />
+      <URL value="@../../color.css" />
    </stylesheets>
 </HBox>

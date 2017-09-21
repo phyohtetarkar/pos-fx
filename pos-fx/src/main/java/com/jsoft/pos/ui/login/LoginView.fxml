@@ -22,7 +22,7 @@
                <graphic>
                   <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../image/point-of-service-256.png" />
+                        <Image url="@../../../../../../resources/image/point-of-service-256.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -66,13 +66,13 @@
          </styleClass>
       </VBox>
    </children>
-   <stylesheets>
-      <URL value="@../css/application.css" />
-      <URL value="@../css/jfx-common.css" />
-      <URL value="@../css/color.css" />
-   </stylesheets>
    <styleClass>
       <String fx:value="main-layout" />
       <String fx:value="color-primary" />
    </styleClass>
+   <stylesheets>
+      <URL value="@../../application.css" />
+      <URL value="@../../jfx-common.css" />
+      <URL value="@../../color.css" />
+   </stylesheets>
 </StackPane>
