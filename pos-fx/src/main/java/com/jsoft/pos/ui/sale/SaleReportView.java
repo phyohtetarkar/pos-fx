@@ -1,4 +1,4 @@
-package com.jsoft.pos.view;
+package com.jsoft.pos.ui.sale;
 
 public class SaleReportView {
 

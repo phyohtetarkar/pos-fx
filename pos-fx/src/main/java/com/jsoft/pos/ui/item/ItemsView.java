@@ -1,4 +1,4 @@
-package com.jsoft.pos.view;
+package com.jsoft.pos.ui.item;
 
 import java.net.URL;
 import java.util.ResourceBundle;

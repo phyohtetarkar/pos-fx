@@ -37,6 +37,6 @@ public class RetrofitSingleton {
 	}
 	
 	public void cancelAll() {
-		
+
 	}
 }
