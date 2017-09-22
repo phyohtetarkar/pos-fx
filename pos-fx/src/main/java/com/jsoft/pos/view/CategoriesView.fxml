@@ -5,17 +5,15 @@
 <?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.Tooltip?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jsoft.pos.ui.category.CategoriesView">
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jsoft.pos.view.CategoriesView">
    <stylesheets>
       <URL value="@../application.css" />
       <URL value="@../color.css" />
@@ -24,23 +22,23 @@
    <children>
       <HBox alignment="CENTER_LEFT">
          <children>
-            <JFXTextField prefWidth="200.0" promptText="Category name" styleClass="operation-text-field" />
-            <JFXButton prefHeight="40.0" prefWidth="100.0" text="Search">
+            <JFXTextField fx:id="filter" prefWidth="200.0" promptText="Category name" styleClass="operation-text-field" />
+            <JFXButton onAction="#clear" prefHeight="40.0" prefWidth="100.0" text="Clear">
                <styleClass>
                   <String fx:value="operation-btn" />
                   <String fx:value="color-primary" />
                </styleClass>
                <tooltip>
-                  <Tooltip text="Search Items" />
+                  <Tooltip text="Clear Text" />
                </tooltip>
             </JFXButton>
-            <JFXButton layoutX="690.0" layoutY="18.0" prefHeight="40.0" prefWidth="100.0" text="Add">
+            <JFXButton layoutX="690.0" layoutY="18.0" onAction="#add" prefHeight="40.0" prefWidth="100.0" text="Add">
                <styleClass>
                   <String fx:value="operation-btn" />
                   <String fx:value="color-primary" />
                </styleClass>
                <tooltip>
-                  <Tooltip text="Add New Item" />
+                  <Tooltip text="Add New Category" />
                </tooltip>
             </JFXButton>
          </children>
@@ -54,35 +52,33 @@
       </HBox>
       <StackPane VBox.vgrow="ALWAYS">
          <children>
-            <TableView>
+            <TableView fx:id="tableView">
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
                <columns>
-                  <TableColumn prefWidth="75.0" text="Name" />
+                  <TableColumn prefWidth="75.0" text="Name">
+                  	<cellValueFactory>
+                  		<PropertyValueFactory property="name" />
+                  	</cellValueFactory>
+                  </TableColumn>
                   <TableColumn prefWidth="75.0" text="Create User" />
-                  <TableColumn prefWidth="75.0" text="Create Date" />
+                  <TableColumn prefWidth="75.0" text="Create Date">
+                  	<cellValueFactory>
+                  		<PropertyValueFactory property="createDate" />
+                  	</cellValueFactory>
+                  </TableColumn>
                   <TableColumn prefWidth="75.0" text="Update User" />
-                  <TableColumn prefWidth="75.0" text="Update Date" />
+                  <TableColumn prefWidth="75.0" text="Update Date">
+                  	<cellValueFactory>
+                  		<PropertyValueFactory property="updateDate" />
+                  	</cellValueFactory>
+                  </TableColumn>
                   <TableColumn prefWidth="75.0" text="Action" />
                </columns>
             </TableView>
          </children>
       </StackPane>
-      <BorderPane>
-         <right>
-            <Pagination maxPageIndicatorCount="5" pageCount="10" BorderPane.alignment="CENTER" />
-         </right>
-         <left>
-            <Label text="Showing 1 to 5 of 100" BorderPane.alignment="CENTER">
-               <styleClass>
-                  <String fx:value="fs-16" />
-                  <String fx:value="padd-left-8" />
-                  <String fx:value="text-default" />
-               </styleClass>
-            </Label>
-         </left>
-      </BorderPane>
    </children>
    <styleClass>
       <String fx:value="main-layout" />

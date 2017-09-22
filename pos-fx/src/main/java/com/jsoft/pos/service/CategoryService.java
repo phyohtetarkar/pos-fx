@@ -5,14 +5,21 @@ import java.util.List;
 import com.jsoft.pos.domain.Category;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface CategoryService {
 	
+	@GET("category")
 	Call<List<Category>> findAll();
 	
-	Call<Category> findById(int id);
+	@GET("category/{id}")
+	Call<Category> findById(@Path("id") int id);
 	
 	Call<List<Category>> findByName(String name);
 	
-	Call<String> save(Category category);
+	@POST("category")
+	Call<String> save(@Body Category category);
 }

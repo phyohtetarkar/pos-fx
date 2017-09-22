@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.jsoft.pos.view.MainView;
 
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -13,15 +14,15 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
 
 public class Navigator {
 
 	private static StackPane primaryContainer;
 	private static StackPane contentView;
-	private static Node currentOwner;
 	private static Label loading;
 	private static Label title;
-	private static ObjectProperty<String> currentView = new SimpleObjectProperty<>(); 
+	private static ObjectProperty<String> currentView = new SimpleObjectProperty<>();
 	
 	static {
 		currentView.addListener((a, b, c) -> navigate(c));
@@ -30,7 +31,7 @@ public class Navigator {
 	public static void setContentView(StackPane contentView) {
 		Navigator.contentView = contentView;
 	}
-
+	
 	public static void setPrimaryContainer(StackPane primaryContainer) {
 		Navigator.primaryContainer = primaryContainer;
 	}
@@ -41,10 +42,6 @@ public class Navigator {
 
 	public static void setTitle(Label title) {
 		Navigator.title = title;
-	}
-
-	public static void setCurrentOwner(Node currentOwner) {
-		Navigator.currentOwner = currentOwner;
 	}
 	
 	public static ObjectProperty<String> currentViewProperty() {
@@ -72,20 +69,11 @@ public class Navigator {
 	}
 
 	public static void lowerBrightness() {
-		if (null != currentOwner) {
-			currentOwner.setEffect(new ColorAdjust(0, 0, -0.2, 0));
-		} else {
-			contentView.setEffect(new ColorAdjust(0, 0, -0.2, 0));
-		}
-
+		primaryContainer.setEffect(new ColorAdjust(0, 0, -0.2, 0));
 	}
 
 	public static void resetBrightness() {
-		if (null != currentOwner) {
-			currentOwner.setEffect(null);
-		} else {
-			contentView.setEffect(null);
-		}
+		primaryContainer.setEffect(null);
 	}
 	
 	public static void login() {
@@ -109,12 +97,24 @@ public class Navigator {
 			FXMLLoader loader = new FXMLLoader(MainView.class.getResource(viewName));
 
 			view.getChildren().clear();
-			view.getChildren().add(loader.load());
+			Node node = loader.load();
+			//play(node);
+			view.getChildren().add(node);
+			AlertUtil.queueToast(action);
 
 		} catch (IOException e) {
 			e.printStackTrace();
 			view.getChildren().clear();
 		}
 
+	}
+	
+	@SuppressWarnings("unused")
+	private static void play(Node node) {
+		TranslateTransition trans = new TranslateTransition(Duration.millis(250), node);
+		trans.setFromX(-contentView.getWidth());
+		trans.setToX(contentView.getLayoutBounds().getMinX());
+		
+		trans.play();
 	}
 }

@@ -1,5 +1,95 @@
 package com.jsoft.pos.vm;
 
-public class CategoriesViewModel {
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import com.jsoft.pos.domain.Category;
+import com.jsoft.pos.service.CategoryService;
+import com.jsoft.pos.util.AlertUtil;
+import com.jsoft.pos.util.RetrofitSingleton;
+
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class CategoriesViewModel {
+	
+	private CategoryService service;
+	private List<Category> list;
+	
+	private ListProperty<Category> categories = new SimpleListProperty<>();
+	
+	public CategoriesViewModel() {
+		service = RetrofitSingleton.getInstance().create(CategoryService.class);
+	}
+
+	public void load() {
+		service.findAll().enqueue(new Callback<List<Category>>() {
+			
+			@Override
+			public void onResponse(Call<List<Category>> call, Response<List<Category>> resp) {
+				if (resp.isSuccessful()) {
+					list = resp.body();
+					categories.set(FXCollections.observableArrayList(list));
+				} else {
+					System.out.println(resp.code());
+				}
+			}
+			
+			@Override
+			public void onFailure(Call<List<Category>> call, Throwable t) {
+				t.printStackTrace();
+				AlertUtil.queueToast(t.getMessage());
+			}
+		});
+	}
+	
+	public void filter(String text) {
+		if (null != list) {
+			categories.set(FXCollections.observableArrayList(
+					list.stream()
+					.filter(c -> c.getName().toLowerCase().contains(text))
+					.collect(Collectors.toList())));
+		}
+	}
+	
+	public void save(String name) {
+		Category category = new Category();
+		category.setName(name);
+		category.getSecurity().setCreation(LocalDateTime.now());
+		category.getSecurity().setModification(LocalDateTime.now());
+		
+		service.save(category).enqueue(new Callback<String>() {
+
+			@Override
+			public void onResponse(Call<String> call, Response<String> resp) {
+				if (resp.isSuccessful()) {
+					AlertUtil.queueToast(resp.body());
+					load();
+				} else {
+					try {
+						System.out.println(resp.errorBody().string());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} 
+			}
+			
+			@Override
+			public void onFailure(Call<String> call, Throwable t) {
+				t.printStackTrace();
+				AlertUtil.queueToast(t.getMessage());
+			}
+
+		});
+	}
+	
+	public final ListProperty<Category> categoriesProperty() {
+		return categories;
+	}
 }

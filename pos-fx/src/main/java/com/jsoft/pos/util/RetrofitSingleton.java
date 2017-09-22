@@ -1,8 +1,5 @@
 package com.jsoft.pos.util;
 
-import java.io.File;
-
-import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
@@ -10,16 +7,16 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 public class RetrofitSingleton {
 
 	private static RetrofitSingleton INSTANCE;
-	private static final String BASE_URL = "";
+	private static final String BASE_URL = "http://localhost:8080/pos/";
 	private Retrofit retrofit;
 	private OkHttpClient client;
 	
 	private RetrofitSingleton() {
-		long cacheSize = 10 * 1024 * 1024;
-		Cache cache = new Cache(new File("./cache"), cacheSize);
+		//long cacheSize = 10 * 1024 * 1024;
+		//Cache cache = new Cache(new File("./cache"), cacheSize);
 		
 		client = new OkHttpClient.Builder()
-				.cache(cache)
+				//.cache(cache)
 				.build();
 		
 		retrofit = new Retrofit.Builder()

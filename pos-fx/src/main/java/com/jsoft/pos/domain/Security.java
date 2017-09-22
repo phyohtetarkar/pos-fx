@@ -1,21 +1,31 @@
 package com.jsoft.pos.domain;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.jsoft.pos.util.DateTimeDeSerializer;
+import com.jsoft.pos.util.DateTimeSerializer;
 
 @SuppressWarnings("serial")
 public class Security implements Serializable {
 
-	private LocalDate creation;
+	@JsonSerialize(using = DateTimeSerializer.class)
+	@JsonDeserialize(using = DateTimeDeSerializer.class)
+	private LocalDateTime creation;
 	private String createUser;
-	private LocalDate modification;
+	
+	@JsonSerialize(using = DateTimeSerializer.class)
+	@JsonDeserialize(using = DateTimeDeSerializer.class)
+	private LocalDateTime modification;
 	private String modifiedUser;
 
-	public LocalDate getCreation() {
+	public LocalDateTime getCreation() {
 		return creation;
 	}
 
-	public void setCreation(LocalDate creation) {
+	public void setCreation(LocalDateTime creation) {
 		this.creation = creation;
 	}
 
@@ -27,11 +37,11 @@ public class Security implements Serializable {
 		this.createUser = createUser;
 	}
 
-	public LocalDate getModification() {
+	public LocalDateTime getModification() {
 		return modification;
 	}
 
-	public void setModification(LocalDate modification) {
+	public void setModification(LocalDateTime modification) {
 		this.modification = modification;
 	}
 

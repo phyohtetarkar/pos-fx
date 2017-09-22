@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXRippler?>
+<?import com.jfoenix.controls.JFXSnackbar?>
 <?import com.jfoenix.controls.JFXToolbar?>
 <?import java.lang.String?>
 <?import java.net.URL?>
@@ -18,7 +19,7 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane styleClass="main-layout" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jsoft.pos.view.MainView">
+<AnchorPane fx:id="root" styleClass="main-layout" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jsoft.pos.view.MainView">
    <children>
       <StackPane fx:id="container" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0" />
       <JFXToolbar AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0">
@@ -51,7 +52,7 @@
             </JFXRippler>
          </right>
       </JFXToolbar>
-      <VBox fx:id="menuBox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox fx:id="menuBox" styleClass="shadow" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="70.0">
                <children>
@@ -76,6 +77,7 @@
             <JFXListView fx:id="list" prefWidth="250.0" styleClass="color-white" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
+      <JFXSnackbar fx:id="snackBar" />
    </children>
    <stylesheets>
       <URL value="@../application.css" />
