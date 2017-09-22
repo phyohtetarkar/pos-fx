@@ -100,7 +100,6 @@ public class Navigator {
 			Node node = loader.load();
 			//play(node);
 			view.getChildren().add(node);
-			AlertUtil.queueToast(action);
 
 		} catch (IOException e) {
 			e.printStackTrace();
