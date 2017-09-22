@@ -43,7 +43,7 @@
 }
 
 .jfx-list-cell:odd:selected > .jfx-rippler > StackPane, .jfx-list-cell:even:selected > .jfx-rippler > StackPane  {
-    -fx-background-color: -color-primary;
+    -fx-background-color: #EEEEEE;
 }
 
 .jfx-list-cell {
@@ -57,11 +57,11 @@
 }
 
 .jfx-list-cell:filled:selected {
-    -fx-text-fill: white;
+    -fx-text-fill: #000;
 }
 
 .jfx-list-cell .jfx-rippler {
-    -jfx-rippler-fill: #e1e1e1;
+    -jfx-rippler-fill: #BDBDBD;
 }
 
 .jfx-list-view {
@@ -159,10 +159,11 @@
     -fx-background-color: rgba(230, 230, 230, 1);
 }
 
+.jfx-combo-box,
 .jfx-password-field,
 .jfx-text-field {
 	-jfx-unfocus-color: #757575;
-	-jfx-focus-color: #4059a9;
+	-jfx-focus-color: -color-accent;
 }
 
 .progress-bar > .bar {

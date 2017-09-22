@@ -3,6 +3,21 @@
     src: url("../font/myanmar/Myanmar3.ttf");
 }*/
 
+@font-face {
+    font-family: Roboto;
+    src: url("Roboto-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Roboto Medium";
+    src: url("Roboto-Medium.ttf");
+}
+
+@font-face {
+    font-family: "Roboto Bold";
+    src: url("Roboto-Bold.ttf");
+}
+
 .main-layout {
 	-fx-pref-width: 1280px;
 	-fx-pref-height: 720px;
@@ -34,6 +49,18 @@
 }
 .fs-48 {
 	-fx-font-size: 48px;
+}
+
+.font-normal {
+	-fx-font-family: "Roboto";
+}
+
+.font-medium {
+	-fx-font-family: "Roboto Medium";
+}
+
+.font-bold {
+	-fx-font-family: "Roboto Bold";
 }
 
 /*
@@ -157,7 +184,7 @@
 
 .pagination .toggle-button:selected {
 	-fx-background-radius: 2px;
-    -fx-background-color: -color-primary;
+    -fx-background-color: -color-accent;
     -fx-text-fill: white;
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.26) , 10, 0.12, -1,2);
 }
@@ -183,7 +210,7 @@
  */
 
 TableView {
-	-fx-border-color: -color-primary;
+	-fx-border-color: -color-accent;
 	-fx-border-radius: 2px;
 	-fx-background-radius: 2px;
 	-fx-padding: 0;
@@ -199,13 +226,13 @@ TableView:focused {
 }
 
 TableView .filler {
-	-fx-background-color: -color-primary;
+	-fx-background-color: -color-accent;
 }
 
 TableView .column-header, .table-menu-button {
 	-fx-border-color: white;
 	-fx-border-width: 0.1;
-	-fx-background-color: -color-primary;
+	-fx-background-color: -color-accent;
 	-fx-pref-height: 50px;
 }
 
@@ -215,7 +242,8 @@ TableView .table-cell {
 }
 
 TableView .table-row-cell:selected {
-	-fx-background-color: #BBDEFB;
+	-fx-background-color: -color-primary-light;
+	-fx-table-cell-border-color: #c2c2c2;
 }
 
 TableView .table-row-cell:selected Text {

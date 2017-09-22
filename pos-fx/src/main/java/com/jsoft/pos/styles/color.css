@@ -1,7 +1,8 @@
 .root {
-	-color-primary: #2196F3;
-	-color-primary-dark: #1976D2;
-	-color-accent: #FFD740;
+	-color-primary: #D94B4B;
+	-color-primary-dark: #CF3B3B;
+	-color-accent: #D94B4B;
+	-color-primary-light: #F4C9C9;
 	-color-white: #ffffff;
 	-color-transparent: rgba(0, 0, 0, 0);
 	-color-transparent-lo: rgba(0, 0, 0, 0.7);
@@ -11,17 +12,22 @@
 }
 
 .color-primary {
-	-fx-background-color: #2196F3;
+	-fx-background-color: -color-primary;
 	-fx-text-fill: #fff;
 }
 
 .color-primary-dark {
-	-fx-background-color: #1976D2;
+	-fx-background-color: -color-primary-dark;
+	-fx-text-fill: #fff;
+}
+
+.color-accent {
+	-fx-background-color: -color-accent;
 	-fx-text-fill: #fff;
 }
 
 .color-white {
-	-fx-background-color: #ffffff;
+	-fx-background-color: -color-white;
 }
 
 .color-black {

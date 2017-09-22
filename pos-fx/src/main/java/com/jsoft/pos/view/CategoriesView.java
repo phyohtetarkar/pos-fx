@@ -36,7 +36,9 @@ public class CategoriesView implements Initializable {
 	
 	public void add() {
 		InputView.show(s -> {
-			model.save(s);
+			if (!s.isEmpty()) {
+				model.save(s);
+			}
 		});
 	}
 	

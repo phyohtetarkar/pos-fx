@@ -60,7 +60,7 @@
                      <graphic>
                         <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../point-of-service-128.png" />
+                              <Image url="@../styles/point-of-service-128.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -80,8 +80,8 @@
       <JFXSnackbar fx:id="snackBar" />
    </children>
    <stylesheets>
-      <URL value="@../application.css" />
-      <URL value="@../color.css" />
-      <URL value="@../jfx-common.css" />
+      <URL value="@../styles/application.css" />
+      <URL value="@../styles/color.css" />
+      <URL value="@../styles/jfx-common.css" />
    </stylesheets>
 </AnchorPane>

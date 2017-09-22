@@ -22,7 +22,7 @@
                <graphic>
                   <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../point-of-service-256.png" />
+                        <Image url="@../styles/point-of-service-256.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -56,7 +56,11 @@
                   <Insets bottom="20.0" />
                </VBox.margin>
             </VBox>
-            <JFXButton defaultButton="true" onAction="#login" prefHeight="50.0" prefWidth="400.0" styleClass="color-primary" text="LOGIN" />
+            <JFXButton defaultButton="true" maxWidth="1.7976931348623157E308" onAction="#login" prefHeight="50.0" text="LOGIN">
+               <styleClass>
+                  <String fx:value="color-primary" />
+                  <String fx:value="font-medium" />
+               </styleClass></JFXButton>
          </children>
          <styleClass>
             <String fx:value="padd-16" />
@@ -71,8 +75,8 @@
       <String fx:value="color-primary" />
    </styleClass>
    <stylesheets>
-      <URL value="@../application.css" />
-      <URL value="@../color.css" />
-      <URL value="@../jfx-common.css" />
+      <URL value="@../styles/application.css" />
+      <URL value="@../styles/color.css" />
+      <URL value="@../styles/jfx-common.css" />
    </stylesheets>
 </StackPane>

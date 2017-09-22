@@ -9,21 +9,34 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox spacing="16.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jsoft.pos.view.InputView">
+<VBox spacing="32.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jsoft.pos.view.InputView">
    <children>
-      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="400.0" spacing="32.0">
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="400.0" spacing="48.0">
          <padding>
             <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
          </padding>
          <children>
-            <Label fx:id="heading" styleClass="fs-24" text="Heading" />
-            <JFXTextField fx:id="input" labelFloat="true" promptText="Enter name" />
+            <Label fx:id="heading" text="Heading">
+               <styleClass>
+                  <String fx:value="fs-24" />
+                  <String fx:value="text-default" />
+                  <String fx:value="font-medium" />
+               </styleClass></Label>
+            <JFXTextField fx:id="input" labelFloat="true" prefHeight="30.0" promptText="Enter name" />
          </children>
       </VBox>
       <HBox alignment="CENTER_RIGHT" spacing="8.0">
          <children>
-            <JFXButton onAction="#close" prefHeight="40.0" prefWidth="75.0" styleClass="text-primary-dark" text="CANCEL" />
-            <JFXButton onAction="#save" prefHeight="40.0" prefWidth="75.0" styleClass="text-primary-dark" text="SAVE" />
+            <JFXButton onAction="#close" prefHeight="40.0" prefWidth="75.0" text="CANCEL">
+               <styleClass>
+                  <String fx:value="text-accent" />
+                  <String fx:value="font-medium" />
+               </styleClass></JFXButton>
+            <JFXButton onAction="#save" prefHeight="40.0" prefWidth="75.0" text="SAVE">
+               <styleClass>
+                  <String fx:value="text-accent" />
+                  <String fx:value="font-medium" />
+               </styleClass></JFXButton>
          </children>
          <padding>
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
@@ -31,8 +44,9 @@
       </HBox>
    </children>
    <stylesheets>
-      <URL value="@../application.css" />
-      <URL value="@../color.css" />
+      <URL value="@../styles/application.css" />
+      <URL value="@../styles/color.css" />
+      <URL value="@../styles/jfx-common.css" />
    </stylesheets>
    <styleClass>
       <String fx:value="color-white" />
