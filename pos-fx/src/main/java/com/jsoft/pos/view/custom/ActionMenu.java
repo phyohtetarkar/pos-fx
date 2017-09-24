@@ -12,10 +12,6 @@ public class ActionMenu {
 	private MenuItem edit;
 	private MenuItem delete;
 	
-	public interface OnClickHandler {
-		void click();
-	}
-	
 	private ActionMenu() {
 		contextMenu = new ContextMenu();
 		contextMenu.getStyleClass().add("context-menu");
@@ -46,13 +42,11 @@ public class ActionMenu {
 	
 	public ActionMenu onEdit(EventHandler<ActionEvent> evt) {
 		edit.setOnAction(evt);
-		
 		return this;
 	}
 	
 	public ActionMenu onDelete(EventHandler<ActionEvent> evt) {
 		delete.setOnAction(evt);
-		
 		return this;
 	}
 }

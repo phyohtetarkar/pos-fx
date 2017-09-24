@@ -1,4 +1,4 @@
-package com.jsoft.pos.vm;
+package com.jsoft.pos.view.model;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -71,22 +71,14 @@ public class CategoriesViewModel {
 		}
 	}
 	
-	public void save(String name, int id) {
-		Category category = new Category();
-		category.setId(id);
-		category.setName(name);
-		
-		post(category);
-	}
-	
 	public void delete(Category category) {
 		if (AlertUtil.showConfirm("Are you sure to delete?")) {
 			category.setDeleted(true);
-			post(category);
+			save(category);
 		}
 	}
 	
-	private void post(Category category) {
+	public void save(Category category) {
 		if (ServerStatus.isReachable()) {
 			category.getSecurity().setCreation(LocalDateTime.now());
 			category.getSecurity().setModification(LocalDateTime.now());

@@ -75,6 +75,10 @@ public class Navigator {
 				title.setText(action);
 			}
 			
+			if (null != refresh) {
+				refresh.setOnMouseClicked(null);
+			}
+			
 			action = action.replace(" ", "").concat("View");
 			String viewName = String.format("%s.fxml", action);
 			

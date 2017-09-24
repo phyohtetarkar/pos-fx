@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
+import com.jsoft.pos.domain.Nameable;
 import com.jsoft.pos.util.Navigator;
 
 import javafx.fxml.FXML;
@@ -27,13 +28,10 @@ public class InputView implements Initializable {
 	private JFXTextField input;
 	
 	private RequiredFieldValidator validator;
-	private Consumer<String> consumer;
+	private Nameable entity;
+	private Consumer<Nameable> consumer;
 	
-	public static void show(String heading, String placeholder, Consumer<String> consumer) {
-		show(heading, placeholder, null, consumer);
-	}
-	
-	public static void show(String heading, String placeholder, String text, Consumer<String> consumer) {
+	public static void show(String heading, String placeholder, Nameable entity, Consumer<Nameable> consumer) {
 		try {
 			Navigator.lowerBrightness();
 			Stage stage = new Stage();
@@ -46,13 +44,14 @@ public class InputView implements Initializable {
 			InputView context = loader.getController();
 			
 			context.consumer = consumer;
+			context.entity = entity;
 			context.heading.setText(heading);
 			context.input.setPromptText(placeholder);
 			
-			if (null != text) {
-				context.input.setText(text);
+			if (null != entity.getName()) {
+				context.input.setText(entity.getName());
 			}
-		
+			
 			stage.setOnHidden(evt -> {
 				Navigator.resetBrightness();
 			});
@@ -80,7 +79,8 @@ public class InputView implements Initializable {
 		
 		if (!input.getText().trim().isEmpty()) {
 			close();
-			consumer.accept(input.getText());
+			entity.setName(input.getText());
+			consumer.accept(entity);
 		}
 	}
 	

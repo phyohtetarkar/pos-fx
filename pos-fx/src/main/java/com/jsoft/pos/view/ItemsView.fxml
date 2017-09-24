@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jsoft.pos.view.ItemsView">
    <stylesheets>
       <URL value="@../styles/application.css" />
       <URL value="@../styles/color.css" />
@@ -25,10 +25,15 @@
    <children>
       <HBox alignment="CENTER_LEFT">
          <children>
-            <JFXComboBox prefWidth="200.0" promptText="Category" />
-            <JFXTextField prefWidth="200.0" promptText="Item code" styleClass="operation-text-field" />
-            <JFXTextField prefWidth="200.0" promptText="Item name" styleClass="operation-text-field" />
-            <JFXButton buttonType="RAISED" prefHeight="40.0" prefWidth="100.0" styleClass="color-accent" text="Search">
+            <JFXComboBox fx:id="categories" prefWidth="200.0" promptText="Category" styleClass="customize-combo" visibleRowCount="5" />
+            <JFXTextField fx:id="code" prefWidth="200.0" promptText="Item code" styleClass="operation-text-field" />
+            <JFXTextField fx:id="name" prefWidth="200.0" promptText="Item name" styleClass="operation-text-field" />
+            <JFXButton buttonType="RAISED" onAction="#search" prefHeight="40.0" prefWidth="100.0" styleClass="color-accent" text="Search">
+               <tooltip>
+                  <Tooltip text="Search Items" />
+               </tooltip>
+            </JFXButton>
+            <JFXButton buttonType="RAISED" layoutX="690.0" layoutY="18.0" onAction="#clear" prefHeight="40.0" prefWidth="100.0" styleClass="color-accent" text="Clear">
                <tooltip>
                   <Tooltip text="Search Items" />
                </tooltip>
@@ -49,7 +54,7 @@
       </HBox>
       <StackPane VBox.vgrow="ALWAYS">
          <children>
-            <TableView>
+            <TableView fx:id="tableView">
               <columns>
                 <TableColumn maxWidth="1.7976931348623157E308" minWidth="150.0" prefWidth="-1.0" text="Name" />
                 <TableColumn maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Code" />
@@ -67,10 +72,10 @@
       </StackPane>
       <BorderPane>
          <right>
-            <Pagination maxPageIndicatorCount="5" pageCount="10" BorderPane.alignment="CENTER" />
+            <Pagination fx:id="pagination" maxPageIndicatorCount="5" pageCount="10" BorderPane.alignment="CENTER" />
          </right>
          <left>
-            <Label text="Showing 1 to 5 of 100" BorderPane.alignment="CENTER">
+            <Label fx:id="pageInfo" text="Showing 1 to 5 of 100" BorderPane.alignment="CENTER">
                <styleClass>
                   <String fx:value="fs-16" />
                   <String fx:value="padd-left-8" />

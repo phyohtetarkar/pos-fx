@@ -1,4 +1,4 @@
-package com.jsoft.pos.vm;
+package com.jsoft.pos.view.model;
 
 public class SaleReportViewModel {
 

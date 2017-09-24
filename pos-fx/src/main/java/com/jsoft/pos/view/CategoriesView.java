@@ -8,7 +8,7 @@ import com.jfoenix.controls.JFXTextField;
 import com.jsoft.pos.domain.Category;
 import com.jsoft.pos.util.Navigator;
 import com.jsoft.pos.view.custom.ActionMenu;
-import com.jsoft.pos.vm.CategoriesViewModel;
+import com.jsoft.pos.view.model.CategoriesViewModel;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,8 +17,9 @@ import javafx.scene.control.TableView;
 
 public class CategoriesView implements Initializable {
 	
-	private static final String DIALOG_HEADING = "Create new category";
-	private static final String INPUT_PLACEHOLDER = "Enter category name";
+	private static final String CREATE_HEADING = "Create New Category";
+	private static final String EDIT_HEADING = "Edit Category";
+	private static final String INPUT_PLACEHOLDER = "Category Name";
 
 	@FXML
 	private TableView<Category> tableView;
@@ -37,11 +38,9 @@ public class CategoriesView implements Initializable {
 		tableView.setPlaceholder(new Label(""));
 		tableView.setContextMenu(ActionMenu.builder()
 				.onEdit(e -> {
-					Category c = tableView.getSelectionModel().getSelectedItem();
-					InputView.show(DIALOG_HEADING, INPUT_PLACEHOLDER, c.getName(), s -> {
-						if (!s.trim().isEmpty()) {
-							model.save(s, c.getId());
-						}
+					Category category = tableView.getSelectionModel().getSelectedItem();
+					InputView.show(EDIT_HEADING, INPUT_PLACEHOLDER, category, c -> {
+						model.save((Category) c);
 					});
 				})
 				.onDelete(e -> {
@@ -50,23 +49,18 @@ public class CategoriesView implements Initializable {
 				})
 				.build());
 
-		filter.textProperty().addListener((a, b, c) -> filter(c));
+		filter.textProperty().addListener((a, b, c) -> model.filter(c.toLowerCase()));
 
 		spinner.visibleProperty().bind(model.loadingProperty());
+		
 		Navigator.setRefreshAction(e -> model.load());
 
 		model.load();
 	}
 
-	public void filter(String text) {
-		model.filter(text.toLowerCase());
-	}
-
 	public void add() {
-		InputView.show(DIALOG_HEADING, INPUT_PLACEHOLDER, s -> {
-			if (!s.trim().isEmpty()) {
-				model.save(s, 0);
-			}
+		InputView.show(CREATE_HEADING, INPUT_PLACEHOLDER, new Category(), c -> {
+			model.save((Category) c);
 		});
 	}
 

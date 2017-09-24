@@ -2,8 +2,10 @@ package com.jsoft.pos.domain;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @SuppressWarnings("serial")
-public class Payment implements Serializable {
+public class Payment implements Serializable, Nameable {
 
 	private int id;
 	private String type;
@@ -50,6 +52,17 @@ public class Payment implements Serializable {
 
 	public void setSecurity(Security security) {
 		this.security = security;
+	}
+
+	@JsonIgnore
+	@Override
+	public String getName() {
+		return type;
+	}
+
+	@Override
+	public void setName(String name) {
+		this.type = name;
 	}
 
 }

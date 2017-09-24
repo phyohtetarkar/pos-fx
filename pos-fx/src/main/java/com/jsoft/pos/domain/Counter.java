@@ -2,8 +2,10 @@ package com.jsoft.pos.domain;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @SuppressWarnings("serial")
-public class Counter implements Serializable {
+public class Counter implements Serializable, Nameable {
 
 	private int id;
 	private String code;
@@ -41,6 +43,17 @@ public class Counter implements Serializable {
 
 	public void setSecurity(Security security) {
 		this.security = security;
+	}
+
+	@JsonIgnore
+	@Override
+	public String getName() {
+		return code;
+	}
+
+	@Override
+	public void setName(String name) {
+		this.code = name;
 	}
 
 }

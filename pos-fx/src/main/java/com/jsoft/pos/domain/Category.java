@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jsoft.pos.util.Utils;
 
 @SuppressWarnings("serial")
-public class Category implements Serializable {
+public class Category implements Serializable, Nameable {
 
 	private int id;
 	private String name;
@@ -58,5 +58,10 @@ public class Category implements Serializable {
 	@JsonIgnore
 	public String getUpdateDate() {
 		return security.getModification().format(Utils.dateTimeFormatter);
+	}
+	
+	@Override
+	public String toString() {
+		return name;
 	}
 }
