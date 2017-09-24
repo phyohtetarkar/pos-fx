@@ -28,7 +28,8 @@ public class PosMain extends Application {
 			Scene scene = new Scene(decor);
 			
 			final ObservableList<String> stylesheets = scene.getStylesheets();
-			stylesheets.addAll(getClass().getResource("styles/color.css").toExternalForm(),
+			stylesheets.addAll(getClass().getResource("styles/application.css").toExternalForm(),
+					getClass().getResource("styles/color.css").toExternalForm(),
 					getClass().getResource("styles/jfx-common.css").toExternalForm());
 			
 			stage.setScene(scene);

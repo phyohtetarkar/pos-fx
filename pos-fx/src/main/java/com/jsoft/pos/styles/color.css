@@ -1,29 +1,28 @@
 .root {
-	-color-primary: #D94B4B;
-	-color-primary-dark: #CF3B3B;
-	-color-accent: #D94B4B;
-	-color-primary-light: #F4C9C9;
+	-color-primary: #4CAF50;
+	-color-primary-dark: #388E3C;
+	-color-accent: #1E88E5;
+	-color-highlight: #BBDEFB;
 	-color-white: #ffffff;
 	-color-transparent: rgba(0, 0, 0, 0);
 	-color-transparent-lo: rgba(0, 0, 0, 0.7);
-	-text-white: #fff;
-	-text-default: #4a4a4a;
-	-text-promote-default: #757575;
+	-text-default: #212121;
+	-text-default-secondary: #757575;
 }
 
 .color-primary {
 	-fx-background-color: -color-primary;
-	-fx-text-fill: #fff;
+	-fx-text-fill: -color-white;
 }
 
 .color-primary-dark {
 	-fx-background-color: -color-primary-dark;
-	-fx-text-fill: #fff;
+	-fx-text-fill: -color-white;
 }
 
 .color-accent {
 	-fx-background-color: -color-accent;
-	-fx-text-fill: #fff;
+	-fx-text-fill: -color-white;
 }
 
 .color-white {
@@ -43,11 +42,15 @@
 }
 
 .text-white {
-	-fx-text-fill: #fff;
+	-fx-text-fill: -color-white;
 }
 
 .text-default {
-	-fx-text-fill: #4a4a4a;
+	-fx-text-fill: -text-default;
+}
+
+.text-default-secondary {
+	-fx-text-fill: -text-default-secondary;
 }
 
 .text-primary {
@@ -63,16 +66,5 @@
 }
 
 .text-promote-default {
-	-fx-prompt-text-fill: #757575;
-}
-
-.jfx-snackbar-content {
-    -fx-background-color: -color-transparent-lo;
-}
-
-.jfx-snackbar-toast {
-    -fx-text-fill: WHITE;   
-}
-.jfx-snackbar-action {
-    -fx-text-fill: #ff4081; 
+	-fx-prompt-text-fill: -text-default-secondary;
 }

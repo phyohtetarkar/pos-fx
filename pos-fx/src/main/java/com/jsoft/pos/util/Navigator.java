@@ -2,16 +2,19 @@ package com.jsoft.pos.util;
 
 import java.io.IOException;
 
+import com.jfoenix.controls.JFXRippler;
 import com.jsoft.pos.view.MainView;
 
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
@@ -20,32 +23,12 @@ public class Navigator {
 
 	private static StackPane primaryContainer;
 	private static StackPane contentView;
-	private static Label loading;
 	private static Label title;
+	private static JFXRippler refresh;
 	private static ObjectProperty<String> currentView = new SimpleObjectProperty<>();
 	
 	static {
 		currentView.addListener((a, b, c) -> navigate(c));
-	}
-
-	public static void setContentView(StackPane contentView) {
-		Navigator.contentView = contentView;
-	}
-	
-	public static void setPrimaryContainer(StackPane primaryContainer) {
-		Navigator.primaryContainer = primaryContainer;
-	}
-
-	public static void setLoadingView(Label loading) {
-		Navigator.loading = loading;
-	}
-
-	public static void setTitle(Label title) {
-		Navigator.title = title;
-	}
-	
-	public static ObjectProperty<String> currentViewProperty() {
-		return currentView;
 	}
 
 	public static void navigate(String action) {
@@ -63,11 +46,6 @@ public class Navigator {
 		}
 	}
 
-	public static void showLoading(boolean visibility) {
-		loading.getGraphic().setVisible(visibility);
-		loading.setVisible(visibility);
-	}
-
 	public static void lowerBrightness() {
 		primaryContainer.setEffect(new ColorAdjust(0, 0, -0.2, 0));
 	}
@@ -82,6 +60,12 @@ public class Navigator {
 	
 	public static void logout() {
 		handle("Login", primaryContainer);
+	}
+	
+	public static void setRefreshAction(EventHandler<MouseEvent> evt) {
+		if (null != refresh) {
+			refresh.setOnMouseClicked(evt);
+		}
 	}
 
 	private static void handle(String action, Pane view) {
@@ -115,5 +99,25 @@ public class Navigator {
 		trans.setToX(contentView.getLayoutBounds().getMinX());
 		
 		trans.play();
+	}
+	
+	public static void setContentView(StackPane contentView) {
+		Navigator.contentView = contentView;
+	}
+	
+	public static void setPrimaryContainer(StackPane primaryContainer) {
+		Navigator.primaryContainer = primaryContainer;
+	}
+
+	public static void setTitle(Label title) {
+		Navigator.title = title;
+	}
+	
+	public static ObjectProperty<String> currentViewProperty() {
+		return currentView;
+	}
+	
+	public static void setRefresh(JFXRippler refresh) {
+		Navigator.refresh = refresh;
 	}
 }

@@ -28,20 +28,12 @@
             <JFXComboBox prefWidth="200.0" promptText="Category" />
             <JFXTextField prefWidth="200.0" promptText="Item code" styleClass="operation-text-field" />
             <JFXTextField prefWidth="200.0" promptText="Item name" styleClass="operation-text-field" />
-            <JFXButton prefHeight="40.0" prefWidth="100.0" text="Search">
-               <styleClass>
-                  <String fx:value="operation-btn" />
-                  <String fx:value="color-accent" />
-               </styleClass>
+            <JFXButton buttonType="RAISED" prefHeight="40.0" prefWidth="100.0" styleClass="color-accent" text="Search">
                <tooltip>
                   <Tooltip text="Search Items" />
                </tooltip>
             </JFXButton>
-            <JFXButton layoutX="690.0" layoutY="18.0" prefHeight="40.0" prefWidth="100.0" text="Add">
-               <styleClass>
-                  <String fx:value="operation-btn" />
-                  <String fx:value="color-accent" />
-               </styleClass>
+            <JFXButton buttonType="RAISED" layoutX="690.0" layoutY="18.0" prefHeight="40.0" prefWidth="100.0" styleClass="color-accent" text="Add">
                <tooltip>
                   <Tooltip text="Add New Item" />
                </tooltip>
@@ -66,7 +58,6 @@
                   <TableColumn maxWidth="70.0" minWidth="70.0" prefWidth="70.0" text="Qty" />
                   <TableColumn maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Category" />
                   <TableColumn maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Photo" />
-                  <TableColumn maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Action" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

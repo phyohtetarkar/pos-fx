@@ -7,7 +7,6 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 public class RetrofitSingleton {
 
 	private static RetrofitSingleton INSTANCE;
-	private static final String BASE_URL = "http://localhost:8080/pos/";
 	private Retrofit retrofit;
 	private OkHttpClient client;
 	
@@ -20,7 +19,7 @@ public class RetrofitSingleton {
 				.build();
 		
 		retrofit = new Retrofit.Builder()
-				.baseUrl(BASE_URL)
+				.baseUrl(Utils.BASE_URL)
 				.client(client)
 				.addConverterFactory(JacksonConverterFactory.create())
 				.build();

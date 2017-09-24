@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXRippler;
 import com.jfoenix.controls.JFXSnackbar;
 import com.jsoft.pos.util.AlertUtil;
 import com.jsoft.pos.util.Navigator;
@@ -29,6 +30,8 @@ public class MainView implements Initializable {
 	private AnchorPane root;
 	@FXML
 	private JFXSnackbar snackBar;
+	@FXML
+	private JFXRippler refresh;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -38,6 +41,7 @@ public class MainView implements Initializable {
 		
 		Navigator.setContentView(container);
 		Navigator.setTitle(naviPath);
+		Navigator.setRefresh(refresh);
 		
 		snackBar.registerSnackbarContainer(root);
 		AlertUtil.setSnackBar(snackBar);

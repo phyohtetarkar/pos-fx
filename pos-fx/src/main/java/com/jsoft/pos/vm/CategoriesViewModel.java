@@ -9,8 +9,11 @@ import com.jsoft.pos.domain.Category;
 import com.jsoft.pos.service.CategoryService;
 import com.jsoft.pos.util.AlertUtil;
 import com.jsoft.pos.util.RetrofitSingleton;
+import com.jsoft.pos.util.ServerStatus;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import retrofit2.Call;
@@ -23,30 +26,40 @@ public class CategoriesViewModel {
 	private List<Category> list;
 	
 	private ListProperty<Category> categories = new SimpleListProperty<>();
+	private BooleanProperty loading = new SimpleBooleanProperty();
 	
 	public CategoriesViewModel() {
 		service = RetrofitSingleton.getInstance().create(CategoryService.class);
 	}
 
 	public void load() {
-		service.findAll().enqueue(new Callback<List<Category>>() {
-			
-			@Override
-			public void onResponse(Call<List<Category>> call, Response<List<Category>> resp) {
-				if (resp.isSuccessful()) {
-					list = resp.body();
-					categories.set(FXCollections.observableArrayList(list));
-				} else {
-					System.out.println(resp.code());
+		
+		if (ServerStatus.isReachable()) {
+			loading.set(true);
+			service.findAll().enqueue(new Callback<List<Category>>() {
+				
+				@Override
+				public void onResponse(Call<List<Category>> call, Response<List<Category>> resp) {
+					loading.set(false);
+					if (resp.isSuccessful()) {
+						list = resp.body();
+						categories.set(FXCollections.observableArrayList(list));
+					} else {
+						System.out.println(resp.code());
+					}
 				}
-			}
-			
-			@Override
-			public void onFailure(Call<List<Category>> call, Throwable t) {
-				t.printStackTrace();
-				AlertUtil.queueToast(t.getMessage());
-			}
-		});
+				
+				@Override
+				public void onFailure(Call<List<Category>> call, Throwable t) {
+					t.printStackTrace();
+					loading.set(false);
+					AlertUtil.queueToast(t.getMessage());
+				}
+			});
+		} else {
+			AlertUtil.queueToast(ServerStatus.CONNECTION_ERROR);
+		}
+		
 	}
 	
 	public void filter(String text) {
@@ -58,38 +71,61 @@ public class CategoriesViewModel {
 		}
 	}
 	
-	public void save(String name) {
+	public void save(String name, int id) {
 		Category category = new Category();
+		category.setId(id);
 		category.setName(name);
-		category.getSecurity().setCreation(LocalDateTime.now());
-		category.getSecurity().setModification(LocalDateTime.now());
 		
-		service.save(category).enqueue(new Callback<String>() {
-
-			@Override
-			public void onResponse(Call<String> call, Response<String> resp) {
-				if (resp.isSuccessful()) {
-					AlertUtil.queueToast(resp.body());
-					load();
-				} else {
-					try {
-						System.out.println(resp.errorBody().string());
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				} 
-			}
+		post(category);
+	}
+	
+	public void delete(Category category) {
+		if (AlertUtil.showConfirm("Are you sure to delete?")) {
+			category.setDeleted(true);
+			post(category);
+		}
+	}
+	
+	private void post(Category category) {
+		if (ServerStatus.isReachable()) {
+			category.getSecurity().setCreation(LocalDateTime.now());
+			category.getSecurity().setModification(LocalDateTime.now());
 			
-			@Override
-			public void onFailure(Call<String> call, Throwable t) {
-				t.printStackTrace();
-				AlertUtil.queueToast(t.getMessage());
-			}
+			service.save(category).enqueue(new Callback<String>() {
 
-		});
+				@Override
+				public void onResponse(Call<String> call, Response<String> resp) {
+					if (resp.isSuccessful()) {
+						AlertUtil.queueToast(resp.body());
+						load();
+					} else {
+						try {
+							System.out.println(resp.errorBody().string());
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					} 
+				}
+				
+				@Override
+				public void onFailure(Call<String> call, Throwable t) {
+					t.printStackTrace();
+					AlertUtil.queueToast(t.getMessage());
+				}
+
+			});
+		} else {
+			AlertUtil.queueToast(ServerStatus.CONNECTION_ERROR);
+		}
+		
 	}
 	
 	public final ListProperty<Category> categoriesProperty() {
 		return categories;
 	}
+	
+	public final BooleanProperty loadingProperty() {
+		return loading;
+	}
+	
 }

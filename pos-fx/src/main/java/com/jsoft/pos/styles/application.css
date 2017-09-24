@@ -30,7 +30,7 @@
 }
 
 .shadow {
-	-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.26) , 10, 0.12, -1,2);
+	-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.26) , 15, 0.16, 0, 4);
 }
 
 
@@ -69,7 +69,7 @@
  
  .operation-text-field {
  	-fx-text-fill: -text-default;
- 	-fx-prompt-text-fill: -text-promote-default;
+ 	-fx-prompt-text-fill: -text-default-secondary;
  }
  
  /*
@@ -172,6 +172,7 @@
 
 .pagination .toggle-button {
     -fx-background-radius: 2px;
+    -fx-pref-width: 30px;
     -fx-background-color: -color-transparent;
     -fx-text-fill: black;
 }
@@ -242,7 +243,7 @@ TableView .table-cell {
 }
 
 TableView .table-row-cell:selected {
-	-fx-background-color: -color-primary-light;
+	-fx-background-color: -color-highlight;
 	-fx-table-cell-border-color: #c2c2c2;
 }
 
@@ -273,4 +274,91 @@ TableView .column-header Label {
 TableView .column-header.header-left15 Label {
 	-fx-alignment: center-left;
 	-fx-padding: 0 15 0 15;
+}
+
+/*
+ * SnackBar
+ */
+
+.jfx-snackbar-content {
+    -fx-background-color: -color-transparent-lo;
+}
+
+.jfx-snackbar-toast {
+    -fx-text-fill: -color-white;  
+}
+.jfx-snackbar-action {
+    -fx-text-fill: #ff4081; 
+}
+
+/*
+ * Spinner
+ */
+
+.custom-spinner {
+	-jfx-radius: 30;
+}
+ 
+.custom-spinner > .arc {
+    -fx-stroke-width: 5.0;
+    -fx-stroke: -color-accent;
+}
+
+/*
+ * ScrollBar
+ */
+
+.scroll-bar:vertical > .track-background, .scroll-bar:horizontal > .track-background {
+    -fx-background-color: #F1F1F1;
+    -fx-background-insets: 0.0;
+}
+
+.scroll-bar:vertical > .thumb, .scroll-bar:horizontal > .thumb {
+    -fx-background-color: #BCBCBC;
+    -fx-background-insets: 0.0;
+    -fx-background-radius: 1.0;
+}
+
+.scroll-bar > .increment-button, .scroll-bar > .decrement-button {
+    -fx-padding: 5 2 5 2;
+}
+
+.scroll-bar > .increment-button, .scroll-bar > .decrement-button, .scroll-bar:hover > .increment-button, .scroll-bar:hover > .decrement-button {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar > .increment-button > .increment-arrow, .scroll-bar > .decrement-button > .decrement-arrow {
+    -fx-background-color: rgb(150.0, 150.0, 150.0);
+}
+
+/*
+ * Context Menu
+ */
+
+.context-menu {
+    -fx-background-color: -color-white;
+    -fx-padding: 5px;
+    -fx-background-radius: 2px;
+}
+
+.context-menu .menu-item {
+	-fx-cursor: hand;
+	-fx-padding: 8px;
+	-fx-pref-width: 150px;
+}
+
+.context-menu .menu-item SVGPath {
+	-fx-fill: -text-default;
+}
+
+.context-menu .menu-item:focused {
+  	-fx-background-color: -color-accent;
+}
+
+.context-menu .menu-item:focused .label {
+  	-fx-text-fill: white;
+}
+
+.context-menu .menu-item:focused SVGPath {
+  	-fx-fill: white;
 }

@@ -27,8 +27,13 @@ public class InputView implements Initializable {
 	private JFXTextField input;
 	
 	private RequiredFieldValidator validator;
+	private Consumer<String> consumer;
 	
-	public static void show(Consumer<String> consumer) {
+	public static void show(String heading, String placeholder, Consumer<String> consumer) {
+		show(heading, placeholder, null, consumer);
+	}
+	
+	public static void show(String heading, String placeholder, String text, Consumer<String> consumer) {
 		try {
 			Navigator.lowerBrightness();
 			Stage stage = new Stage();
@@ -39,10 +44,17 @@ public class InputView implements Initializable {
 			
 			VBox view = loader.load();
 			InputView context = loader.getController();
+			
+			context.consumer = consumer;
+			context.heading.setText(heading);
+			context.input.setPromptText(placeholder);
+			
+			if (null != text) {
+				context.input.setText(text);
+			}
 		
 			stage.setOnHidden(evt -> {
 				Navigator.resetBrightness();
-				consumer.accept(context.input.getText());
 			});
 			
 			Scene scene = new Scene(view);
@@ -66,8 +78,9 @@ public class InputView implements Initializable {
 	public void save() {
 		input.validate();
 		
-		if (!input.getText().isEmpty()) {
+		if (!input.getText().trim().isEmpty()) {
 			close();
+			consumer.accept(input.getText());
 		}
 	}
 	
