@@ -7,6 +7,7 @@ import com.jsoft.pos.service.CategoryService;
 import com.jsoft.pos.service.ItemService;
 import com.jsoft.pos.util.AlertUtil;
 import com.jsoft.pos.util.RetrofitSingleton;
+import com.jsoft.pos.util.ServerStatus;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -29,6 +30,7 @@ public class ItemsViewModel {
 	private BooleanProperty loading = new SimpleBooleanProperty();
 	
 	private CategoryService catService;
+	@SuppressWarnings("unused")
 	private ItemService service;
 	
 	private ObjectProperty<Category> category = new SimpleObjectProperty<>();
@@ -43,8 +45,13 @@ public class ItemsViewModel {
 	}
 	
 	public void init() {
-		loadCategories();
-		count();
+		if (ServerStatus.isReachable()) {
+			loadCategories();
+			count();
+		} else {
+			AlertUtil.queueToast(ServerStatus.CONNECTION_ERROR);
+		}
+		
 	}
 	
 	public void search() {
@@ -59,21 +66,26 @@ public class ItemsViewModel {
 	}
 	
 	private void loadCategories() {
-		catService.findAll().enqueue(new Callback<List<Category>>() {
-			
-			@Override
-			public void onResponse(Call<List<Category>> call, Response<List<Category>> resp) {
-				if (resp.isSuccessful()) {
-					categories.set(FXCollections.observableArrayList(resp.body()));
+		if (ServerStatus.isReachable()) {
+			catService.findAll().enqueue(new Callback<List<Category>>() {
+				
+				@Override
+				public void onResponse(Call<List<Category>> call, Response<List<Category>> resp) {
+					if (resp.isSuccessful()) {
+						categories.set(FXCollections.observableArrayList(resp.body()));
+					}
 				}
-			}
-			
-			@Override
-			public void onFailure(Call<List<Category>> call, Throwable t) {
-				t.printStackTrace();
-				AlertUtil.queueToast(t.getMessage());
-			}
-		});
+				
+				@Override
+				public void onFailure(Call<List<Category>> call, Throwable t) {
+					t.printStackTrace();
+					AlertUtil.queueToast(t.getMessage());
+				}
+			});
+		} else {
+			AlertUtil.queueToast(ServerStatus.CONNECTION_ERROR);
+		}
+		
 	}
 	
 	public final ListProperty<Category> categoriesProperty() {

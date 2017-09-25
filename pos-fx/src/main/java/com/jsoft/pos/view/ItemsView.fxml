@@ -35,7 +35,7 @@
             </JFXButton>
             <JFXButton buttonType="RAISED" layoutX="690.0" layoutY="18.0" onAction="#clear" prefHeight="40.0" prefWidth="100.0" styleClass="color-accent" text="Clear">
                <tooltip>
-                  <Tooltip text="Search Items" />
+                  <Tooltip text="Clear searches" />
                </tooltip>
             </JFXButton>
             <JFXButton buttonType="RAISED" layoutX="690.0" layoutY="18.0" prefHeight="40.0" prefWidth="100.0" styleClass="color-accent" text="Add">
