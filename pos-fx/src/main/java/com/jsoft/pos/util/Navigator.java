@@ -98,7 +98,7 @@ public class Navigator {
 	
 	@SuppressWarnings("unused")
 	private static void play(Node node) {
-		TranslateTransition trans = new TranslateTransition(Duration.millis(250), node);
+		TranslateTransition trans = new TranslateTransition(Duration.millis(500), node);
 		trans.setFromX(-contentView.getWidth());
 		trans.setToX(contentView.getLayoutBounds().getMinX());
 		

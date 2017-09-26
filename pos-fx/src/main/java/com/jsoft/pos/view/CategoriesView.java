@@ -34,7 +34,7 @@ public class CategoriesView implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		model = new CategoriesViewModel();
 
-		tableView.itemsProperty().bind(model.categoriesProperty());
+		tableView.itemsProperty().bind(model.valuesProperty());
 		tableView.setPlaceholder(new Label(""));
 		tableView.setContextMenu(ActionMenu.builder()
 				.onEdit(e -> {

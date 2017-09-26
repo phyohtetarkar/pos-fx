@@ -5,12 +5,25 @@ import java.util.List;
 import com.jsoft.pos.domain.Supplier;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface SupplierService {
 
-	Call<List<Supplier>> search();
+	@GET("supplier/search")
+	Call<List<Supplier>> search(@Query("name") String name, 
+			@Query("name") int offset, 
+			@Query("name") int limit);
 	
-	Call<Supplier> findById(int id);
+	@GET("supplier/count")
+	Call<Long> count(@Query("name") String name);
 	
-	Call<String> save(Supplier supplier);
+	@GET("supplier/{id}")
+	Call<Supplier> findById(@Path("id") int id);
+	
+	@POST("supplier")
+	Call<String> save(@Body Supplier suppllier);
 }

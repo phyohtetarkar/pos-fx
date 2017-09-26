@@ -5,12 +5,25 @@ import java.util.List;
 import com.jsoft.pos.domain.Employee;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface EmployeeService {
 
-	Call<List<Employee>> search();
+	@GET("employee/search")
+	Call<List<Employee>> search(@Query("name") String name, 
+			@Query("name") int offset, 
+			@Query("name") int limit);
 	
-	Call<Employee> findById(int id);
+	@GET("employee/count")
+	Call<Long> count(@Query("name") String name);
 	
-	Call<String> save(Employee employee);
+	@GET("employee/{id}")
+	Call<Employee> findById(@Path("id") int id);
+	
+	@POST("employee")
+	Call<String> save(@Body Employee employee);
 }

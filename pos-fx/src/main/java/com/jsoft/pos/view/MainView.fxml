@@ -20,7 +20,7 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" styleClass="main-layout" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jsoft.pos.view.MainView">
+<AnchorPane fx:id="root" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jsoft.pos.view.MainView">
    <children>
       <StackPane fx:id="container" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0" />
       <JFXToolbar styleClass="toolbar" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0">
@@ -95,4 +95,8 @@
       <URL value="@../styles/color.css" />
       <URL value="@../styles/jfx-common.css" />
    </stylesheets>
+   <styleClass>
+      <String fx:value="main-layout" />
+      <String fx:value="color-white" />
+   </styleClass>
 </AnchorPane>

@@ -5,14 +5,27 @@ import java.util.List;
 import com.jsoft.pos.domain.Invoice;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface InvoiceService {
 
-	Call<List<Invoice>> search();
+	@GET("invoice/search")
+	Call<List<Invoice>> search(@Query("dateFrom") String dateFrom, 
+			@Query("dateTo") String dateTo,
+			@Query("offset") int offset,
+			@Query("limit") int limit);
 	
-	Call<Long> count();
+	@GET("invoice/count")
+	Call<Long> count(@Query("dateFrom") String dateFrom, 
+			@Query("dateTo") String dateTo);
 	
-	Call<Invoice> findById(long id);
+	@GET("invoice/{id}")
+	Call<Invoice> findById(@Path("id") long id);
 	
-	Call<String> save(Invoice Invoice);
+	@POST("invoice")
+	Call<String> save(@Body Invoice Invoice);
 }

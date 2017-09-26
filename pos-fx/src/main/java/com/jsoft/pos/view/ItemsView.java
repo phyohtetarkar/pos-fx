@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXSpinner;
 import com.jfoenix.controls.JFXTextField;
 import com.jsoft.pos.domain.Category;
 import com.jsoft.pos.domain.Item;
@@ -29,6 +30,8 @@ public class ItemsView implements Initializable {
 	private Pagination pagination;
 	@FXML
 	private Label pageInfo;
+	@FXML
+	private JFXSpinner spinner;
 	
 	private ItemsViewModel model;
 
@@ -37,6 +40,11 @@ public class ItemsView implements Initializable {
 		model = new ItemsViewModel();
 		
 		categories.itemsProperty().bind(model.categoriesProperty());
+		spinner.visibleProperty().bind(model.loadingProperty());
+		pageInfo.textProperty().bind(model.pageInfoProperty());
+		
+		tableView.itemsProperty().bind(model.valuesProperty());
+		tableView.setPlaceholder(new Label(""));
 		
 		model.categoryProperty().bind(categories.getSelectionModel().selectedItemProperty());
 		model.codeProperty().bind(code.textProperty());
@@ -46,7 +54,7 @@ public class ItemsView implements Initializable {
 		model.pageProperty().set(10);
 		model.currentPageProperty().bind(pagination.currentPageIndexProperty());
 		
-		pagination.currentPageIndexProperty().addListener((a, b, c) -> model.search());
+		pagination.currentPageIndexProperty().addListener((a, b, c) -> model.loadValues());
 		
 		model.init();
 	}

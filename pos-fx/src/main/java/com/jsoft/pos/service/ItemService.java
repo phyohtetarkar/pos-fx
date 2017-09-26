@@ -5,16 +5,32 @@ import java.util.List;
 import com.jsoft.pos.domain.Item;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ItemService {
 
-	Call<List<Item>> search();
+	@GET("item/search")
+	Call<List<Item>> search(@Query("code") String code, 
+			@Query("name") String name, 
+			@Query("categoryId") int categoryId, 
+			@Query("offset") int offset, 
+			@Query("limit") int limit);
 	
-	Call<Long> count();
+	@GET("item/count")
+	Call<Long> count(@Query("code") String code, 
+			@Query("name") String name, 
+			@Query("categoryId") int categoryId);
 	
-	Call<Item> findById(int id);
+	@GET("item/find/code")
+	Call<Item> findByCode(@Query("code") String code);
 	
-	Call<Item> findByCode(String code);
+	@GET("item/{id}")
+	Call<Item> findById(@Path("id") int id);
 	
-	Call<String> save(Item item);
+	@POST("item")
+	Call<String> save(@Body Item item);
 }

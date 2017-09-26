@@ -79,7 +79,7 @@
 .operation-btn {
 	-fx-pref-width: 100px;
 	-fx-pref-height: 40px;
-	-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.26) , 10, 0.12, -1,2);
+	-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.26) , 15, 0.16, 0, 4);
 } 
 
 .operation-icon-btn {
@@ -187,7 +187,7 @@
 	-fx-background-radius: 2px;
     -fx-background-color: -color-accent;
     -fx-text-fill: white;
-    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.26) , 10, 0.12, -1,2);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.26) , 15, 0.16, 0, 4);
 }
 
 .pagination .button .left-arrow {
@@ -215,7 +215,7 @@ TableView {
 	-fx-border-radius: 2px;
 	-fx-background-radius: 2px;
 	-fx-padding: 0;
-	-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.26) , 10, 0.12, -1,2);
+	-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.26) , 15, 0.16, 0, 4);
 }
 
 TableView .arrow {
