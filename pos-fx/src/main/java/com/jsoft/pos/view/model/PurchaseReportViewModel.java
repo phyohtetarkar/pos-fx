@@ -24,6 +24,7 @@ public class PurchaseReportViewModel extends PagableViewModel<Purchase> {
 		service = RetrofitSingleton.getInstance().create(PurchaseService.class);
 	}
 
+	@Override
 	public void init() {
 		if (ServerStatus.isReachable()) {
 			search();
@@ -32,6 +33,7 @@ public class PurchaseReportViewModel extends PagableViewModel<Purchase> {
 		}
 	}
 
+	@Override
 	public void search() {
 		if (ServerStatus.isReachable()) {
 			loading.set(true);
