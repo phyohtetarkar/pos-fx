@@ -47,13 +47,13 @@ public class SaleReportViewModel extends PagableViewModel<Sale> {
 
 	@Override
 	public void queryList() {
-		int offset = currentPage.get() * LIMIT;
+		int offset = currentPage.get() * limit;
 
 		if (!loading.get()) {
 			loading.set(true);
 		}
 
-		service.search(dateFrom.get(), dateTo.get(), employee.get() == null ? 0 : employee.get().getId(), offset, LIMIT)
+		service.search(dateFrom.get(), dateTo.get(), employee.get() == null ? 0 : employee.get().getId(), offset, limit)
 				.enqueue(listCallBack());
 	}
 

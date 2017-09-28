@@ -21,7 +21,8 @@ import retrofit2.Response;
 
 public abstract class PagableViewModel<T> {
 	
-	protected static int LIMIT = 25;
+	protected int limit = 25;
+	protected int count = 0;
 	
 	protected ListProperty<T> list = new SimpleListProperty<>();
 	protected BooleanProperty loading = new SimpleBooleanProperty();
@@ -40,7 +41,8 @@ public abstract class PagableViewModel<T> {
 			@Override
 			public void onResponse(Call<Long> call, Response<Long> resp) {
 				if (resp.isSuccessful()) {
-					Platform.runLater(() -> page.set(resp.body().intValue() / LIMIT));
+					count = resp.body().intValue();
+					Platform.runLater(() -> page.set(count / limit));
 					queryList();
 				} else {
 					loading.set(false);
@@ -66,11 +68,11 @@ public abstract class PagableViewModel<T> {
 					loading.set(false);
 					list.set(FXCollections.observableArrayList(resp.body()));
 					
-					int offset = currentPage.get() * LIMIT;
+					int offset = currentPage.get() * limit;
 					int range = offset + list.size();
 					Platform.runLater(() -> {
 						pageInfo.set(String.format("Showing %d to %d of %d", offset, 
-								list.size() > 0 ? range : 0, page.get()));
+								list.size() > 0 ? range : 0, count));
 					}); 
 					
 				} else {

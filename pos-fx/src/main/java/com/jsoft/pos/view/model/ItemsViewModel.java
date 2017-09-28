@@ -62,13 +62,13 @@ public class ItemsViewModel extends PagableViewModel<Item> {
 
 	@Override
 	public void queryList() {
-		int offset = currentPage.get() * LIMIT;
+		int offset = currentPage.get() * limit;
 
 		if (!loading.get()) {
 			loading.set(true);
 		}
 
-		service.search(code.get(), name.get(), category.get() == null ? 0 : category.get().getId(), offset, LIMIT)
+		service.search(code.get(), name.get(), category.get() == null ? 0 : category.get().getId(), offset, limit)
 				.enqueue(listCallBack());
 	}
 

@@ -41,13 +41,13 @@ public class CustomersViewModel extends PagableViewModel<Customer> {
 
 	@Override
 	public void queryList() {
-		int offset = currentPage.get() * LIMIT;
+		int offset = currentPage.get() * limit;
 
 		if (!loading.get()) {
 			loading.set(true);
 		}
 
-		service.search(name.get(), offset, LIMIT).enqueue(listCallBack());
+		service.search(name.get(), offset, limit).enqueue(listCallBack());
 	}
 
 	public final StringProperty nameProperty() {
