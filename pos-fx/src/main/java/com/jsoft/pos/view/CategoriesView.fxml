@@ -56,16 +56,10 @@
                   	</cellValueFactory>
                   </TableColumn>
                   <TableColumn prefWidth="75.0" text="Create User" />
-                  <TableColumn prefWidth="75.0" text="Create Date">
-                  	<cellValueFactory>
-                  		<PropertyValueFactory property="createDate" />
-                  	</cellValueFactory>
+                  <TableColumn fx:id="createDate" prefWidth="75.0" text="Create Date">
                   </TableColumn>
                   <TableColumn prefWidth="75.0" text="Update User" />
-                  <TableColumn prefWidth="75.0" text="Update Date">
-                  	<cellValueFactory>
-                  		<PropertyValueFactory property="updateDate" />
-                  	</cellValueFactory>
+                  <TableColumn fx:id="updateDate" prefWidth="75.0" text="Update Date">
                   </TableColumn>
                </columns>
             </TableView>

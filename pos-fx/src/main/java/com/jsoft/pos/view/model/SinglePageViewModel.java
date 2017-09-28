@@ -16,24 +16,24 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public abstract class NameableViewModel<T extends Nameable> {
+public abstract class SinglePageViewModel<T extends Nameable> {
 
-	protected List<T> list;
+	protected List<T> copyList;
 
-	protected ListProperty<T> values = new SimpleListProperty<>();
+	protected ListProperty<T> list = new SimpleListProperty<>();
 	protected BooleanProperty loading = new SimpleBooleanProperty();
 	
 	public abstract void load();
 	
-	protected Callback<List<T>> valuesCallBack() {
+	protected Callback<List<T>> listCallBack() {
 		return new Callback<List<T>>() {
 			
 			@Override
 			public void onResponse(Call<List<T>> call, Response<List<T>> resp) {
 				loading.set(false);
 				if (resp.isSuccessful()) {
-					list = resp.body();
-					values.set(FXCollections.observableArrayList(list));
+					copyList = resp.body();
+					list.set(FXCollections.observableArrayList(copyList));
 				} else {
 					System.out.println(resp.code());
 				}
@@ -45,6 +45,7 @@ public abstract class NameableViewModel<T extends Nameable> {
 				loading.set(false);
 				AlertUtil.queueToast(t.getMessage());
 			}
+			
 		};
 	}
 	
@@ -75,15 +76,15 @@ public abstract class NameableViewModel<T extends Nameable> {
 	}
 	
 	public void filter(String text) {
-		if (null != list) {
-			values.set(FXCollections.observableArrayList(list.stream()
+		if (null != copyList) {
+			list.set(FXCollections.observableArrayList(copyList.stream()
 					.filter(c -> c.getName().toLowerCase().startsWith(text))
 					.collect(Collectors.toList())));
 		}
 	}
 	
-	public final ListProperty<T> valuesProperty() {
-		return values;
+	public final ListProperty<T> listProperty() {
+		return list;
 	}
 	
 	public final BooleanProperty loadingProperty() {

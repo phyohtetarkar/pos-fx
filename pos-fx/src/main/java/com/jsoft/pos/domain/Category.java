@@ -2,9 +2,6 @@ package com.jsoft.pos.domain;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.jsoft.pos.util.Utils;
-
 @SuppressWarnings("serial")
 public class Category implements Serializable, Nameable {
 
@@ -48,16 +45,6 @@ public class Category implements Serializable, Nameable {
 
 	public void setSecurity(Security security) {
 		this.security = security;
-	}
-
-	@JsonIgnore
-	public String getCreateDate() {
-		return security.getCreation().format(Utils.dateTimeFormatter);
-	}
-	
-	@JsonIgnore
-	public String getUpdateDate() {
-		return security.getModification().format(Utils.dateTimeFormatter);
 	}
 	
 	@Override

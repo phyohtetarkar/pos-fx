@@ -38,14 +38,14 @@ public class SuppliersViewModel extends PagableViewModel<Supplier> {
 	}
 
 	@Override
-	public void loadValues() {
+	public void queryList() {
 		int offset = currentPage.get() * LIMIT;
 
 		if (!loading.get()) {
 			loading.set(true);
 		}
 
-		service.search(name.get(), offset, LIMIT).enqueue(valuesCallBack());
+		service.search(name.get(), offset, LIMIT).enqueue(listCallBack());
 	}
 
 	public final StringProperty nameProperty() {

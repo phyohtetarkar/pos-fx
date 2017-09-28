@@ -65,4 +65,8 @@ public class Payment implements Serializable, Nameable {
 		this.type = name;
 	}
 
+	@Override
+	public String toString() {
+		return type;
+	}
 }

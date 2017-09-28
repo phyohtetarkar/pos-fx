@@ -70,4 +70,8 @@ public abstract class Person implements Serializable {
 		this.security = security;
 	}
 
+	@Override
+	public String toString() {
+		return name;
+	}
 }

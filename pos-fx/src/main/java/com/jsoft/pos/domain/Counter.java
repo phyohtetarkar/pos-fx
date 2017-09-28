@@ -56,4 +56,8 @@ public class Counter implements Serializable, Nameable {
 		this.code = name;
 	}
 
+	@Override
+	public String toString() {
+		return code;
+	}
 }

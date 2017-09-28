@@ -8,7 +8,7 @@ import com.jsoft.pos.util.AlertUtil;
 import com.jsoft.pos.util.RetrofitSingleton;
 import com.jsoft.pos.util.ServerStatus;
 
-public class PaymentsViewModel extends NameableViewModel<Payment> {
+public class PaymentsViewModel extends SinglePageViewModel<Payment> {
 	
 	private PaymentService service;
 	
@@ -20,7 +20,7 @@ public class PaymentsViewModel extends NameableViewModel<Payment> {
 	public void load() {
 		if (ServerStatus.isReachable()) {
 			loading.set(true);
-			service.findAll().enqueue(valuesCallBack());
+			service.findAll().enqueue(listCallBack());
 		} else {
 			AlertUtil.queueToast(ServerStatus.CONNECTION_ERROR);
 		}

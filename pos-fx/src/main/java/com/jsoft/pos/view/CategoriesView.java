@@ -10,9 +10,11 @@ import com.jsoft.pos.util.Navigator;
 import com.jsoft.pos.view.custom.ActionMenu;
 import com.jsoft.pos.view.model.CategoriesViewModel;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 public class CategoriesView implements Initializable {
@@ -24,6 +26,10 @@ public class CategoriesView implements Initializable {
 	@FXML
 	private TableView<Category> tableView;
 	@FXML
+	private TableColumn<Category, String> createDate;
+	@FXML
+	private TableColumn<Category, String> updateDate;
+	@FXML
 	private JFXTextField filter;
 	@FXML
 	private JFXSpinner spinner;
@@ -34,7 +40,7 @@ public class CategoriesView implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		model = new CategoriesViewModel();
 
-		tableView.itemsProperty().bind(model.valuesProperty());
+		tableView.itemsProperty().bind(model.listProperty());
 		tableView.setPlaceholder(new Label(""));
 		tableView.setContextMenu(ActionMenu.builder()
 				.onEdit(e -> {
@@ -48,6 +54,9 @@ public class CategoriesView implements Initializable {
 					model.delete(c);
 				})
 				.build());
+		
+		createDate.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getSecurity().getCreateDate()));
+		updateDate.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getSecurity().getUpdateDate()));
 
 		filter.textProperty().addListener((a, b, c) -> model.filter(c.toLowerCase()));
 

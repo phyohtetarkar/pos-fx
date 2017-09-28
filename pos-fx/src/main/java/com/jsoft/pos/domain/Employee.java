@@ -36,5 +36,5 @@ public class Employee extends Person implements Serializable {
 	public void setRole(Role role) {
 		this.role = role;
 	}
-
+	
 }

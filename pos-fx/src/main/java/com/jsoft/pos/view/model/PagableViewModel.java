@@ -23,14 +23,16 @@ public abstract class PagableViewModel<T> {
 	
 	protected static int LIMIT = 25;
 	
-	protected ListProperty<T> values = new SimpleListProperty<>();
+	protected ListProperty<T> list = new SimpleListProperty<>();
 	protected BooleanProperty loading = new SimpleBooleanProperty();
 	
 	protected IntegerProperty page = new SimpleIntegerProperty();
 	protected IntegerProperty currentPage = new SimpleIntegerProperty();
 	protected StringProperty pageInfo = new SimpleStringProperty();
 	
-	public abstract void loadValues();
+	public abstract void init();
+	public abstract void queryList();
+	public abstract void search();
 	
 	protected Callback<Long> countCallBack() {
 		return new Callback<Long>() {
@@ -39,7 +41,7 @@ public abstract class PagableViewModel<T> {
 			public void onResponse(Call<Long> call, Response<Long> resp) {
 				if (resp.isSuccessful()) {
 					Platform.runLater(() -> page.set(resp.body().intValue() / LIMIT));
-					loadValues();
+					queryList();
 				} else {
 					loading.set(false);
 				}
@@ -55,20 +57,20 @@ public abstract class PagableViewModel<T> {
 		};
 	}
 	
-	protected Callback<List<T>> valuesCallBack() {
+	protected Callback<List<T>> listCallBack() {
 		return new Callback<List<T>>() {
 
 			@Override
 			public void onResponse(Call<List<T>> call, Response<List<T>> resp) {
 				if (resp.isSuccessful()) {
 					loading.set(false);
-					values.set(FXCollections.observableArrayList(resp.body()));
+					list.set(FXCollections.observableArrayList(resp.body()));
 					
 					int offset = currentPage.get() * LIMIT;
-					int range = offset + values.size();
+					int range = offset + list.size();
 					Platform.runLater(() -> {
 						pageInfo.set(String.format("Showing %d to %d of %d", offset, 
-								values.size() > 0 ? range : 0, page.get()));
+								list.size() > 0 ? range : 0, page.get()));
 					}); 
 					
 				} else {
@@ -91,8 +93,8 @@ public abstract class PagableViewModel<T> {
 		};
 	}
 	
-	public final ListProperty<T> valuesProperty() {
-		return values;
+	public final ListProperty<T> listProperty() {
+		return list;
 	}
 	
 	public final BooleanProperty loadingProperty() {

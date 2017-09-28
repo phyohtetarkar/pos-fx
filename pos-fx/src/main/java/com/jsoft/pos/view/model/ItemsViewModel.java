@@ -37,6 +37,7 @@ public class ItemsViewModel extends PagableViewModel<Item> {
 		service = RetrofitSingleton.getInstance().create(ItemService.class);
 	}
 
+	@Override
 	public void init() {
 		if (ServerStatus.isReachable()) {
 			loadCategories();
@@ -47,6 +48,7 @@ public class ItemsViewModel extends PagableViewModel<Item> {
 
 	}
 
+	@Override
 	public void search() {
 		if (ServerStatus.isReachable()) {
 			loading.set(true);
@@ -59,7 +61,7 @@ public class ItemsViewModel extends PagableViewModel<Item> {
 	}
 
 	@Override
-	public void loadValues() {
+	public void queryList() {
 		int offset = currentPage.get() * LIMIT;
 
 		if (!loading.get()) {
@@ -67,7 +69,7 @@ public class ItemsViewModel extends PagableViewModel<Item> {
 		}
 
 		service.search(code.get(), name.get(), category.get() == null ? 0 : category.get().getId(), offset, LIMIT)
-				.enqueue(valuesCallBack());
+				.enqueue(listCallBack());
 	}
 
 	private void loadCategories() {

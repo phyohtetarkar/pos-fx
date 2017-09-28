@@ -44,7 +44,7 @@ public class PurchaseReportViewModel extends PagableViewModel<Purchase> {
 	}
 
 	@Override
-	public void loadValues() {
+	public void queryList() {
 		int offset = currentPage.get() * LIMIT;
 
 		if (!loading.get()) {
@@ -52,7 +52,7 @@ public class PurchaseReportViewModel extends PagableViewModel<Purchase> {
 		}
 
 		service.search(dateFrom.get(), dateTo.get(), employee.get() == null ? 0 : employee.get().getId(), offset, LIMIT)
-				.enqueue(valuesCallBack());
+				.enqueue(listCallBack());
 	}
 
 	public final StringProperty dateFromProperty() {

@@ -3,10 +3,12 @@ package com.jsoft.pos.domain;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.jsoft.pos.util.DateTimeDeSerializer;
 import com.jsoft.pos.util.DateTimeSerializer;
+import com.jsoft.pos.util.Utils;
 
 @SuppressWarnings("serial")
 public class Security implements Serializable {
@@ -51,6 +53,16 @@ public class Security implements Serializable {
 
 	public void setModifiedUser(String modifiedUser) {
 		this.modifiedUser = modifiedUser;
+	}
+	
+	@JsonIgnore
+	public String getCreateDate() {
+		return creation.format(Utils.dateTimeFormatter);
+	}
+	
+	@JsonIgnore
+	public String getUpdateDate() {
+		return modification.format(Utils.dateTimeFormatter);
 	}
 
 	@Override

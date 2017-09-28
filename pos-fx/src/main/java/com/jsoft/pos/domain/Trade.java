@@ -2,15 +2,22 @@ package com.jsoft.pos.domain;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.jsoft.pos.util.DateDeSerializer;
+import com.jsoft.pos.util.DateSerializer;
 
 @SuppressWarnings("serial")
 public abstract class Trade implements Serializable {
 
 	private long id;
+	@JsonSerialize(using = DateSerializer.class)
+	@JsonDeserialize(using = DateDeSerializer.class)
 	private LocalDate eventDate;
 	private String remark;
-	private Set<TradeDetail> tradeDetail;
+	private List<TradeDetail> tradeDetail;
 	private Employee employee;
 	private Payment payment;
 
@@ -41,11 +48,11 @@ public abstract class Trade implements Serializable {
 		this.remark = remark;
 	}
 
-	public Set<TradeDetail> getTradeDetail() {
+	public List<TradeDetail> getTradeDetail() {
 		return tradeDetail;
 	}
 
-	public void setTradeDetail(Set<TradeDetail> tradeDetail) {
+	public void setTradeDetail(List<TradeDetail> tradeDetail) {
 		this.tradeDetail = tradeDetail;
 	}
 
