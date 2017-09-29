@@ -221,15 +221,16 @@
  */
 
 TableView {
-	-fx-border-color: -color-accent;
+	-fx-border-color: white;
 	-fx-border-radius: 2px;
 	-fx-background-radius: 2px;
-	-fx-padding: 0;
+	-fx-background-color: white;
+	-fx-padding: 8px;
 	-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.26) , 15, 0.16, 0, 4);
 }
 
 TableView .arrow {
-	-fx-background-color: white;
+	-fx-background-color: #212121;
 }
 
 TableView:focused {
@@ -241,19 +242,35 @@ TableView .filler {
 }
 
 TableView .column-header, .table-menu-button {
-	-fx-border-color: white;
-	-fx-border-width: 0.1;
-	-fx-background-color: -color-accent;
+	-fx-border-color: #212121;
+	-fx-border-width: 0 0 0.5 0;
+	-fx-background-color: white;
 	-fx-pref-height: 50px;
 }
 
-TableView .table-cell {
-	-fx-alignment: top-left;
+TableView .table-row-cell {
+	-fx-background-color: white;
+	-fx-border-color: #757575;
+	-fx-border-width: 0 0 0.1 0;
+}
+
+TableView .table-row-cell:empty {
+	-fx-background-color: white;
+	-fx-border-color: transparent;
+}
+
+TableView .table-row-cell:empty:hover {
+	-fx-background-color: white;
+	-fx-border-color: transparent;
 }
 
 TableView .table-row-cell:selected {
 	-fx-background-color: -color-highlight;
-	-fx-table-cell-border-color: #c2c2c2;
+	-fx-table-cell-border-color: transparent;
+}
+
+TableView .table-row-cell:hover {
+	-fx-background-color: -color-highlight;
 }
 
 TableView .table-row-cell:selected Text {
@@ -265,17 +282,19 @@ TableView .table-row-cell:selected .table-cell {
 }
 
 TableView .table-row-cell .table-cell {
+	-fx-table-cell-border-color: transparent;
 	-fx-alignment: top-left;
 	-fx-fill: #212121;
 	-fx-padding: 12 15 12 15;
 }
 
 TableView .column-header SVGPath {
-	-fx-fill: white;
+	-fx-fill: #757575;
 }
 
 TableView .column-header Label {
-	-fx-text-fill: white;
+	-fx-text-fill: -text-default;
+	-fx-font-family: "Roboto Bold";
 	-fx-alignment: center-left;
 	-fx-padding: 0 0 0 15;
 }
