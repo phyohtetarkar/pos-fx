@@ -12,6 +12,10 @@ public class Counter implements Serializable, Nameable {
 
 	private boolean deleted;
 	private Security security;
+	
+	public Counter() {
+		security = new Security();
+	}
 
 	public int getId() {
 		return id;

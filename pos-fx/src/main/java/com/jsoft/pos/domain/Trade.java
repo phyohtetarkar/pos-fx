@@ -11,6 +11,10 @@ import com.jsoft.pos.util.DateSerializer;
 
 @SuppressWarnings("serial")
 public abstract class Trade implements Serializable {
+	
+	public enum Payment {
+		CASH, CREDIT
+	}
 
 	private long id;
 	@JsonSerialize(using = DateSerializer.class)

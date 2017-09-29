@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jsoft.pos.view.CategoriesView">
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jsoft.pos.view.CountersView">
    <stylesheets>
       <URL value="@../styles/application.css" />
       <URL value="@../styles/color.css" />
@@ -23,7 +23,7 @@
    <children>
       <HBox alignment="CENTER_LEFT">
          <children>
-            <JFXTextField fx:id="filter" prefWidth="200.0" promptText="Category name" styleClass="operation-text-field" />
+            <JFXTextField fx:id="filter" prefWidth="200.0" promptText="Counter" styleClass="operation-text-field" />
             <JFXButton buttonType="RAISED" onAction="#clear" prefHeight="40.0" prefWidth="100.0" styleClass="color-accent" text="Clear">
                <tooltip>
                   <Tooltip text="Clear" />
@@ -50,7 +50,7 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
                <columns>
-                  <TableColumn prefWidth="75.0" text="Name">
+                  <TableColumn prefWidth="75.0" text="Counter">
                   	<cellValueFactory>
                   		<PropertyValueFactory property="name" />
                   	</cellValueFactory>

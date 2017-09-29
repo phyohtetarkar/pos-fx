@@ -2,18 +2,18 @@ package com.jsoft.pos.view.model;
 
 import java.time.LocalDateTime;
 
-import com.jsoft.pos.domain.Payment;
-import com.jsoft.pos.service.PaymentService;
+import com.jsoft.pos.domain.Counter;
+import com.jsoft.pos.service.CounterService;
 import com.jsoft.pos.util.AlertUtil;
 import com.jsoft.pos.util.RetrofitSingleton;
 import com.jsoft.pos.util.ServerStatus;
 
-public class PaymentsViewModel extends SinglePageViewModel<Payment> {
+public class CountersViewModel extends SinglePageViewModel<Counter> {
 	
-	private PaymentService service;
+	private CounterService service;
 	
-	public PaymentsViewModel() {
-		service = RetrofitSingleton.getInstance().create(PaymentService.class);
+	public CountersViewModel() {
+		service = RetrofitSingleton.getInstance().create(CounterService.class);
 	}
 
 	@Override
@@ -24,22 +24,22 @@ public class PaymentsViewModel extends SinglePageViewModel<Payment> {
 		} else {
 			AlertUtil.queueToast(ServerStatus.CONNECTION_ERROR);
 		}
-		
 	}
 	
-	public void delete(Payment payment) {
+	public void delete(Counter counter) {
 		if (AlertUtil.showConfirm("Are you sure to delete?")) {
-			payment.setDeleted(true);
-			save(payment);
+			counter.setDeleted(true);
+			save(counter);
 		}
 	}
 	
-	public void save(Payment payment) {
+	public void save(Counter counter) {
 		if (ServerStatus.isReachable()) {
-			payment.getSecurity().setCreation(LocalDateTime.now());
-			payment.getSecurity().setModification(LocalDateTime.now());
+			counter.getSecurity().setCreation(LocalDateTime.now());
+			counter.getSecurity().setModification(LocalDateTime.now());
 			
-			service.save(payment).enqueue(saveCallBack());
+			service.save(counter).enqueue(saveCallBack());
+			
 		} else {
 			AlertUtil.queueToast(ServerStatus.CONNECTION_ERROR);
 		}

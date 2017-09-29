@@ -7,13 +7,17 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import com.jsoft.pos.domain.Category;
 import com.jsoft.pos.domain.Item;
+import com.jsoft.pos.view.custom.ImageCell;
 import com.jsoft.pos.view.model.ItemsViewModel;
 import com.jsoft.pos.view.model.PagableViewModel;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.TableColumn;
 
 public class ItemsView extends PagableView<Item> {
 
+	@FXML
+	private TableColumn<Item, String> imageColumn;
 	@FXML
 	private JFXComboBox<Category> categories;
 	@FXML
@@ -37,6 +41,8 @@ public class ItemsView extends PagableView<Item> {
 		model.categoryProperty().bind(categories.getSelectionModel().selectedItemProperty());
 		model.codeProperty().bind(code.textProperty());
 		model.nameProperty().bind(name.textProperty());
+		
+		imageColumn.setCellFactory(c -> new ImageCell<>("item"));
 		
 		super.initialize(location, resources);
 	}

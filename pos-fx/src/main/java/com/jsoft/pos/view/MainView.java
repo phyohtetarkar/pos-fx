@@ -35,7 +35,7 @@ public class MainView implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		list.getItems().addAll("Home", "Pos", "Items", "Categories", "Logout");
+		list.getItems().addAll("Home", "Pos", "Items", "Categories", "Counters", "Logout");
 		list.setDepth(0);
 		list.getSelectionModel().select(1);
 		

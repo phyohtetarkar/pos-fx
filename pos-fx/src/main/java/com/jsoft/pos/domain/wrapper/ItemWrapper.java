@@ -1,6 +1,7 @@
 package com.jsoft.pos.domain.wrapper;
 
 import com.jsoft.pos.domain.Category;
+import com.jsoft.pos.domain.Item;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -25,37 +26,50 @@ public class ItemWrapper {
 	public ItemWrapper() {
 		security = new SecurityWrapper();
 	}
-
-	public StringProperty codeProperty() {
-		return this.code;
+	
+	public Item build() {
+		Item item = new Item();
+		item.setCode(code.get());
+		item.setName(name.get());
+		item.setPurchasePrice(purchasePrice.get());
+		item.setRetailPrice(retailPrice.get());
+		item.setPhoto(photo.get());
+		item.setCategory(category.get());
+		item.setRemark(remark.get());
+		
+		return item;
 	}
 
-	public StringProperty nameProperty() {
-		return this.name;
+	public final StringProperty codeProperty() {
+		return code;
 	}
 
-	public IntegerProperty purchasePriceProperty() {
-		return this.purchasePrice;
+	public final StringProperty nameProperty() {
+		return name;
 	}
 
-	public IntegerProperty retailPriceProperty() {
-		return this.retailPrice;
+	public final IntegerProperty purchasePriceProperty() {
+		return purchasePrice;
 	}
 
-	public StringProperty photoProperty() {
-		return this.photo;
+	public final IntegerProperty retailPriceProperty() {
+		return retailPrice;
 	}
 
-	public IntegerProperty quantityProperty() {
-		return this.quantity;
+	public final StringProperty photoProperty() {
+		return photo;
 	}
 
-	public StringProperty remarkProperty() {
-		return this.remark;
+	public final IntegerProperty quantityProperty() {
+		return quantity;
 	}
 
-	public ObjectProperty<Category> categoryProperty() {
-		return this.category;
+	public final StringProperty remarkProperty() {
+		return remark;
+	}
+
+	public final ObjectProperty<Category> categoryProperty() {
+		return category;
 	}
 
 	public SecurityWrapper getSecurity() {
