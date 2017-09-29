@@ -294,7 +294,7 @@ TableView .column-header SVGPath {
 
 TableView .column-header Label {
 	-fx-text-fill: -text-default;
-	-fx-font-family: "Roboto Bold";
+	-fx-font-weight: bold;
 	-fx-alignment: center-left;
 	-fx-padding: 0 0 0 15;
 }
