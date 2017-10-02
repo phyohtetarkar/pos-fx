@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import com.jsoft.pos.domain.Nameable;
 import com.jsoft.pos.util.AlertUtil;
 
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -30,9 +31,10 @@ public abstract class SinglePageViewModel<T extends Nameable> {
 			
 			@Override
 			public void onResponse(Call<List<T>> call, Response<List<T>> resp) {
-				loading.set(false);
+				Platform.runLater(() -> loading.set(false));
 				if (resp.isSuccessful()) {
 					copyList = resp.body();
+					list.clear();
 					list.set(FXCollections.observableArrayList(copyList));
 				} else {
 					System.out.println(resp.code());
@@ -42,7 +44,7 @@ public abstract class SinglePageViewModel<T extends Nameable> {
 			@Override
 			public void onFailure(Call<List<T>> call, Throwable t) {
 				t.printStackTrace();
-				loading.set(false);
+				Platform.runLater(() -> loading.set(false));
 				AlertUtil.queueToast(t.getMessage());
 			}
 			

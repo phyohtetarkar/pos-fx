@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXTextField;
 import com.jsoft.pos.domain.Category;
+import com.jsoft.pos.util.AlertUtil;
 import com.jsoft.pos.util.Navigator;
 import com.jsoft.pos.view.custom.ActionMenu;
 import com.jsoft.pos.view.model.CategoriesViewModel;
@@ -47,7 +48,9 @@ public class CategoriesView extends SinglePageView<Category> {
 				})
 				.onDelete(e -> {
 					Category c = tableView.getSelectionModel().getSelectedItem();
-					model.delete(c);
+					if (AlertUtil.showConfirm("Are you sure to delete?")) {
+						model.delete(c);
+					}
 				})
 				.build());
 		

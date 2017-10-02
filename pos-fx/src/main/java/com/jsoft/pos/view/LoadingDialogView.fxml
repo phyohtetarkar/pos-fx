@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXSpinner?>
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox alignment="CENTER_LEFT" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jsoft.pos.view.LoadingDialogView">
+   <stylesheets>
+      <URL value="@../styles/application.css" />
+      <URL value="@../styles/color.css" />
+   </stylesheets>
+   <styleClass>
+      <String fx:value="padd-16" />
+      <String fx:value="space-24" />
+      <String fx:value="color-white" />
+   </styleClass>
+   <children>
+      <JFXSpinner radius="25.0" styleClass="custom-spinner" />
+      <Label fx:id="message" text="Loading...">
+         <styleClass>
+            <String fx:value="fs-16" />
+            <String fx:value="text-default-secondary" />
+         </styleClass>
+      </Label>
+   </children>
+</HBox>

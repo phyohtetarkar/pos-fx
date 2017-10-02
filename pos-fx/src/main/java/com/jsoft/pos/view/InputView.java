@@ -33,7 +33,6 @@ public class InputView implements Initializable {
 	
 	public static void show(String heading, String placeholder, Nameable entity, Consumer<Nameable> consumer) {
 		try {
-			Navigator.lowerBrightness();
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.initStyle(StageStyle.UNDECORATED);
@@ -52,9 +51,8 @@ public class InputView implements Initializable {
 				context.input.setText(entity.getName());
 			}
 			
-			stage.setOnHidden(evt -> {
-				Navigator.resetBrightness();
-			});
+			stage.setOnShowing(e -> Navigator.lowerBrightness());
+			stage.setOnHidden(evt -> Navigator.resetBrightness());
 			
 			Scene scene = new Scene(view);
 			stage.setScene(scene);

@@ -1,7 +1,5 @@
 package com.jsoft.pos.view.model;
 
-import java.time.LocalDateTime;
-
 import com.jsoft.pos.domain.Counter;
 import com.jsoft.pos.service.CounterService;
 import com.jsoft.pos.util.AlertUtil;
@@ -27,17 +25,12 @@ public class CountersViewModel extends SinglePageViewModel<Counter> {
 	}
 	
 	public void delete(Counter counter) {
-		if (AlertUtil.showConfirm("Are you sure to delete?")) {
-			counter.setDeleted(true);
-			save(counter);
-		}
+		counter.setDeleted(true);
+		save(counter);
 	}
 	
 	public void save(Counter counter) {
 		if (ServerStatus.isReachable()) {
-			counter.getSecurity().setCreation(LocalDateTime.now());
-			counter.getSecurity().setModification(LocalDateTime.now());
-			
 			service.save(counter).enqueue(saveCallBack());
 			
 		} else {

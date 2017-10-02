@@ -10,7 +10,7 @@ public class Category implements Serializable, Nameable {
 
 	private boolean deleted;
 	private Security security;
-	
+
 	public Category() {
 		security = new Security();
 	}
@@ -46,9 +46,32 @@ public class Category implements Serializable, Nameable {
 	public void setSecurity(Security security) {
 		this.security = security;
 	}
-	
+
 	@Override
 	public String toString() {
 		return name;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Category other = (Category) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
 }

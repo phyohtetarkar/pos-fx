@@ -21,6 +21,7 @@
 .main-layout {
 	-fx-pref-width: 1280px;
 	-fx-pref-height: 720px;
+	-fx-background-color: -color-back;
 }
 
 .toolbar {
@@ -30,7 +31,11 @@
 }
 
 .shadow {
-	-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.26) , 15, 0.16, 0, 4);
+	-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.26) , 10, 0.12, 1, 0);
+}
+
+.shadow-compact {
+	-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.36) , 5, 0.12, 0, 0);
 }
 
 
@@ -51,16 +56,21 @@
 	-fx-font-size: 48px;
 }
 
-.font-normal {
-	-fx-font-family: "Roboto";
+.jfx-combo-box,
+.jfx-password-field,
+.jfx-text-area,
+.jfx-text-field,
+.jfx-button,
+Label {
+	-fx-font-family: "sans-serif";
 }
 
-.font-medium {
-	-fx-font-family: "Roboto Medium";
+.font-normal {
+	-fx-font-weight: normal;
 }
 
 .font-bold {
-	-fx-font-family: "Roboto Bold";
+	-fx-font-weight: bold;
 }
 
 /*
@@ -79,7 +89,7 @@
 .operation-btn {
 	-fx-pref-width: 100px;
 	-fx-pref-height: 40px;
-	-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.26) , 15, 0.16, 0, 4);
+	-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.36) , 5, 0.12, 0, 0);
 } 
 
 .operation-icon-btn {
@@ -147,6 +157,14 @@
 .space-24 {
 	-fx-spacing: 24px;
 }
+
+.space-32 {
+	-fx-spacing: 32px;
+}
+
+.space-48 {
+	-fx-spacing: 48px;
+}
  
  /*
   * Background Radius
@@ -184,7 +202,8 @@
     -fx-background-radius: 2px;
     -fx-pref-width: 30px;
     -fx-background-color: -color-transparent;
-    -fx-text-fill: black;
+    -fx-text-fill: -text-default;
+	-fx-font-family: "sans-serif";
 }
 
 .pagination .toggle-button:hover {
@@ -196,8 +215,8 @@
 .pagination .toggle-button:selected {
 	-fx-background-radius: 2px;
     -fx-background-color: -color-accent;
-    -fx-text-fill: white;
-    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.26) , 15, 0.16, 0, 4);
+    -fx-text-fill: -text-accent;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.26) , 10, 0.12, -1, 1);
 }
 
 .pagination .button .left-arrow {
@@ -219,14 +238,19 @@
 /*
  * TableView
  */
+ 
+.table-container {
+	-fx-background-color: white;
+	-fx-background-radius: 2px;
+	-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.36) , 5, 0.12, 0, 0);
+	-fx-padding: 8;
+}
 
 TableView {
-	-fx-border-color: white;
+	-fx-border-color: white , white, -fx-control-inner-background;
 	-fx-border-radius: 2px;
 	-fx-background-radius: 2px;
-	-fx-background-color: white;
-	-fx-padding: 8px;
-	-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.26) , 15, 0.16, 0, 4);
+	-fx-padding: 0;
 }
 
 TableView .arrow {
@@ -234,11 +258,7 @@ TableView .arrow {
 }
 
 TableView:focused {
-	-fx-background-color: transparent , -fx-box-border, -fx-control-inner-background;
-}
-
-TableView .filler {
-	-fx-background-color: -color-accent;
+	-fx-background-color: white , white, -fx-control-inner-background;
 }
 
 TableView .column-header, .table-menu-button {
@@ -246,6 +266,10 @@ TableView .column-header, .table-menu-button {
 	-fx-border-width: 0 0 0.5 0;
 	-fx-background-color: white;
 	-fx-pref-height: 50px;
+}
+
+TableView .filler {
+    -fx-background-color: white;
 }
 
 TableView .table-row-cell {
@@ -260,7 +284,7 @@ TableView .table-row-cell:empty {
 }
 
 TableView .table-row-cell:empty:hover {
-	-fx-background-color: white;
+	-fx-background-color: transparent;
 	-fx-border-color: transparent;
 }
 
@@ -273,12 +297,8 @@ TableView .table-row-cell:hover {
 	-fx-background-color: -color-highlight;
 }
 
-TableView .table-row-cell:selected Text {
-	-fx-fill: #212121;
-}
-
 TableView .table-row-cell:selected .table-cell {
-	-fx-text-fill: #212121;
+	-fx-text-fill: -text-default;
 }
 
 TableView .table-row-cell .table-cell {
@@ -289,12 +309,12 @@ TableView .table-row-cell .table-cell {
 }
 
 TableView .column-header SVGPath {
-	-fx-fill: #757575;
+	-fx-fill: #212121;
 }
 
 TableView .column-header Label {
 	-fx-text-fill: -text-default;
-	-fx-font-weight: bold;
+	-fx-font-family: "sans-serif";
 	-fx-alignment: center-left;
 	-fx-padding: 0 0 0 15;
 }
@@ -323,12 +343,12 @@ TableView .column-header.header-left15 Label {
  * Spinner
  */
 
-.custom-spinner {
+/*.custom-spinner {
 	-jfx-radius: 30;
-}
+}*/
  
 .custom-spinner > .arc {
-    -fx-stroke-width: 5.0;
+    -fx-stroke-width: 5.5;
     -fx-stroke: -color-accent;
 }
 
@@ -375,6 +395,11 @@ TableView .column-header.header-left15 Label {
 	-fx-pref-width: 150px;
 }
 
+.context-menu .menu-item .label {
+	-fx-font-family: "sans-serif";
+	-fx-text-fill: -text-default
+}
+
 .context-menu .menu-item SVGPath {
 	-fx-fill: -text-default;
 }
@@ -384,11 +409,11 @@ TableView .column-header.header-left15 Label {
 }
 
 .context-menu .menu-item:focused .label {
-  	-fx-text-fill: white;
+  	-fx-text-fill: -text-accent;
 }
 
 .context-menu .menu-item:focused SVGPath {
-  	-fx-fill: white;
+  	-fx-fill: -text-accent;
 }
 
 /*
@@ -398,6 +423,7 @@ TableView .column-header.header-left15 Label {
 .combo-box-popup .combo-box-popup .list-view .jfx-list-cell {
     -fx-background-insets: 0.0;
     -fx-text-fill: -text-default;
+	-fx-font-family: "sans-serif";
 }
  
 .customize-combo .combo-box-popup .list-view {
@@ -409,10 +435,10 @@ TableView .column-header.header-left15 Label {
 
 .customize-combo .combo-box-popup .list-view .list-cell:filled:hover {
     -fx-background-color: -color-accent;
-    -fx-text-fill: #fff;
+    -fx-text-fill: -text-accent;
 }
 
 .customize-combo .combo-box-popup .list-view .list-cell:filled:selected {
     -fx-background-color: -color-accent;
-    -fx-text-fill: #fff;
+    -fx-text-fill: -text-accent;
 }

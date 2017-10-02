@@ -1,7 +1,5 @@
 package com.jsoft.pos.view.model;
 
-import java.time.LocalDateTime;
-
 import com.jsoft.pos.domain.Category;
 import com.jsoft.pos.service.CategoryService;
 import com.jsoft.pos.util.AlertUtil;
@@ -27,17 +25,12 @@ public class CategoriesViewModel extends SinglePageViewModel<Category> {
 	}
 	
 	public void delete(Category category) {
-		if (AlertUtil.showConfirm("Are you sure to delete?")) {
-			category.setDeleted(true);
-			save(category);
-		}
+		category.setDeleted(true);
+		save(category);
 	}
 	
 	public void save(Category category) {
 		if (ServerStatus.isReachable()) {
-			category.getSecurity().setCreation(LocalDateTime.now());
-			category.getSecurity().setModification(LocalDateTime.now());
-			
 			service.save(category).enqueue(saveCallBack());
 			
 		} else {

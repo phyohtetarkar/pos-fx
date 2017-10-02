@@ -45,25 +45,29 @@
       </HBox>
       <StackPane VBox.vgrow="ALWAYS">
          <children>
-            <TableView fx:id="tableView">
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
-               <columns>
-                  <TableColumn prefWidth="75.0" text="Name">
-                  	<cellValueFactory>
-                  		<PropertyValueFactory property="name" />
-                  	</cellValueFactory>
+            <VBox styleClass="table-container">
+               <children>
+                  <TableView fx:id="tableView" VBox.vgrow="ALWAYS">
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                     <columns>
+                        <TableColumn prefWidth="75.0" text="Name">
+                        	<cellValueFactory>
+                        		<PropertyValueFactory property="name" />
+                        	</cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="75.0" text="Create User" />
+                        <TableColumn fx:id="createDate" prefWidth="75.0" text="Create Date">
                   </TableColumn>
-                  <TableColumn prefWidth="75.0" text="Create User" />
-                  <TableColumn fx:id="createDate" prefWidth="75.0" text="Create Date">
+                        <TableColumn prefWidth="75.0" text="Update User" />
+                        <TableColumn fx:id="updateDate" prefWidth="75.0" text="Update Date">
                   </TableColumn>
-                  <TableColumn prefWidth="75.0" text="Update User" />
-                  <TableColumn fx:id="updateDate" prefWidth="75.0" text="Update Date">
-                  </TableColumn>
-               </columns>
-            </TableView>
-            <JFXSpinner fx:id="spinner" styleClass="custom-spinner" visible="false" />
+                     </columns>
+                  </TableView>
+               </children>
+            </VBox>
+            <JFXSpinner fx:id="spinner" radius="30.0" styleClass="custom-spinner" visible="false" />
          </children>
       </StackPane>
    </children>
@@ -71,6 +75,5 @@
       <String fx:value="main-layout" />
       <String fx:value="padd-8" />
       <String fx:value="space-8" />
-      <String fx:value="color-white" />
    </styleClass>
 </VBox>

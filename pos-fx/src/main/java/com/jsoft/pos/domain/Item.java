@@ -17,6 +17,10 @@ public class Item implements Serializable {
 
 	private boolean deleted;
 	private Security security;
+	
+	public Item() {
+		security = new Security();
+	}
 
 	public int getId() {
 		return id;

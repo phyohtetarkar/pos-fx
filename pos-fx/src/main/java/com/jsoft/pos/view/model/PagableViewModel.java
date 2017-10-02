@@ -21,7 +21,7 @@ import retrofit2.Response;
 
 public abstract class PagableViewModel<T> {
 	
-	protected int limit = 25;
+	protected int limit = 20;
 	protected int count = 0;
 	
 	protected ListProperty<T> list = new SimpleListProperty<>();
@@ -42,17 +42,17 @@ public abstract class PagableViewModel<T> {
 			public void onResponse(Call<Long> call, Response<Long> resp) {
 				if (resp.isSuccessful()) {
 					count = resp.body().intValue();
-					Platform.runLater(() -> page.set(count / limit));
+					Platform.runLater(() -> page.set(Math.round((float)count / limit)));
 					queryList();
 				} else {
-					loading.set(false);
+					Platform.runLater(() -> loading.set(false));
 				}
 			}
 
 			@Override
 			public void onFailure(Call<Long> call, Throwable t) {
 				t.printStackTrace();
-				loading.set(false);
+				Platform.runLater(() -> loading.set(false));
 				AlertUtil.queueToast(t.getMessage());
 
 			}
@@ -64,19 +64,18 @@ public abstract class PagableViewModel<T> {
 
 			@Override
 			public void onResponse(Call<List<T>> call, Response<List<T>> resp) {
+				Platform.runLater(() -> loading.set(false));
 				if (resp.isSuccessful()) {
-					loading.set(false);
 					list.set(FXCollections.observableArrayList(resp.body()));
 					
 					int offset = currentPage.get() * limit;
 					int range = offset + list.size();
 					Platform.runLater(() -> {
-						pageInfo.set(String.format("Showing %d to %d of %d", offset, 
+						pageInfo.set(String.format("Showing %d to %d of %d", offset + 1, 
 								list.size() > 0 ? range : 0, count));
 					}); 
 					
 				} else {
-					loading.set(false);
 					try {
 						System.out.println(resp.errorBody().string());
 					} catch (IOException e) {
@@ -88,7 +87,7 @@ public abstract class PagableViewModel<T> {
 			@Override
 			public void onFailure(Call<List<T>> call, Throwable t) {
 				t.printStackTrace();
-				loading.set(false);
+				Platform.runLater(() -> loading.set(false));
 				AlertUtil.queueToast(t.getMessage());
 			}
 

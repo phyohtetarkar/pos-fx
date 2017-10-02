@@ -28,7 +28,10 @@ public class Navigator {
 	private static ObjectProperty<String> currentView = new SimpleObjectProperty<>();
 	
 	static {
-		currentView.addListener((a, b, c) -> navigate(c));
+		currentView.addListener((a, b, c) -> {
+			navigate(c);
+			setNavTitle(c);
+		});
 	}
 
 	public static void navigate(String action) {
@@ -44,6 +47,10 @@ public class Navigator {
 			handle(action, contentView);
 			break;
 		}
+	}
+	
+	public static<T> T navigateAndGet(String action) {
+		return handle(action, contentView);
 	}
 
 	public static void lowerBrightness() {
@@ -62,18 +69,19 @@ public class Navigator {
 		handle("Login", primaryContainer);
 	}
 	
+	public static void setNavTitle(String text) {
+		title.setText(text);
+	}
+	
 	public static void setRefreshAction(EventHandler<MouseEvent> evt) {
 		if (null != refresh) {
 			refresh.setOnMouseClicked(evt);
 		}
 	}
 
-	private static void handle(String action, Pane view) {
+	private static<T> T handle(String action, Pane view) {
 
 		try {
-			if (null != title) {
-				title.setText(action);
-			}
 			
 			if (null != refresh) {
 				refresh.setOnMouseClicked(null);
@@ -88,12 +96,15 @@ public class Navigator {
 			Node node = loader.load();
 			//play(node);
 			view.getChildren().add(node);
+			
+			return loader.getController();
 
 		} catch (IOException e) {
 			e.printStackTrace();
 			view.getChildren().clear();
 		}
 
+		return null;
 	}
 	
 	@SuppressWarnings("unused")

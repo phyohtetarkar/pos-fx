@@ -12,7 +12,7 @@ public class Counter implements Serializable, Nameable {
 
 	private boolean deleted;
 	private Security security;
-	
+
 	public Counter() {
 		security = new Security();
 	}
@@ -64,4 +64,27 @@ public class Counter implements Serializable, Nameable {
 	public String toString() {
 		return code;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Counter other = (Counter) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
 }

@@ -5,6 +5,7 @@
 <?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -20,15 +21,20 @@
                <styleClass>
                   <String fx:value="fs-24" />
                   <String fx:value="text-default" />
-                  <String fx:value="font-medium" />
                </styleClass></Label>
             <JFXTextField fx:id="input" labelFloat="true" prefHeight="30.0" promptText="Enter name" />
          </children>
       </VBox>
       <HBox alignment="CENTER_RIGHT" spacing="8.0">
          <children>
-            <JFXButton onAction="#close" prefHeight="40.0" prefWidth="75.0" styleClass="text-accent" text="CANCEL" />
-            <JFXButton onAction="#save" prefHeight="40.0" prefWidth="75.0" styleClass="text-accent" text="SAVE" />
+            <JFXButton cancelButton="true" onAction="#close" prefHeight="40.0" prefWidth="75.0" styleClass="text-accent" text="CANCEL">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXButton>
+            <JFXButton defaultButton="true" onAction="#save" prefHeight="40.0" prefWidth="75.0" styleClass="text-accent" text="SAVE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXButton>
          </children>
          <padding>
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />

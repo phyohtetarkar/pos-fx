@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXTextField;
 import com.jsoft.pos.domain.Counter;
+import com.jsoft.pos.util.AlertUtil;
 import com.jsoft.pos.view.custom.ActionMenu;
 import com.jsoft.pos.view.model.CountersViewModel;
 import com.jsoft.pos.view.model.SinglePageViewModel;
@@ -45,8 +46,10 @@ public class CountersView extends SinglePageView<Counter> {
 					});
 				})
 				.onDelete(e -> {
-					Counter c = tableView.getSelectionModel().getSelectedItem();
-					model.delete(c);
+					Counter counter = tableView.getSelectionModel().getSelectedItem();
+					if (AlertUtil.showConfirm("Are you sure to delete?")) {
+						model.delete(counter);
+					}
 				})
 				.build());
 		
