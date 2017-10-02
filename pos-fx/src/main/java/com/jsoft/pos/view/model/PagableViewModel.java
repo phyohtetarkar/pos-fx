@@ -66,11 +66,13 @@ public abstract class PagableViewModel<T> {
 			public void onResponse(Call<List<T>> call, Response<List<T>> resp) {
 				Platform.runLater(() -> loading.set(false));
 				if (resp.isSuccessful()) {
-					list.set(FXCollections.observableArrayList(resp.body()));
 					
-					int offset = currentPage.get() * limit;
-					int range = offset + list.size();
 					Platform.runLater(() -> {
+						list.set(FXCollections.observableArrayList(resp.body()));
+						
+						int offset = currentPage.get() * limit;
+						int range = offset + list.size();
+						
 						pageInfo.set(String.format("Showing %d to %d of %d", offset + 1, 
 								list.size() > 0 ? range : 0, count));
 					}); 

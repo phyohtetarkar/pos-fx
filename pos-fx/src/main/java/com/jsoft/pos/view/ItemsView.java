@@ -16,6 +16,7 @@ import com.jsoft.pos.view.form.ItemFormView;
 import com.jsoft.pos.view.model.ItemsViewModel;
 import com.jsoft.pos.view.model.PagableViewModel;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 
@@ -50,8 +51,10 @@ public class ItemsView extends PagableView<Item> {
 					Item item = tableView.getSelectionModel().getSelectedItem();
 					ItemFormView form = Navigator.navigateAndWait("form/ItemForm");
 					Navigator.setNavTitle("Items / Item Form");
-					form.setItem(item);
-					form = null;
+					Platform.runLater(() -> {
+						form.setItem(item);
+					}); 
+					
 				})
 				.onDelete(e -> {
 					Item item = tableView.getSelectionModel().getSelectedItem();

@@ -59,8 +59,8 @@
                         </StackPane>
                         <VBox alignment="CENTER" styleClass="space-48" HBox.hgrow="ALWAYS">
                            <children>
-                              <JFXTextField fx:id="name" labelFloat="true" promptText="Item Name" styleClass="fs-16" />
-                              <JFXTextField fx:id="code" labelFloat="true" promptText="Item Code" styleClass="fs-16" />
+                              <JFXTextField fx:id="name" labelFloat="true" promptText="Item Name *" styleClass="fs-16" />
+                              <JFXTextField fx:id="code" labelFloat="true" promptText="Item Code *" styleClass="fs-16" />
                               <JFXComboBox fx:id="categories" maxWidth="1.7976931348623157E308" promptText="Category">
                                  <styleClass>
                                     <String fx:value="customize-combo" />
@@ -76,18 +76,18 @@
                   </HBox>
                   <HBox styleClass="space-16">
                      <children>
-                        <JFXTextField fx:id="purchasePrice" labelFloat="true" promptText="Purhase Price" styleClass="fs-16" HBox.hgrow="ALWAYS" />
-                        <JFXTextField fx:id="retailPrice" labelFloat="true" promptText="Retail Price" styleClass="fs-16" HBox.hgrow="ALWAYS" />
+                        <JFXTextField fx:id="purchasePrice" labelFloat="true" promptText="Purhase Price *" styleClass="fs-16" HBox.hgrow="ALWAYS" />
+                        <JFXTextField fx:id="retailPrice" labelFloat="true" promptText="Retail Price *" styleClass="fs-16" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
-                  <JFXTextField fx:id="quantity" labelFloat="true" promptText="Quantity" styleClass="fs-16" />
+                  <JFXTextField fx:id="quantity" labelFloat="true" promptText="Quantity *" styleClass="fs-16" />
                   <JFXTextArea fx:id="remark" labelFloat="true" promptText="Remark" styleClass="fs-16" wrapText="true" />
                </children>
             </VBox>
             <HBox alignment="BOTTOM_RIGHT" styleClass="space-16" VBox.vgrow="ALWAYS">
                <children>
                   <JFXButton buttonType="RAISED" minHeight="40.0" onAction="#back" prefWidth="100.0" styleClass="color-accent" text="Back" />
-                  <JFXButton buttonType="RAISED" layoutX="1142.0" layoutY="10.0" minHeight="40.0" onAction="#save" prefWidth="100.0" styleClass="color-accent" text="Save" />
+                  <JFXButton fx:id="saveButton" buttonType="RAISED" layoutX="1142.0" layoutY="10.0" minHeight="40.0" onAction="#save" prefWidth="100.0" styleClass="color-accent" text="Save" />
                </children>
             </HBox>
          </children>

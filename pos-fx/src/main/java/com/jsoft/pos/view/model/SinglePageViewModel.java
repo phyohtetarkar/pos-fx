@@ -34,8 +34,10 @@ public abstract class SinglePageViewModel<T extends Nameable> {
 				Platform.runLater(() -> loading.set(false));
 				if (resp.isSuccessful()) {
 					copyList = resp.body();
-					list.clear();
-					list.set(FXCollections.observableArrayList(copyList));
+					Platform.runLater(() -> {
+						list.clear();
+						list.set(FXCollections.observableArrayList(copyList));
+					}); 
 				} else {
 					System.out.println(resp.code());
 				}

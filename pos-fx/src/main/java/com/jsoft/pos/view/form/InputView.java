@@ -6,9 +6,9 @@ import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.validation.RequiredFieldValidator;
 import com.jsoft.pos.domain.Nameable;
 import com.jsoft.pos.util.Navigator;
+import com.jsoft.pos.util.Utils;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,7 +27,6 @@ public class InputView implements Initializable {
 	@FXML
 	private JFXTextField input;
 	
-	private RequiredFieldValidator validator;
 	private Nameable entity;
 	private Consumer<Nameable> consumer;
 	
@@ -66,16 +65,11 @@ public class InputView implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		validator = new RequiredFieldValidator();
-		validator.setMessage("Input required!");
-		
-		input.getValidators().add(validator);
+		input.getValidators().add(Utils.requiredValidator());
 	}
 
 	public void save() {
-		input.validate();
-		
-		if (!input.getText().trim().isEmpty()) {
+		if (input.validate()) {
 			close();
 			entity.setName(input.getText());
 			consumer.accept(entity);
