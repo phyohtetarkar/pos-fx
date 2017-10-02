@@ -1,4 +1,4 @@
-package com.jsoft.pos.view;
+package com.jsoft.pos.view.form;
 
 import java.io.IOException;
 import java.net.URL;

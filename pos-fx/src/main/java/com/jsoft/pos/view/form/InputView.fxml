@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox spacing="32.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jsoft.pos.view.InputView">
+<VBox spacing="32.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jsoft.pos.view.form.InputView">
    <children>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="400.0" spacing="48.0">
          <padding>
@@ -41,13 +41,13 @@
          </padding>
       </HBox>
    </children>
-   <stylesheets>
-      <URL value="@../styles/application.css" />
-      <URL value="@../styles/color.css" />
-      <URL value="@../styles/jfx-common.css" />
-   </stylesheets>
    <styleClass>
       <String fx:value="color-white" />
       <String fx:value="back-radius-2" />
    </styleClass>
+   <stylesheets>
+      <URL value="@../../styles/application.css" />
+      <URL value="@../../styles/color.css" />
+      <URL value="@../../styles/jfx-common.css" />
+   </stylesheets>
 </VBox>

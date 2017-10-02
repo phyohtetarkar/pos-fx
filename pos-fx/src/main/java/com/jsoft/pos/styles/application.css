@@ -442,3 +442,15 @@ TableView .column-header.header-left15 Label {
     -fx-background-color: -color-accent;
     -fx-text-fill: -text-accent;
 }
+
+/*
+ * Progress Indicator 
+ */
+
+.progress-indicator {
+    -fx-progress-color: -color-accent;
+}
+
+.progress-indicator .percentage {
+    -fx-fill: #fff;
+}

@@ -95,6 +95,7 @@ public class ItemsViewModel extends PagableViewModel<Item> {
 
 	}
 	
+	
 	public void delete(Item item) {
 		item.setDeleted(true);
 		service.save(item);
@@ -115,5 +116,5 @@ public class ItemsViewModel extends PagableViewModel<Item> {
 	public StringProperty nameProperty() {
 		return name;
 	}
-
+	
 }

@@ -8,6 +8,7 @@ import com.jsoft.pos.domain.Category;
 import com.jsoft.pos.util.AlertUtil;
 import com.jsoft.pos.util.Navigator;
 import com.jsoft.pos.view.custom.ActionMenu;
+import com.jsoft.pos.view.form.InputView;
 import com.jsoft.pos.view.model.CategoriesViewModel;
 import com.jsoft.pos.view.model.SinglePageViewModel;
 

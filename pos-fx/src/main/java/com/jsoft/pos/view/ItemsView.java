@@ -48,9 +48,10 @@ public class ItemsView extends PagableView<Item> {
 		tableView.setContextMenu(ActionMenu.builder()
 				.onEdit(e -> {
 					Item item = tableView.getSelectionModel().getSelectedItem();
-					ItemFormView form = Navigator.navigateAndGet("form/ItemForm");
+					ItemFormView form = Navigator.navigateAndWait("form/ItemForm");
 					Navigator.setNavTitle("Items / Item Form");
 					form.setItem(item);
+					form = null;
 				})
 				.onDelete(e -> {
 					Item item = tableView.getSelectionModel().getSelectedItem();

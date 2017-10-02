@@ -7,11 +7,14 @@
 <?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <HBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jsoft.pos.view.form.ItemFormView">
@@ -34,18 +37,26 @@
                <children>
                   <HBox styleClass="space-16">
                      <children>
-                        <VBox styleClass="border-1">
+                        <StackPane maxHeight="202.0" maxWidth="202.0" minHeight="202.0" minWidth="202.0" styleClass="border-1">
                            <children>
-                              <ImageView fx:id="imageView" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="imageView" fitHeight="200.0" fitWidth="200.0" onMouseClicked="#chooseImage" pickOnBounds="true">
                                  <image>
                                     <Image url="@../custom/placeholder.png" />
                                  </image>
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
+                                 <viewport>
+                                    <Rectangle2D />
+                                 </viewport>
                               </ImageView>
+                              <HBox fx:id="progressContainer" alignment="CENTER" styleClass="color-transparent-lo" visible="false">
+                                 <children>
+                                    <ProgressIndicator fx:id="progress" maxHeight="60.0" prefHeight="60.0" prefWidth="60.0" progress="0.0" />
+                                 </children>
+                              </HBox>
                            </children>
-                        </VBox>
+                        </StackPane>
                         <VBox alignment="CENTER" styleClass="space-48" HBox.hgrow="ALWAYS">
                            <children>
                               <JFXTextField fx:id="name" labelFloat="true" promptText="Item Name" styleClass="fs-16" />
@@ -75,8 +86,8 @@
             </VBox>
             <HBox alignment="BOTTOM_RIGHT" styleClass="space-16" VBox.vgrow="ALWAYS">
                <children>
-                  <JFXButton buttonType="RAISED" minHeight="40.0" onAction="#back" prefWidth="120.0" styleClass="color-accent" text="Back" />
-                  <JFXButton buttonType="RAISED" layoutX="1142.0" layoutY="10.0" minHeight="40.0" onAction="#save" prefWidth="120.0" styleClass="color-accent" text="Save" />
+                  <JFXButton buttonType="RAISED" minHeight="40.0" onAction="#back" prefWidth="100.0" styleClass="color-accent" text="Back" />
+                  <JFXButton buttonType="RAISED" layoutX="1142.0" layoutY="10.0" minHeight="40.0" onAction="#save" prefWidth="100.0" styleClass="color-accent" text="Save" />
                </children>
             </HBox>
          </children>

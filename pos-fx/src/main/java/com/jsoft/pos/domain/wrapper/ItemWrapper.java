@@ -17,8 +17,8 @@ public class ItemWrapper {
 	private StringProperty name = new SimpleStringProperty();
 	private StringProperty purchasePrice = new SimpleStringProperty();
 	private StringProperty retailPrice = new SimpleStringProperty();
-	private StringProperty photo = new SimpleStringProperty();
 	private StringProperty quantity = new SimpleStringProperty();
+	private StringProperty photo = new SimpleStringProperty();
 	private StringProperty remark = new SimpleStringProperty();
 	private ObjectProperty<Category> category = new SimpleObjectProperty<>();
 	

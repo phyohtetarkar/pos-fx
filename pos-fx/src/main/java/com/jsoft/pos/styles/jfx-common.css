@@ -83,15 +83,16 @@
 }
 
 .progress-bar > .bar {
-    -fx-min-width: 200;
+    -fx-min-width: 20;
 }
 
 .jfx-progress-bar > .bar {
-    -fx-min-width: 200;
+    -fx-min-width: 20;
+    -fx-background-color: -color-accent;
     -fx-min-height: 10;
 }
 
 .jfx-progress-bar {
-    -fx-progress-color: #4059a9;
+    -fx-progress-color: -color-accent;
     -fx-stroke-width: 3;
 }

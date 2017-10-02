@@ -10,11 +10,8 @@ public abstract class PersonWrapper {
 	private StringProperty remark = new SimpleStringProperty();
 	private ContactWrapper contact;
 
-	private SecurityWrapper security;
-
 	public PersonWrapper() {
 		contact = new ContactWrapper();
-		security = new SecurityWrapper();
 	}
 
 	public StringProperty nameProperty() {
@@ -32,8 +29,5 @@ public abstract class PersonWrapper {
 	public ContactWrapper getContact() {
 		return contact;
 	}
-
-	public SecurityWrapper getSecurity() {
-		return security;
-	}
+	
 }

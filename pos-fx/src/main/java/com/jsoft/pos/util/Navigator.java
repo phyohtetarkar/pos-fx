@@ -49,7 +49,7 @@ public class Navigator {
 		}
 	}
 	
-	public static<T> T navigateAndGet(String action) {
+	public static<T> T navigateAndWait(String action) {
 		return handle(action, contentView);
 	}
 

@@ -1,5 +1,7 @@
 package com.jsoft.pos.view.model;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import com.jsoft.pos.domain.Category;
@@ -8,15 +10,20 @@ import com.jsoft.pos.domain.wrapper.ItemWrapper;
 import com.jsoft.pos.service.CategoryService;
 import com.jsoft.pos.service.ItemService;
 import com.jsoft.pos.util.AlertUtil;
+import com.jsoft.pos.util.ProgressRequestBody;
+import com.jsoft.pos.util.ProgressRequestBody.UploadCallback;
 import com.jsoft.pos.util.RetrofitSingleton;
 import com.jsoft.pos.util.ServerStatus;
 
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,6 +31,7 @@ import retrofit2.Response;
 public class ItemFormViewModel {
 	private ListProperty<Category> categories = new SimpleListProperty<>();
 	private BooleanProperty loading = new SimpleBooleanProperty();
+	private DoubleProperty upload = new SimpleDoubleProperty();
 	
 	private ItemWrapper wrapper;
 	private ItemService service;
@@ -44,6 +52,7 @@ public class ItemFormViewModel {
 		if (ServerStatus.isReachable()) {
 			loading.set(true);
 			Item item = wrapper.build();
+			
 			service.save(item).enqueue(new Callback<String>() {
 				
 				@Override
@@ -53,6 +62,12 @@ public class ItemFormViewModel {
 						AlertUtil.queueToast(resp.body());
 						if (onFinishedListener != null) {
 							Platform.runLater(onFinishedListener::finished);
+						}
+					} else {
+						try {
+							AlertUtil.queueToast(resp.errorBody().string().replace("\"", ""));
+						} catch (IOException e) {
+							e.printStackTrace();
 						}
 					}
 				}
@@ -64,6 +79,7 @@ public class ItemFormViewModel {
 					AlertUtil.queueToast(t.getMessage());
 				}
 			});
+			
 		} else {
 			AlertUtil.queueToast(ServerStatus.CONNECTION_ERROR);
 		}
@@ -93,8 +109,27 @@ public class ItemFormViewModel {
 
 	}
 	
-	public void setOnSaveCompleteListener(OnFinishedListener onSaveCompleteListener) {
-		this.onFinishedListener = onSaveCompleteListener;
+	public void upload(File image, UploadCallback callback) {
+		RequestBody body = new ProgressRequestBody(image, null, callback);
+		
+		service.uploadImage(body).enqueue(new Callback<String>() {
+			
+			@Override
+			public void onResponse(Call<String> call, Response<String> resp) {
+				if (resp.isSuccessful()) {
+					AlertUtil.queueToast(resp.body());
+				}
+			}
+			
+			@Override
+			public void onFailure(Call<String> call, Throwable t) {
+				t.printStackTrace();
+			}
+		});
+	}
+	
+	public void setOnSaveComplete(OnFinishedListener onFinishedListener) {
+		this.onFinishedListener = onFinishedListener;
 	}
 	
 	public final ItemWrapper itemWrapper() {
@@ -109,4 +144,7 @@ public class ItemFormViewModel {
 		return loading;
 	}
 	
+	public DoubleProperty uploadProperty() {
+		return upload;
+	}
 }

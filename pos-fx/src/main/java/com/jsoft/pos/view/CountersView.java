@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXTextField;
 import com.jsoft.pos.domain.Counter;
 import com.jsoft.pos.util.AlertUtil;
 import com.jsoft.pos.view.custom.ActionMenu;
+import com.jsoft.pos.view.form.InputView;
 import com.jsoft.pos.view.model.CountersViewModel;
 import com.jsoft.pos.view.model.SinglePageViewModel;
 
