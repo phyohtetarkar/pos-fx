@@ -12,7 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class PosMain extends Application {
+public class PointOfSale extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);

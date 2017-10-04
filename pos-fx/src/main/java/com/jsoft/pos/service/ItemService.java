@@ -39,5 +39,5 @@ public interface ItemService {
 	
 	@Multipart
     @POST("item/upload")        
-    Call<String> uploadImage(@Part("image") RequestBody image);
+    Call<String> uploadImage(@Part("image") RequestBody body);
 }

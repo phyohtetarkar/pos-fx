@@ -10,8 +10,9 @@ import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.jsoft.pos.domain.Category;
 import com.jsoft.pos.domain.Item;
+import com.jsoft.pos.util.AlertUtil;
 import com.jsoft.pos.util.Navigator;
-import com.jsoft.pos.util.ProgressRequestBody.UploadCallback;
+import com.jsoft.pos.util.OperationCallback;
 import com.jsoft.pos.util.Utils;
 import com.jsoft.pos.view.LoadingDialogView;
 import com.jsoft.pos.view.model.ItemFormViewModel;
@@ -64,8 +65,8 @@ public class ItemFormView implements Initializable {
 		model.itemWrapper().retailPriceProperty().bindBidirectional(retailPrice.textProperty());
 		model.itemWrapper().quantityProperty().bindBidirectional(quantity.textProperty());
 		model.itemWrapper().remarkProperty().bindBidirectional(remark.textProperty());
-
-		categories.valueProperty().bindBidirectional(model.itemWrapper().categoryProperty());
+		model.itemWrapper().categoryProperty().bindBidirectional(categories.valueProperty());
+		
 		categories.itemsProperty().bind(model.categoriesProperty());
 
 		model.setOnSaveComplete(this::back);
@@ -77,6 +78,8 @@ public class ItemFormView implements Initializable {
 		model.itemWrapper().photoProperty().addListener((v, ov, nv) -> {
 			imageView.setImage(new Image(nv, true));
 		});
+		
+		model.setOnMessage(AlertUtil::queueToast);
 
 		model.init();
 	}
@@ -94,11 +97,9 @@ public class ItemFormView implements Initializable {
 		if (item.getPhoto() != null) {
 			imageView.setImage(new Image(model.itemWrapper().photoProperty().get(), true));
 		}
-
 	}
 
 	public void save() {
-
 		if (name.validate() & 
 				code.validate() & 
 				purchasePrice.validate() & 
@@ -107,7 +108,6 @@ public class ItemFormView implements Initializable {
 			
 			model.save();
 		}
-
 	}
 
 	public void chooseImage() {
@@ -121,8 +121,9 @@ public class ItemFormView implements Initializable {
 
 		File image = fileChooser.showOpenDialog(imageView.getScene().getWindow());
 
+		progress.setProgress(0);
 		progressContainer.setVisible(true);
-		model.upload(image, new UploadCallback() {
+		model.upload(image, new OperationCallback() {
 
 			@Override
 			public void onProgressUpdate(double value) {

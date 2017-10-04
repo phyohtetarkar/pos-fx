@@ -10,6 +10,7 @@ import com.jsoft.pos.domain.Nameable;
 import com.jsoft.pos.util.Navigator;
 import com.jsoft.pos.util.Utils;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -46,8 +47,8 @@ public class InputView implements Initializable {
 			context.heading.setText(heading);
 			context.input.setPromptText(placeholder);
 			
-			if (null != entity.getName()) {
-				context.input.setText(entity.getName());
+			if (entity.getName() != null) {
+				Platform.runLater(() -> context.input.setText(entity.getName())); 
 			}
 			
 			stage.setOnShowing(e -> Navigator.lowerBrightness());

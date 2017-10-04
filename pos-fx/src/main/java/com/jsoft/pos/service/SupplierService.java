@@ -25,5 +25,5 @@ public interface SupplierService {
 	Call<Supplier> findById(@Path("id") int id);
 	
 	@POST("supplier")
-	Call<String> save(@Body Supplier suppllier);
+	Call<String> save(@Body Supplier supplier);
 }

@@ -1,27 +1,59 @@
 package com.jsoft.pos.view.model;
 
-import com.jsoft.pos.domain.Category;
-import com.jsoft.pos.service.CategoryService;
-import com.jsoft.pos.util.AlertUtil;
-import com.jsoft.pos.util.RetrofitSingleton;
-import com.jsoft.pos.util.ServerStatus;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
-public class CategoriesViewModel extends SinglePageViewModel<Category> {
+import com.jsoft.pos.domain.Category;
+import com.jsoft.pos.repo.CategoryRepo;
+import com.jsoft.pos.repo.retrofit.impl.CategoryRepoImpl;
+
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
+
+public class CategoriesViewModel {
 	
-	private CategoryService service;
+	private List<Category> copyList;
+
+	private ListProperty<Category> list = new SimpleListProperty<>();
+	private final BooleanProperty loading = new SimpleBooleanProperty();
+	
+	private Consumer<String> onMessage;
+
+	private CategoryRepo repo;
 	
 	public CategoriesViewModel() {
-		service = RetrofitSingleton.getInstance().create(CategoryService.class);
+		repo = new CategoryRepoImpl();
 	}
 
-	@Override
 	public void load() {
-		if (ServerStatus.isReachable()) {
-			loading.set(true);
-			service.findAll().enqueue(listCallBack());
-		} else {
-			AlertUtil.queueToast(ServerStatus.CONNECTION_ERROR);
-		}
+		Task<List<Category>> task = new Task<List<Category>>() {
+			@Override
+			protected List<Category> call() throws Exception {
+				return repo.findAll();
+			}
+		};
+		
+		loading.bind(task.runningProperty());
+		
+		task.setOnSucceeded(evt -> {
+			copyList = task.getValue();
+			list.clear();
+			list.set(FXCollections.observableArrayList(copyList));
+			loading.unbind();
+		});
+		
+		task.exceptionProperty().addListener((v, ov, nv) -> {
+			pushMessage(nv.getMessage());
+			loading.unbind();
+		});
+		
+		Executors.newSingleThreadExecutor().submit(task);
 	}
 	
 	public void delete(Category category) {
@@ -30,13 +62,52 @@ public class CategoriesViewModel extends SinglePageViewModel<Category> {
 	}
 	
 	public void save(Category category) {
-		if (ServerStatus.isReachable()) {
-			service.save(category).enqueue(saveCallBack());
-			
-		} else {
-			AlertUtil.queueToast(ServerStatus.CONNECTION_ERROR);
-		}
+		Task<String> task = new Task<String>() {
+			@Override
+			protected String call() throws Exception {
+				return repo.save(category);
+			}
+		};
 		
+		loading.bind(task.runningProperty());
+		
+		task.setOnSucceeded(evt -> {
+			onMessage.accept(task.getValue());
+			loading.unbind();
+			load();
+		});
+		
+		task.exceptionProperty().addListener((v, ov, nv) -> {
+			pushMessage(nv.getMessage());
+			loading.unbind();
+		});
+		
+		Executors.newSingleThreadExecutor().submit(task);
 	}
 	
+	public void filter(String text) {
+		if (copyList != null) {
+			list.set(FXCollections.observableArrayList(copyList.stream()
+					.filter(c -> c.getName().toLowerCase().startsWith(text))
+					.collect(Collectors.toList())));
+		}
+	}
+	
+	private void pushMessage(String message) {
+		if (onMessage != null) {
+			onMessage.accept(message);
+		}
+	}
+	
+	public void setOnMessage(Consumer<String> onMessage) {
+		this.onMessage = onMessage;
+	}
+	
+	public final ListProperty<Category> listProperty() {
+		return list;
+	}
+	
+	public final BooleanProperty loadingProperty() {
+		return loading;
+	}
 }

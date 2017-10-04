@@ -1,21 +1,19 @@
 package com.jsoft.pos.view.model;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.function.Consumer;
 
 import com.jsoft.pos.domain.Category;
 import com.jsoft.pos.domain.Item;
 import com.jsoft.pos.domain.wrapper.ItemWrapper;
-import com.jsoft.pos.service.CategoryService;
-import com.jsoft.pos.service.ItemService;
-import com.jsoft.pos.util.AlertUtil;
-import com.jsoft.pos.util.ProgressRequestBody;
-import com.jsoft.pos.util.ProgressRequestBody.UploadCallback;
-import com.jsoft.pos.util.RetrofitSingleton;
-import com.jsoft.pos.util.ServerStatus;
+import com.jsoft.pos.repo.CategoryRepo;
+import com.jsoft.pos.repo.ItemRepo;
+import com.jsoft.pos.repo.retrofit.impl.CategoryRepoImpl;
+import com.jsoft.pos.repo.retrofit.impl.ItemRepoImpl;
+import com.jsoft.pos.util.OperationCallback;
 
-import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ListProperty;
@@ -23,25 +21,24 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import javafx.concurrent.Task;
 
 public class ItemFormViewModel {
 	private ListProperty<Category> categories = new SimpleListProperty<>();
 	private BooleanProperty loading = new SimpleBooleanProperty();
 	private DoubleProperty upload = new SimpleDoubleProperty();
+
+	private Consumer<String> onMessage;
+	private OnFinishedListener onFinishedListener;
 	
 	private ItemWrapper wrapper;
-	private ItemService service;
-	private CategoryService catService;
-	private OnFinishedListener onFinishedListener;
+	private ItemRepo repo;
+	private CategoryRepo catRepo;
 
 	public ItemFormViewModel() {
 		wrapper = new ItemWrapper();
-		service = RetrofitSingleton.getInstance().create(ItemService.class);
-		catService = RetrofitSingleton.getInstance().create(CategoryService.class);
+		repo = new ItemRepoImpl();
+		catRepo = new CategoryRepoImpl();
 	}
 	
 	public void init() {
@@ -49,83 +46,85 @@ public class ItemFormViewModel {
 	}
 	
 	public void save() {
-		if (ServerStatus.isReachable()) {
-			loading.set(true);
-			Item item = wrapper.build();
-			
-			service.save(item).enqueue(new Callback<String>() {
-				
-				@Override
-				public void onResponse(Call<String> call, Response<String> resp) {
-					Platform.runLater(() -> loading.set(false));
-					if (resp.isSuccessful()) {
-						AlertUtil.queueToast(resp.body());
-						if (onFinishedListener != null) {
-							Platform.runLater(onFinishedListener::finished);
-						}
-					} else {
-						try {
-							AlertUtil.queueToast(resp.errorBody().string().replace("\"", ""));
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-				
-				@Override
-				public void onFailure(Call<String> call, Throwable t) {
-					t.printStackTrace();
-					loading.set(false);
-					AlertUtil.queueToast(t.getMessage());
-				}
-			});
-			
-		} else {
-			AlertUtil.queueToast(ServerStatus.CONNECTION_ERROR);
-		}
+		Task<String> task = new Task<String>() {
+			@Override
+			protected String call() throws Exception {
+				Item item = wrapper.build();
+				return repo.save(item);
+			}
+		};
 		
+		loading.bind(task.runningProperty());
+		
+		task.setOnSucceeded(evt -> {
+			pushMessage(task.getValue());
+			loading.unbind();
+			if (onFinishedListener != null) {
+				onFinishedListener.finished();
+			}
+		});
+		
+		task.exceptionProperty().addListener((v, ov, nv) -> {
+			pushMessage(nv.getMessage());
+			loading.unbind();
+		});
+		
+		Executors.newSingleThreadExecutor().submit(task);
 	}
 	
 	private void loadCategories() {
-		if (ServerStatus.isReachable()) {
-			catService.findAll().enqueue(new Callback<List<Category>>() {
-
-				@Override
-				public void onResponse(Call<List<Category>> call, Response<List<Category>> resp) {
-					if (resp.isSuccessful()) {
-						categories.set(FXCollections.observableArrayList(resp.body()));
-					}
-				}
-
-				@Override
-				public void onFailure(Call<List<Category>> call, Throwable t) {
-					t.printStackTrace();
-					AlertUtil.queueToast(t.getMessage());
-				}
-			});
-		} else {
-			AlertUtil.queueToast(ServerStatus.CONNECTION_ERROR);
-		}
-
-	}
-	
-	public void upload(File image, UploadCallback callback) {
-		RequestBody body = new ProgressRequestBody(image, null, callback);
-		
-		service.uploadImage(body).enqueue(new Callback<String>() {
-			
+		Task<List<Category>> task = new Task<List<Category>>() {
 			@Override
-			public void onResponse(Call<String> call, Response<String> resp) {
-				if (resp.isSuccessful()) {
-					AlertUtil.queueToast(resp.body());
-				}
+			protected List<Category> call() throws Exception {
+				return catRepo.findAll();
 			}
-			
-			@Override
-			public void onFailure(Call<String> call, Throwable t) {
-				t.printStackTrace();
+		};
+		
+		task.setOnSucceeded(evt -> {
+			categories.set(FXCollections.observableArrayList(task.getValue()));
+			Category category = wrapper.categoryProperty().get();
+			if (category != null) {
+				wrapper.categoryProperty().set(null);
+				wrapper.categoryProperty().set(category);
+			} else {
+				wrapper.categoryProperty().set(categories.get(0));
 			}
 		});
+		
+		task.exceptionProperty().addListener((v, ov, nv) -> {
+			pushMessage(nv.getMessage());
+		});
+		
+		Executors.newSingleThreadExecutor().submit(task);
+	}
+	
+	public void upload(File image, OperationCallback callback) {
+		Task<String> task = new Task<String>() {
+			@Override
+			protected String call() throws Exception {
+				return repo.uploadImage(image, callback);
+			}
+		};
+		
+		task.setOnSucceeded(evt -> {
+			pushMessage(task.getValue());
+		});
+		
+		task.exceptionProperty().addListener((v, ov, nv) -> {
+			pushMessage(nv.getMessage());
+		});
+		
+		Executors.newSingleThreadExecutor().submit(task);
+	}
+	
+	private void pushMessage(String message) {
+		if (onMessage != null) {
+			onMessage.accept(message);
+		}
+	}
+	
+	public void setOnMessage(Consumer<String> onMessage) {
+		this.onMessage = onMessage;
 	}
 	
 	public void setOnSaveComplete(OnFinishedListener onFinishedListener) {
@@ -147,4 +146,5 @@ public class ItemFormViewModel {
 	public DoubleProperty uploadProperty() {
 		return upload;
 	}
+	
 }

@@ -1,27 +1,59 @@
 package com.jsoft.pos.view.model;
 
-import com.jsoft.pos.domain.Counter;
-import com.jsoft.pos.service.CounterService;
-import com.jsoft.pos.util.AlertUtil;
-import com.jsoft.pos.util.RetrofitSingleton;
-import com.jsoft.pos.util.ServerStatus;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
-public class CountersViewModel extends SinglePageViewModel<Counter> {
+import com.jsoft.pos.domain.Counter;
+import com.jsoft.pos.repo.CounterRepo;
+import com.jsoft.pos.repo.retrofit.impl.CounterRepoImpl;
+
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
+
+public class CountersViewModel {
 	
-	private CounterService service;
+	private List<Counter> copyList;
+
+	private ListProperty<Counter> list = new SimpleListProperty<>();
+	private final BooleanProperty loading = new SimpleBooleanProperty();
+	
+	private Consumer<String> onMessage;
+
+	private CounterRepo repo;
 	
 	public CountersViewModel() {
-		service = RetrofitSingleton.getInstance().create(CounterService.class);
+		repo = new CounterRepoImpl();
 	}
 
-	@Override
 	public void load() {
-		if (ServerStatus.isReachable()) {
-			loading.set(true);
-			service.findAll().enqueue(listCallBack());
-		} else {
-			AlertUtil.queueToast(ServerStatus.CONNECTION_ERROR);
-		}
+		Task<List<Counter>> task = new Task<List<Counter>>() {
+			@Override
+			protected List<Counter> call() throws Exception {
+				return repo.findAll();
+			}
+		};
+		
+		loading.bind(task.runningProperty());
+		
+		task.setOnSucceeded(evt -> {
+			copyList = task.getValue();
+			list.clear();
+			list.set(FXCollections.observableArrayList(copyList));
+			loading.unbind();
+		});
+		
+		task.exceptionProperty().addListener((v, ov, nv) -> {
+			pushMessage(nv.getMessage());
+			loading.unbind();
+		});
+		
+		Executors.newSingleThreadExecutor().submit(task);
 	}
 	
 	public void delete(Counter counter) {
@@ -30,13 +62,53 @@ public class CountersViewModel extends SinglePageViewModel<Counter> {
 	}
 	
 	public void save(Counter counter) {
-		if (ServerStatus.isReachable()) {
-			service.save(counter).enqueue(saveCallBack());
-			
-		} else {
-			AlertUtil.queueToast(ServerStatus.CONNECTION_ERROR);
-		}
+		Task<String> task = new Task<String>() {
+			@Override
+			protected String call() throws Exception {
+				return repo.save(counter);
+			}
+		};
 		
+		loading.bind(task.runningProperty());
+		
+		task.setOnSucceeded(evt -> {
+			onMessage.accept(task.getValue());
+			loading.unbind();
+			load();
+		});
+		
+		task.exceptionProperty().addListener((v, ov, nv) -> {
+			pushMessage(nv.getMessage());
+			loading.unbind();
+		});
+		
+		Executors.newSingleThreadExecutor().submit(task);
+	}
+	
+	public void filter(String text) {
+		if (copyList != null) {
+			list.set(FXCollections.observableArrayList(copyList.stream()
+					.filter(c -> c.getName().toLowerCase().startsWith(text))
+					.collect(Collectors.toList())));
+		}
+	}
+	
+	private void pushMessage(String message) {
+		if (onMessage != null) {
+			onMessage.accept(message);
+		}
+	}
+	
+	public void setOnMessage(Consumer<String> onMessage) {
+		this.onMessage = onMessage;
+	}
+	
+	public final ListProperty<Counter> listProperty() {
+		return list;
+	}
+	
+	public final BooleanProperty loadingProperty() {
+		return loading;
 	}
 	
 }

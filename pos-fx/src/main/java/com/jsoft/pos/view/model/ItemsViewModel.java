@@ -1,14 +1,14 @@
 package com.jsoft.pos.view.model;
 
 import java.util.List;
+import java.util.concurrent.Executors;
 
 import com.jsoft.pos.domain.Category;
 import com.jsoft.pos.domain.Item;
-import com.jsoft.pos.service.CategoryService;
-import com.jsoft.pos.service.ItemService;
-import com.jsoft.pos.util.AlertUtil;
-import com.jsoft.pos.util.RetrofitSingleton;
-import com.jsoft.pos.util.ServerStatus;
+import com.jsoft.pos.repo.CategoryRepo;
+import com.jsoft.pos.repo.ItemRepo;
+import com.jsoft.pos.repo.retrofit.impl.CategoryRepoImpl;
+import com.jsoft.pos.repo.retrofit.impl.ItemRepoImpl;
 
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
@@ -17,88 +17,130 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import javafx.concurrent.Task;
 
 public class ItemsViewModel extends PagableViewModel<Item> {
 
 	private ListProperty<Category> categories = new SimpleListProperty<>();
 
-	private CategoryService catService;
-	private ItemService service;
-
 	private ObjectProperty<Category> category = new SimpleObjectProperty<>();
 	private StringProperty code = new SimpleStringProperty();
 	private StringProperty name = new SimpleStringProperty();
+	
+	private ItemRepo repo;
+	private CategoryRepo catRepo;
 
 	public ItemsViewModel() {
-		catService = RetrofitSingleton.getInstance().create(CategoryService.class);
-		service = RetrofitSingleton.getInstance().create(ItemService.class);
+		repo = new ItemRepoImpl();
+		catRepo = new CategoryRepoImpl();
 	}
 
 	@Override
 	public void init() {
-		if (ServerStatus.isReachable()) {
-			loadCategories();
-			search();
-		} else {
-			AlertUtil.queueToast(ServerStatus.CONNECTION_ERROR);
-		}
-
+		loadCategories();
+		search();
 	}
 
 	@Override
 	public void search() {
-		if (ServerStatus.isReachable()) {
-			loading.set(true);
-			service.count(code.get(), name.get(), category.get() == null ? 0 : category.get().getId())
-					.enqueue(countCallBack());
-
-		} else {
-			AlertUtil.queueToast(ServerStatus.CONNECTION_ERROR);
-		}
+		loading.set(true);
+		
+		Task<Long> task = new Task<Long>() {
+			@Override
+			protected Long call() throws Exception {
+				return repo.count(code.get(), name.get(), category.get() != null ? category.get().getId() : 0);
+			}
+		};
+		
+		task.setOnSucceeded(evt -> {
+			count = task.getValue().intValue();
+			page.set(Math.round((float)count / limit));
+			searchPage();
+		});
+		
+		task.exceptionProperty().addListener((v, ov, nv) -> {
+			pushMessage(nv.getMessage());
+			loading.set(false);
+		});
+		
+		Executors.newSingleThreadExecutor().submit(task);
 	}
 
 	@Override
-	public void queryList() {
-		int offset = currentPage.get() * limit;
-
-		if (!loading.get()) {
-			loading.set(true);
-		}
-
-		service.search(code.get(), name.get(), category.get() == null ? 0 : category.get().getId(), offset, limit)
-				.enqueue(listCallBack());
+	public void searchPage() {
+		Task<List<Item>> task = new Task<List<Item>>() {
+			@Override
+			protected List<Item> call() throws Exception {
+				int offset = currentPage.get() * limit;
+				return repo.search(code.get(), name.get(), category.get() != null ? category.get().getId() : 0, offset, limit);
+			}
+		};
+		
+		loading.bind(task.runningProperty());
+		
+		task.setOnSucceeded(evt -> {
+			list.clear();
+			list.set(FXCollections.observableArrayList(task.getValue()));
+			loading.unbind();
+			int offset = currentPage.get() * limit;
+			int range = offset + list.size();
+			pageInfo.set(String.format("Showing %d to %d of %d", offset + 1, 
+					list.size() > 0 ? range : 0, count));
+		});
+		
+		task.exceptionProperty().addListener((v, ov, nv) -> {
+			pushMessage(nv.getMessage());
+			loading.unbind();
+		});
+		
+		Executors.newSingleThreadExecutor().submit(task);
 	}
 
 	private void loadCategories() {
-		if (ServerStatus.isReachable()) {
-			catService.findAll().enqueue(new Callback<List<Category>>() {
-
-				@Override
-				public void onResponse(Call<List<Category>> call, Response<List<Category>> resp) {
-					if (resp.isSuccessful()) {
-						categories.set(FXCollections.observableArrayList(resp.body()));
-					}
-				}
-
-				@Override
-				public void onFailure(Call<List<Category>> call, Throwable t) {
-					t.printStackTrace();
-					AlertUtil.queueToast(t.getMessage());
-				}
-			});
-		} else {
-			AlertUtil.queueToast(ServerStatus.CONNECTION_ERROR);
-		}
+		Task<List<Category>> task = new Task<List<Category>>() {
+			@Override
+			protected List<Category> call() throws Exception {
+				return catRepo.findAll();
+			}
+		};
+		
+		task.setOnSucceeded(evt -> {
+			categories.set(FXCollections.observableArrayList(task.getValue()));
+		});
+		
+		task.exceptionProperty().addListener((v, ov, nv) -> {
+			pushMessage(nv.getMessage());
+		});
+		
+		Executors.newSingleThreadExecutor().submit(task);
 
 	}
 	
 	
 	public void delete(Item item) {
 		item.setDeleted(true);
-		service.save(item);
+		
+		Task<String> task = new Task<String>() {
+			@Override
+			protected String call() throws Exception {
+				return repo.save(item);
+			}
+		};
+		
+		loading.bind(task.runningProperty());
+		
+		task.setOnSucceeded(evt -> {
+			pushMessage(task.getValue());
+			loading.unbind();
+			search();
+		});
+		
+		task.exceptionProperty().addListener((v, ov, nv) -> {
+			pushMessage(nv.getMessage());
+			loading.unbind();
+		});
+		
+		Executors.newSingleThreadExecutor().submit(task);
 	}
 
 	public final ListProperty<Category> categoriesProperty() {
@@ -116,5 +158,5 @@ public class ItemsViewModel extends PagableViewModel<Item> {
 	public StringProperty nameProperty() {
 		return name;
 	}
-	
+
 }

@@ -9,6 +9,7 @@ import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.WeakChangeListener;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -28,10 +29,10 @@ public class Navigator {
 	private static ObjectProperty<String> currentView = new SimpleObjectProperty<>();
 	
 	static {
-		currentView.addListener((a, b, c) -> {
+		currentView.addListener(new WeakChangeListener<>((a, b, c) -> {
 			navigate(c);
 			setNavTitle(c);
-		});
+		}));
 	}
 
 	public static void navigate(String action) {
@@ -74,7 +75,7 @@ public class Navigator {
 	}
 	
 	public static void setRefreshAction(EventHandler<MouseEvent> evt) {
-		if (null != refresh) {
+		if (refresh != null) {
 			refresh.setOnMouseClicked(evt);
 		}
 	}
@@ -83,7 +84,7 @@ public class Navigator {
 
 		try {
 			
-			if (null != refresh) {
+			if (refresh != null) {
 				refresh.setOnMouseClicked(null);
 			}
 			

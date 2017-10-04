@@ -12,17 +12,11 @@ import okio.BufferedSink;
 public class ProgressRequestBody extends RequestBody {
 	private static final int DEFAULT_BUFFER_SIZE = 2048;
 
-	private UploadCallback callback;
+	private OperationCallback callback;
 	private File file;
 	private MediaType mediaType;
 
-	public interface UploadCallback {
-		void onProgressUpdate(double value);
-		void onFinished();
-		void onError();
-	}
-
-	public ProgressRequestBody(File file, MediaType mediaType, UploadCallback callback) {
+	public ProgressRequestBody(File file, MediaType mediaType, OperationCallback callback) {
 		this.file = file;
 		this.callback = callback;
 		this.mediaType = mediaType;
@@ -65,6 +59,7 @@ public class ProgressRequestBody extends RequestBody {
 					callback.onError();
 				}
 			});
+			throw new RuntimeException("Error uploading file!");
 		} finally {
 			Platform.runLater(() -> {
 				if (callback != null) {

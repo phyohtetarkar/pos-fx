@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXSpinner;
+import com.jsoft.pos.util.AlertUtil;
 import com.jsoft.pos.view.model.PagableViewModel;
 
 import javafx.fxml.FXML;
@@ -34,7 +35,9 @@ public abstract class PagableView<T> implements Initializable {
 		pagination.pageCountProperty().bind(model().pageProperty());
 		
 		model().currentPageProperty().bind(pagination.currentPageIndexProperty());
-		pagination.currentPageIndexProperty().addListener((a, b, c) -> model().queryList());
+		pagination.currentPageIndexProperty().addListener((a, b, c) -> model().searchPage());
+		
+		model().setOnMessage(AlertUtil::queueToast);
 
 		model().init();
 	}

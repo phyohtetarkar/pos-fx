@@ -3,6 +3,7 @@ package com.jsoft.pos.view;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXSpinner;
 import com.jfoenix.controls.JFXTextField;
 import com.jsoft.pos.domain.Category;
 import com.jsoft.pos.util.AlertUtil;
@@ -10,18 +11,24 @@ import com.jsoft.pos.util.Navigator;
 import com.jsoft.pos.view.custom.ActionMenu;
 import com.jsoft.pos.view.form.InputView;
 import com.jsoft.pos.view.model.CategoriesViewModel;
-import com.jsoft.pos.view.model.SinglePageViewModel;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
-public class CategoriesView extends SinglePageView<Category> {
+public class CategoriesView implements Initializable {
 	
 	private static final String CREATE_HEADING = "Create New Category";
 	private static final String EDIT_HEADING = "Edit Category";
 	private static final String INPUT_PLACEHOLDER = "Category Name";
 
+	@FXML
+	protected TableView<Category> tableView;
+	@FXML
+	protected JFXSpinner spinner;
 	@FXML
 	private TableColumn<Category, String> createDate;
 	@FXML
@@ -32,14 +39,11 @@ public class CategoriesView extends SinglePageView<Category> {
 	private CategoriesViewModel model;
 
 	@Override
-	protected SinglePageViewModel<Category> model() {
-		return model;
-	}
-
-	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		model = new CategoriesViewModel();
-
+		
+		tableView.itemsProperty().bind(model.listProperty());
+		tableView.setPlaceholder(new Label(""));
 		tableView.setContextMenu(ActionMenu.builder()
 				.onEdit(e -> {
 					Category category = tableView.getSelectionModel().getSelectedItem();
@@ -60,9 +64,12 @@ public class CategoriesView extends SinglePageView<Category> {
 
 		filter.textProperty().addListener((a, b, c) -> model.filter(c.toLowerCase()));
 		
+		spinner.visibleProperty().bind(model.loadingProperty());
+		
 		Navigator.setRefreshAction(e -> model.load());
-
-		super.initialize(location, resources);
+		
+		model.setOnMessage(AlertUtil::queueToast);
+		model.load();
 	}
 
 	public void add() {
