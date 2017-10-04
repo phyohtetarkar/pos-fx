@@ -135,10 +135,9 @@ public class ItemsViewModel extends PagableViewModel<Item> {
 			search();
 		});
 		
-		task.exceptionProperty().addListener((v, ov, nv) -> {
-			pushMessage(nv.getMessage());
+		task.setOnFailed(evt -> {
+			pushMessage(task.getException().getMessage());
 			loading.unbind();
-			loading.set(false);
 		});
 		
 		Executors.newSingleThreadExecutor().submit(task);
