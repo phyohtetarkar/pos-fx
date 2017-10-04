@@ -62,7 +62,7 @@
 }
 
 .jfx-list-cell .jfx-rippler {
-    -jfx-rippler-fill: #e2e2e2;
+    -jfx-rippler-fill: -color-ripple;
 }
 
 .jfx-list-view {

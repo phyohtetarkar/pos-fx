@@ -64,8 +64,8 @@ public class ItemFormViewModel {
 			}
 		});
 		
-		task.exceptionProperty().addListener((v, ov, nv) -> {
-			pushMessage(nv.getMessage());
+		task.setOnFailed(evt -> {
+			pushMessage(task.getException().getMessage());
 			loading.unbind();
 		});
 		
@@ -91,8 +91,8 @@ public class ItemFormViewModel {
 			}
 		});
 		
-		task.exceptionProperty().addListener((v, ov, nv) -> {
-			pushMessage(nv.getMessage());
+		task.setOnFailed(evt -> {
+			pushMessage(task.getException().getMessage());
 		});
 		
 		Executors.newSingleThreadExecutor().submit(task);
@@ -110,8 +110,8 @@ public class ItemFormViewModel {
 			pushMessage(task.getValue());
 		});
 		
-		task.exceptionProperty().addListener((v, ov, nv) -> {
-			pushMessage(nv.getMessage());
+		task.setOnFailed(evt -> {
+			pushMessage(task.getException().getMessage());
 		});
 		
 		Executors.newSingleThreadExecutor().submit(task);

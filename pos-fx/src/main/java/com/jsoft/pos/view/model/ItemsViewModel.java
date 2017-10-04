@@ -58,9 +58,9 @@ public class ItemsViewModel extends PagableViewModel<Item> {
 			searchPage();
 		});
 		
-		task.exceptionProperty().addListener((v, ov, nv) -> {
-			pushMessage(nv.getMessage());
-			loading.set(false);
+		task.setOnFailed(evt -> {
+			pushMessage(task.getException().getMessage());
+			loading.unbind();
 		});
 		
 		Executors.newSingleThreadExecutor().submit(task);
@@ -88,8 +88,8 @@ public class ItemsViewModel extends PagableViewModel<Item> {
 					list.size() > 0 ? range : 0, count));
 		});
 		
-		task.exceptionProperty().addListener((v, ov, nv) -> {
-			pushMessage(nv.getMessage());
+		task.setOnFailed(evt -> {
+			pushMessage(task.getException().getMessage());
 			loading.unbind();
 		});
 		
@@ -108,8 +108,8 @@ public class ItemsViewModel extends PagableViewModel<Item> {
 			categories.set(FXCollections.observableArrayList(task.getValue()));
 		});
 		
-		task.exceptionProperty().addListener((v, ov, nv) -> {
-			pushMessage(nv.getMessage());
+		task.setOnFailed(evt -> {
+			pushMessage(task.getException().getMessage());
 		});
 		
 		Executors.newSingleThreadExecutor().submit(task);
@@ -138,6 +138,7 @@ public class ItemsViewModel extends PagableViewModel<Item> {
 		task.exceptionProperty().addListener((v, ov, nv) -> {
 			pushMessage(nv.getMessage());
 			loading.unbind();
+			loading.set(false);
 		});
 		
 		Executors.newSingleThreadExecutor().submit(task);

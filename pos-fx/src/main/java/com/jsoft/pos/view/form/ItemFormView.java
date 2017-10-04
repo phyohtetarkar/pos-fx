@@ -90,6 +90,12 @@ public class ItemFormView implements Initializable {
 		purchasePrice.getValidators().addAll(Utils.requiredValidator(), Utils.numberValidator());
 		retailPrice.getValidators().addAll(Utils.requiredValidator(), Utils.numberValidator());
 		quantity.getValidators().addAll(Utils.requiredValidator(), Utils.numberValidator());
+		
+		name.textProperty().addListener((v, ov, nv) -> name.validate());
+		code.textProperty().addListener((v, ov, nv) -> code.validate());
+		purchasePrice.textProperty().addListener((v, ov, nv) -> purchasePrice.validate());
+		retailPrice.textProperty().addListener((v, ov, nv) -> retailPrice.validate());
+		quantity.textProperty().addListener((v, ov, nv) -> quantity.validate());
 	}
 
 	public void setItem(Item item) {

@@ -1,13 +1,14 @@
 .root {
 	-color-primary: #2196F3;
 	-color-primary-dark: #1976D2;
-	-color-accent: #FF8A65;
+	-color-accent: #EF5350;
 	-color-highlight: #f2f2f2;
-	-color-white: #ffffff;
-	-color-back: #f9f9f9;
+	-color-white: white;
+	-color-back: #E3F2FD;
+	-color-ripple: #e2e2e2;
 	-color-transparent: rgba(0, 0, 0, 0);
 	-color-transparent-lo: rgba(0, 0, 0, 0.7);
-	-text-accent: #212121;
+	-text-accent: white;
 	-text-default: #212121;
 	-text-default-secondary: #757575;
 }
@@ -28,11 +29,11 @@
 }
 
 .color-white {
-	-fx-background-color: -color-white;
+	-fx-background-color: white;
 }
 
 .color-black {
-	-fx-background-color: #000000;
+	-fx-background-color: black;
 }
 
 .color-back {

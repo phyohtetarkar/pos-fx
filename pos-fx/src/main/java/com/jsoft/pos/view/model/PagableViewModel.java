@@ -13,7 +13,7 @@ import javafx.beans.property.StringProperty;
 
 public abstract class PagableViewModel<T> {
 	
-	protected int limit = 20;
+	protected int limit = 2;
 	protected int count = 0;
 	
 	protected ListProperty<T> list = new SimpleListProperty<>();

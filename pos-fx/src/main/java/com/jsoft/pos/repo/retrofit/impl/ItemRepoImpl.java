@@ -44,7 +44,7 @@ public class ItemRepoImpl implements ItemRepo {
 		try {
 			Response<Long> resp = service.count(code, name, categoryId).execute();
 			if (!resp.isSuccessful()) {
-				throw new RepositoryException(resp.errorBody().string());
+				throw new RepositoryException(resp.errorBody().string().replace("\"", ""));
 			} 
 			
 			return resp.body();
@@ -59,7 +59,7 @@ public class ItemRepoImpl implements ItemRepo {
 		try {
 			Response<Item> resp = service.findById(id).execute();
 			if (!resp.isSuccessful()) {
-				throw new RepositoryException(resp.errorBody().string());
+				throw new RepositoryException(resp.errorBody().string().replace("\"", ""));
 			} 
 			
 			return resp.body();
@@ -74,7 +74,7 @@ public class ItemRepoImpl implements ItemRepo {
 		try {
 			Response<String> resp = service.save(item).execute();
 			if (!resp.isSuccessful()) {
-				throw new RepositoryException(resp.errorBody().string());
+				throw new RepositoryException(resp.errorBody().string().replace("\"", ""));
 			} 
 			
 			return resp.body();
@@ -90,7 +90,7 @@ public class ItemRepoImpl implements ItemRepo {
 		try {
 			Response<String> resp = service.uploadImage(body).execute();
 			if (!resp.isSuccessful()) {
-				throw new RepositoryException(resp.errorBody().string());
+				throw new RepositoryException(resp.errorBody().string().replace("\"", ""));
 			} 
 			
 			return resp.body();

@@ -48,8 +48,8 @@ public class CategoriesViewModel {
 			loading.unbind();
 		});
 		
-		task.exceptionProperty().addListener((v, ov, nv) -> {
-			pushMessage(nv.getMessage());
+		task.setOnFailed(evt -> {
+			pushMessage(task.getException().getMessage());
 			loading.unbind();
 		});
 		
@@ -77,8 +77,8 @@ public class CategoriesViewModel {
 			load();
 		});
 		
-		task.exceptionProperty().addListener((v, ov, nv) -> {
-			pushMessage(nv.getMessage());
+		task.setOnFailed(evt -> {
+			pushMessage(task.getException().getMessage());
 			loading.unbind();
 		});
 		

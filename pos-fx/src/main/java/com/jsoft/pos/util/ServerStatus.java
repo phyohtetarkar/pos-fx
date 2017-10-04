@@ -6,7 +6,7 @@ import java.net.URLConnection;
 
 public class ServerStatus {
 
-	public static final String CONNECTION_ERROR = "Error connecting to server!";
+	public static final String CONNECTION_ERROR = "Error connecting with server!";
 
 	public static boolean isReachable() {
 
