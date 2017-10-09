@@ -6,9 +6,9 @@ import com.jsoft.pos.domain.Category;
 import com.jsoft.pos.domain.Item;
 import com.jsoft.pos.repo.CategoryRepo;
 import com.jsoft.pos.repo.ItemRepo;
-import com.jsoft.pos.repo.retrofit.impl.CategoryRepoImpl;
-import com.jsoft.pos.repo.retrofit.impl.ItemRepoImpl;
 import com.jsoft.pos.util.GlobalExecutor;
+import com.jsoft.pos.util.RepositoryFactory;
+import com.jsoft.pos.util.RepositoryFactory.Provider;
 
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
@@ -31,8 +31,8 @@ public class ItemsViewModel extends PagableViewModel<Item> {
 	private CategoryRepo catRepo;
 
 	public ItemsViewModel() {
-		repo = new ItemRepoImpl();
-		catRepo = new CategoryRepoImpl();
+		repo = RepositoryFactory.create(ItemRepo.class, Provider.RETROFIT);
+		catRepo = RepositoryFactory.create(CategoryRepo.class, Provider.RETROFIT);
 	}
 
 	@Override
@@ -82,6 +82,7 @@ public class ItemsViewModel extends PagableViewModel<Item> {
 			list.clear();
 			list.set(FXCollections.observableArrayList(task.getValue()));
 			loading.unbind();
+			
 			int offset = currentPage.get() * limit;
 			int range = offset + list.size();
 			pageInfo.set(String.format("Showing %d to %d of %d", offset + 1, 

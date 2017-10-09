@@ -39,7 +39,7 @@
                      <children>
                         <StackPane maxHeight="202.0" maxWidth="202.0" minHeight="202.0" minWidth="202.0" styleClass="border-1">
                            <children>
-                              <ImageView fx:id="imageView" fitHeight="200.0" fitWidth="200.0" onMouseClicked="#chooseImage" pickOnBounds="true">
+                              <ImageView fx:id="imageView" fitHeight="200.0" fitWidth="200.0" onMouseClicked="#chooseImage" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../custom/placeholder.png" />
                                  </image>

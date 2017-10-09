@@ -1,7 +1,5 @@
 package com.jsoft.pos.util;
 
-import java.util.Objects;
-
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
@@ -29,7 +27,7 @@ public class RetrofitSingleton {
 	}
 	
 	public static RetrofitSingleton getInstance() {
-		if (Objects.isNull(INSTANCE)) {
+		if (INSTANCE == null) {
 			INSTANCE = new RetrofitSingleton();
 		}
 		

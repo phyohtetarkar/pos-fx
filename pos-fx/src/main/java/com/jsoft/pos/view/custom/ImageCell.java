@@ -2,6 +2,7 @@ package com.jsoft.pos.view.custom;
 
 import java.util.Objects;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.TableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,11 +15,13 @@ public class ImageCell<S> extends TableCell<S, String> {
 
 	public ImageCell(String placeholder) {
 		frame = new VBox();
-		frame.setMaxSize(100, 100);
+		frame.setMinSize(100, 100);
+		frame.setAlignment(Pos.CENTER);
 
 		imageView = new ImageView(new Image(ImageCell.class.getResource(placeholder.concat(".png")).toExternalForm(), true));
 		imageView.setFitHeight(100);
 		imageView.setFitWidth(100);
+		imageView.setPreserveRatio(true);
 		imageView.setSmooth(true);
 
 		frame.getChildren().add(imageView);

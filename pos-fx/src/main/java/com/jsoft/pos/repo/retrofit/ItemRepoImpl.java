@@ -1,4 +1,4 @@
-package com.jsoft.pos.repo.retrofit.impl;
+package com.jsoft.pos.repo.retrofit;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,7 +9,7 @@ import com.jsoft.pos.repo.ItemRepo;
 import com.jsoft.pos.service.ItemService;
 import com.jsoft.pos.util.OperationCallback;
 import com.jsoft.pos.util.ProgressRequestBody;
-import com.jsoft.pos.util.RepositoryException;
+import com.jsoft.pos.util.ApplicationException;
 import com.jsoft.pos.util.RetrofitSingleton;
 import com.jsoft.pos.util.ServerStatus;
 
@@ -29,13 +29,13 @@ public class ItemRepoImpl implements ItemRepo {
 		try {
 			Response<List<Item>> resp = service.search(code, name, categoryId, offset, limit).execute();
 			if (!resp.isSuccessful()) {
-				throw new RepositoryException(resp.errorBody().string());
+				throw new ApplicationException(resp.errorBody().string());
 			} 
 			
 			return resp.body();
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new RepositoryException(ServerStatus.CONNECTION_ERROR);
+			throw new ApplicationException(ServerStatus.CONNECTION_ERROR);
 		}
 	}
 
@@ -44,13 +44,13 @@ public class ItemRepoImpl implements ItemRepo {
 		try {
 			Response<Long> resp = service.count(code, name, categoryId).execute();
 			if (!resp.isSuccessful()) {
-				throw new RepositoryException(resp.errorBody().string().replace("\"", ""));
+				throw new ApplicationException(resp.errorBody().string().replace("\"", ""));
 			} 
 			
 			return resp.body();
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new RepositoryException(ServerStatus.CONNECTION_ERROR);
+			throw new ApplicationException(ServerStatus.CONNECTION_ERROR);
 		}
 	}
 
@@ -59,13 +59,13 @@ public class ItemRepoImpl implements ItemRepo {
 		try {
 			Response<Item> resp = service.findById(id).execute();
 			if (!resp.isSuccessful()) {
-				throw new RepositoryException(resp.errorBody().string().replace("\"", ""));
+				throw new ApplicationException(resp.errorBody().string().replace("\"", ""));
 			} 
 			
 			return resp.body();
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new RepositoryException(ServerStatus.CONNECTION_ERROR);
+			throw new ApplicationException(ServerStatus.CONNECTION_ERROR);
 		}
 	}
 
@@ -74,13 +74,13 @@ public class ItemRepoImpl implements ItemRepo {
 		try {
 			Response<String> resp = service.save(item).execute();
 			if (!resp.isSuccessful()) {
-				throw new RepositoryException(resp.errorBody().string().replace("\"", ""));
+				throw new ApplicationException(resp.errorBody().string().replace("\"", ""));
 			} 
 			
 			return resp.body();
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new RepositoryException(ServerStatus.CONNECTION_ERROR);
+			throw new ApplicationException(ServerStatus.CONNECTION_ERROR);
 		}
 	}
 
@@ -90,7 +90,7 @@ public class ItemRepoImpl implements ItemRepo {
 		try {
 			Response<String> resp = service.uploadImage(body).execute();
 			if (!resp.isSuccessful()) {
-				throw new RepositoryException(resp.errorBody().string().replace("\"", ""));
+				throw new ApplicationException(resp.errorBody().string().replace("\"", ""));
 			} 
 			
 			return resp.body();
@@ -99,7 +99,7 @@ public class ItemRepoImpl implements ItemRepo {
 			if (callback != null) {
 				callback.onError();
 			}
-			throw new RepositoryException(ServerStatus.CONNECTION_ERROR);
+			throw new ApplicationException(ServerStatus.CONNECTION_ERROR);
 		}
 	}
 

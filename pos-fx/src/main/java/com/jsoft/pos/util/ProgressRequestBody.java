@@ -3,7 +3,6 @@ package com.jsoft.pos.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Objects;
 
 import javafx.application.Platform;
 import okhttp3.MediaType;
@@ -45,7 +44,7 @@ public class ProgressRequestBody extends RequestBody {
 				double progress = (double) uploaded / fileLength;
 		        
 				Platform.runLater(() -> {
-					if (Objects.nonNull(callback)) {
+					if (callback != null) {
 						callback.onProgressUpdate(progress);
 					}
 				});
@@ -53,17 +52,9 @@ public class ProgressRequestBody extends RequestBody {
 				uploaded += read;
 				bs.write(buffer, 0, read);
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-			Platform.runLater(() -> {
-				if (Objects.nonNull(callback)) {
-					callback.onError();
-				}
-			});
-			throw new RuntimeException("Error uploading file!");
 		} finally {
 			Platform.runLater(() -> {
-				if (Objects.nonNull(callback)) {
+				if (callback != null) {
 					callback.onFinished();
 				}
 			});

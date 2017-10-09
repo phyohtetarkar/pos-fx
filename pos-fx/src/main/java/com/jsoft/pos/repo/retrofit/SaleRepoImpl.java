@@ -1,4 +1,4 @@
-package com.jsoft.pos.repo.retrofit.impl;
+package com.jsoft.pos.repo.retrofit;
 
 import java.io.IOException;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import com.jsoft.pos.domain.Sale;
 import com.jsoft.pos.repo.SaleRepo;
 import com.jsoft.pos.service.SaleService;
-import com.jsoft.pos.util.RepositoryException;
+import com.jsoft.pos.util.ApplicationException;
 import com.jsoft.pos.util.RetrofitSingleton;
 import com.jsoft.pos.util.ServerStatus;
 
@@ -25,13 +25,13 @@ public class SaleRepoImpl implements SaleRepo {
 		try {
 			Response<List<Sale>> resp = service.search(dateFrom, dateTo, employeeId, offset, limit).execute();
 			if (!resp.isSuccessful()) {
-				throw new RepositoryException(resp.errorBody().string());
+				throw new ApplicationException(resp.errorBody().string());
 			} 
 			
 			return resp.body();
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new RepositoryException(ServerStatus.CONNECTION_ERROR);
+			throw new ApplicationException(ServerStatus.CONNECTION_ERROR);
 		}
 	}
 
@@ -40,13 +40,13 @@ public class SaleRepoImpl implements SaleRepo {
 		try {
 			Response<Long> resp = service.count(dateFrom, dateTo, employeeId).execute();
 			if (!resp.isSuccessful()) {
-				throw new RepositoryException(resp.errorBody().string());
+				throw new ApplicationException(resp.errorBody().string());
 			} 
 			
 			return resp.body();
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new RepositoryException(ServerStatus.CONNECTION_ERROR);
+			throw new ApplicationException(ServerStatus.CONNECTION_ERROR);
 		}
 	}
 
@@ -55,13 +55,13 @@ public class SaleRepoImpl implements SaleRepo {
 		try {
 			Response<Sale> resp = service.findById(id).execute();
 			if (!resp.isSuccessful()) {
-				throw new RepositoryException(resp.errorBody().string());
+				throw new ApplicationException(resp.errorBody().string());
 			} 
 			
 			return resp.body();
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new RepositoryException(ServerStatus.CONNECTION_ERROR);
+			throw new ApplicationException(ServerStatus.CONNECTION_ERROR);
 		}
 	}
 
@@ -70,13 +70,13 @@ public class SaleRepoImpl implements SaleRepo {
 		try {
 			Response<String> resp = service.save(sale).execute();
 			if (!resp.isSuccessful()) {
-				throw new RepositoryException(resp.errorBody().string());
+				throw new ApplicationException(resp.errorBody().string());
 			} 
 			
 			return resp.body();
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new RepositoryException(ServerStatus.CONNECTION_ERROR);
+			throw new ApplicationException(ServerStatus.CONNECTION_ERROR);
 		}
 	}
 

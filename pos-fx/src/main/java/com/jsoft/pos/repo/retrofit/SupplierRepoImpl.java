@@ -1,4 +1,4 @@
-package com.jsoft.pos.repo.retrofit.impl;
+package com.jsoft.pos.repo.retrofit;
 
 import java.io.IOException;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import com.jsoft.pos.domain.Supplier;
 import com.jsoft.pos.repo.SupplierRepo;
 import com.jsoft.pos.service.SupplierService;
-import com.jsoft.pos.util.RepositoryException;
+import com.jsoft.pos.util.ApplicationException;
 import com.jsoft.pos.util.RetrofitSingleton;
 import com.jsoft.pos.util.ServerStatus;
 
@@ -25,13 +25,13 @@ public class SupplierRepoImpl implements SupplierRepo {
 		try {
 			Response<List<Supplier>> resp = service.search(name, offset, limit).execute();
 			if (!resp.isSuccessful()) {
-				throw new RepositoryException(resp.errorBody().string());
+				throw new ApplicationException(resp.errorBody().string());
 			} 
 			
 			return resp.body();
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new RepositoryException(ServerStatus.CONNECTION_ERROR);
+			throw new ApplicationException(ServerStatus.CONNECTION_ERROR);
 		}
 	}
 
@@ -40,13 +40,13 @@ public class SupplierRepoImpl implements SupplierRepo {
 		try {
 			Response<Long> resp = service.count(name).execute();
 			if (!resp.isSuccessful()) {
-				throw new RepositoryException(resp.errorBody().string());
+				throw new ApplicationException(resp.errorBody().string());
 			} 
 			
 			return resp.body();
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new RepositoryException(ServerStatus.CONNECTION_ERROR);
+			throw new ApplicationException(ServerStatus.CONNECTION_ERROR);
 		}
 	}
 
@@ -55,13 +55,13 @@ public class SupplierRepoImpl implements SupplierRepo {
 		try {
 			Response<Supplier> resp = service.findById(id).execute();
 			if (!resp.isSuccessful()) {
-				throw new RepositoryException(resp.errorBody().string());
+				throw new ApplicationException(resp.errorBody().string());
 			} 
 			
 			return resp.body();
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new RepositoryException(ServerStatus.CONNECTION_ERROR);
+			throw new ApplicationException(ServerStatus.CONNECTION_ERROR);
 		}
 	}
 
@@ -70,13 +70,13 @@ public class SupplierRepoImpl implements SupplierRepo {
 		try {
 			Response<String> resp = service.save(supplier).execute();
 			if (!resp.isSuccessful()) {
-				throw new RepositoryException(resp.errorBody().string());
+				throw new ApplicationException(resp.errorBody().string());
 			} 
 			
 			return resp.body();
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new RepositoryException(ServerStatus.CONNECTION_ERROR);
+			throw new ApplicationException(ServerStatus.CONNECTION_ERROR);
 		}
 	}
 

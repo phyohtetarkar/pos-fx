@@ -1,6 +1,5 @@
 package com.jsoft.pos.view.model;
 
-import java.util.Objects;
 import java.util.function.Consumer;
 
 import javafx.beans.property.BooleanProperty;
@@ -31,7 +30,7 @@ public abstract class PagableViewModel<T> {
 	public abstract void searchPage();
 	
 	protected void pushMessage(String message) {
-		if (Objects.nonNull(onMessage)) {
+		if (onMessage != null) {
 			onMessage.accept(message);
 		}
 	}

@@ -1,4 +1,4 @@
-package com.jsoft.pos.repo.retrofit.impl;
+package com.jsoft.pos.repo.retrofit;
 
 import java.io.IOException;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import com.jsoft.pos.domain.Category;
 import com.jsoft.pos.repo.CategoryRepo;
 import com.jsoft.pos.service.CategoryService;
-import com.jsoft.pos.util.RepositoryException;
+import com.jsoft.pos.util.ApplicationException;
 import com.jsoft.pos.util.RetrofitSingleton;
 import com.jsoft.pos.util.ServerStatus;
 
@@ -25,13 +25,13 @@ public class CategoryRepoImpl implements CategoryRepo {
 		try {
 			Response<List<Category>> resp = service.findAll().execute();
 			if (!resp.isSuccessful()) {
-				throw new RepositoryException(resp.errorBody().string());
+				throw new ApplicationException(resp.errorBody().string());
 			} 
 			
 			return resp.body();
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new RepositoryException(ServerStatus.CONNECTION_ERROR);
+			throw new ApplicationException(ServerStatus.CONNECTION_ERROR);
 		}
 	}
 
@@ -40,13 +40,13 @@ public class CategoryRepoImpl implements CategoryRepo {
 		try {
 			Response<Category> resp = service.findById(id).execute();
 			if (!resp.isSuccessful()) {
-				throw new RepositoryException(resp.errorBody().string());
+				throw new ApplicationException(resp.errorBody().string());
 			} 
 			
 			return resp.body();
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new RepositoryException(ServerStatus.CONNECTION_ERROR);
+			throw new ApplicationException(ServerStatus.CONNECTION_ERROR);
 		}
 	}
 
@@ -55,13 +55,13 @@ public class CategoryRepoImpl implements CategoryRepo {
 		try {
 			Response<String> resp = service.save(category).execute();
 			if (!resp.isSuccessful()) {
-				throw new RepositoryException(resp.errorBody().string());
+				throw new ApplicationException(resp.errorBody().string());
 			} 
 			
 			return resp.body();
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new RepositoryException(ServerStatus.CONNECTION_ERROR);
+			throw new ApplicationException(ServerStatus.CONNECTION_ERROR);
 		}
 	}
 	

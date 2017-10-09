@@ -51,7 +51,7 @@ public class Navigator {
 		}
 	}
 	
-	public static<T> T navigateAndWait(String action) {
+	public static <T> T navigateAndWait(String action) {
 		return handle(action, contentView);
 	}
 
@@ -81,7 +81,7 @@ public class Navigator {
 		}
 	}
 
-	private static<T> T handle(String action, Pane view) {
+	private static <T> T handle(String action, Pane view) {
 
 		try {
 			

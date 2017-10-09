@@ -26,7 +26,7 @@ public class CategoriesView implements Initializable {
 	private static final String INPUT_PLACEHOLDER = "Category Name";
 
 	@FXML
-	protected TableView<Category> tableView;
+	private TableView<Category> tableView;
 	@FXML
 	private TableColumn<Category, String> createUser;
 	@FXML
@@ -36,7 +36,7 @@ public class CategoriesView implements Initializable {
 	@FXML
 	private TableColumn<Category, String> updateDate;
 	@FXML
-	protected JFXSpinner spinner;
+	private JFXSpinner spinner;
 	@FXML
 	private JFXTextField filter;
 

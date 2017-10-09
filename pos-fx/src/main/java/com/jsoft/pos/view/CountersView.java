@@ -25,9 +25,9 @@ public class CountersView implements Initializable {
 	private static final String INPUT_PLACEHOLDER = "Counter";
 
 	@FXML
-	protected TableView<Counter> tableView;
+	private TableView<Counter> tableView;
 	@FXML
-	protected JFXSpinner spinner;
+	private JFXSpinner spinner;
 	@FXML
 	private TableColumn<Counter, String> createDate;
 	@FXML

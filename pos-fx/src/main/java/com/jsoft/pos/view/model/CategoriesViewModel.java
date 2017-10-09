@@ -1,14 +1,14 @@
 package com.jsoft.pos.view.model;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import com.jsoft.pos.domain.Category;
 import com.jsoft.pos.repo.CategoryRepo;
-import com.jsoft.pos.repo.retrofit.impl.CategoryRepoImpl;
 import com.jsoft.pos.util.GlobalExecutor;
+import com.jsoft.pos.util.RepositoryFactory;
+import com.jsoft.pos.util.RepositoryFactory.Provider;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ListProperty;
@@ -29,7 +29,7 @@ public class CategoriesViewModel {
 	private CategoryRepo repo;
 	
 	public CategoriesViewModel() {
-		repo = new CategoryRepoImpl();
+		repo = RepositoryFactory.create(CategoryRepo.class, Provider.RETROFIT);
 	}
 
 	public void load() {
@@ -87,7 +87,7 @@ public class CategoriesViewModel {
 	}
 	
 	public void filter(String text) {
-		if (Objects.nonNull(copyList)) {
+		if (copyList != null) {
 			list.set(FXCollections.observableArrayList(copyList.stream()
 					.filter(c -> c.getName().toLowerCase().startsWith(text))
 					.collect(Collectors.toList())));
@@ -95,7 +95,7 @@ public class CategoriesViewModel {
 	}
 	
 	private void pushMessage(String message) {
-		if (Objects.nonNull(onMessage)) {
+		if (onMessage != null) {
 			onMessage.accept(message);
 		}
 	}

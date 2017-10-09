@@ -13,7 +13,6 @@ import com.jsoft.pos.domain.Category;
 import com.jsoft.pos.domain.Item;
 import com.jsoft.pos.util.AlertUtil;
 import com.jsoft.pos.util.Navigator;
-import com.jsoft.pos.util.OperationCallback;
 import com.jsoft.pos.util.Utils;
 import com.jsoft.pos.view.LoadingDialogView;
 import com.jsoft.pos.view.model.ItemFormViewModel;
@@ -69,8 +68,8 @@ public class ItemFormView implements Initializable {
 		model.itemWrapper().categoryProperty().bindBidirectional(categories.valueProperty());
 		
 		categories.itemsProperty().bind(model.categoriesProperty());
-
-		model.setOnSaveComplete(this::back);
+		progress.progressProperty().bind(model.uploadProperty());
+		progressContainer.visibleProperty().bind(model.uploadProperty().greaterThan(0).and(model.uploadProperty().lessThan(1)));
 
 		LoadingDialogView.init("Saving...", model.loadingProperty());
 
@@ -80,8 +79,8 @@ public class ItemFormView implements Initializable {
 			imageView.setImage(new Image(nv, true));
 		});
 		
+		model.setOnSaveComplete(this::back);
 		model.setOnMessage(AlertUtil::queueToast);
-
 		model.init();
 	}
 
@@ -127,27 +126,7 @@ public class ItemFormView implements Initializable {
 		 */
 
 		File image = fileChooser.showOpenDialog(imageView.getScene().getWindow());
-
-		progress.setProgress(0);
-		progressContainer.setVisible(true);
-		model.upload(image, new OperationCallback() {
-
-			@Override
-			public void onProgressUpdate(double value) {
-				progress.setProgress(value);
-			}
-
-			@Override
-			public void onFinished() {
-				progress.setProgress(1);
-				progressContainer.setVisible(false);
-			}
-
-			@Override
-			public void onError() {
-				progressContainer.setVisible(false);
-			}
-		});
+		model.upload(image);
 	}
 
 	public void back() {

@@ -2,7 +2,6 @@ package com.jsoft.pos.view.model;
 
 import java.io.File;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Consumer;
 
 import com.jsoft.pos.domain.Category;
@@ -10,10 +9,10 @@ import com.jsoft.pos.domain.Item;
 import com.jsoft.pos.domain.wrapper.ItemWrapper;
 import com.jsoft.pos.repo.CategoryRepo;
 import com.jsoft.pos.repo.ItemRepo;
-import com.jsoft.pos.repo.retrofit.impl.CategoryRepoImpl;
-import com.jsoft.pos.repo.retrofit.impl.ItemRepoImpl;
 import com.jsoft.pos.util.GlobalExecutor;
 import com.jsoft.pos.util.OperationCallback;
+import com.jsoft.pos.util.RepositoryFactory;
+import com.jsoft.pos.util.RepositoryFactory.Provider;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
@@ -38,8 +37,8 @@ public class ItemFormViewModel {
 
 	public ItemFormViewModel() {
 		wrapper = new ItemWrapper();
-		repo = new ItemRepoImpl();
-		catRepo = new CategoryRepoImpl();
+		repo = RepositoryFactory.create(ItemRepo.class, Provider.RETROFIT);
+		catRepo = RepositoryFactory.create(CategoryRepo.class, Provider.RETROFIT);
 	}
 	
 	public void init() {
@@ -60,7 +59,7 @@ public class ItemFormViewModel {
 		task.setOnSucceeded(evt -> {
 			pushMessage(task.getValue());
 			loading.unbind();
-			if (Objects.nonNull(onFinishedListener)) {
+			if (onFinishedListener != null) {
 				onFinishedListener.finished();
 			}
 		});
@@ -84,7 +83,7 @@ public class ItemFormViewModel {
 		task.setOnSucceeded(evt -> {
 			categories.set(FXCollections.observableArrayList(task.getValue()));
 			Category category = wrapper.categoryProperty().get();
-			if (Objects.nonNull(category)) {
+			if (category != null) {
 				wrapper.categoryProperty().set(null);
 				wrapper.categoryProperty().set(category);
 			} else {
@@ -99,27 +98,48 @@ public class ItemFormViewModel {
 		GlobalExecutor.get().submit(task);
 	}
 	
-	public void upload(File image, OperationCallback callback) {
+	public void upload(File image) {
+		upload.set(0);
 		Task<String> task = new Task<String>() {
 			@Override
 			protected String call() throws Exception {
-				return repo.uploadImage(image, callback);
+				return repo.uploadImage(image, new OperationCallback() {
+					
+					@Override
+					public void onProgressUpdate(double value) {
+						updateProgress(value, 1);
+					}
+					
+					@Override
+					public void onFinished() {
+						updateProgress(1, 1);
+					}
+					
+					@Override
+					public void onError() {
+						updateProgress(0, 1);
+					}
+				});
 			}
 		};
 		
+		upload.bind(task.progressProperty());
+		
 		task.setOnSucceeded(evt -> {
 			pushMessage(task.getValue());
+			upload.unbind();
 		});
 		
 		task.setOnFailed(evt -> {
 			pushMessage(task.getException().getMessage());
+			upload.unbind();
 		});
 		
 		GlobalExecutor.get().submit(task);
 	}
 	
 	private void pushMessage(String message) {
-		if (Objects.nonNull(onMessage)) {
+		if (onMessage != null) {
 			onMessage.accept(message);
 		}
 	}
