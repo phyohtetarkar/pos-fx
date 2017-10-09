@@ -50,7 +50,7 @@ public class ItemsView extends PagableView<Item> {
 				.onEdit(e -> {
 					Item item = tableView.getSelectionModel().getSelectedItem();
 					ItemFormView form = Navigator.navigateAndWait("form/ItemForm");
-					Navigator.setNavTitle("Items / Item Form");
+					Navigator.setNavTitle("Edit Item");
 					Platform.runLater(() -> {
 						form.setItem(item);
 					}); 
@@ -76,7 +76,7 @@ public class ItemsView extends PagableView<Item> {
 	
 	public void add() {
 		Navigator.navigate("form/ItemForm");
-		Navigator.setNavTitle("Items / Item Form");
+		Navigator.setNavTitle("New Item");
 	}
 	
 	public void clear() {
