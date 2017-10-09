@@ -2,7 +2,7 @@ package com.jsoft.pos.view.model;
 
 import java.io.File;
 import java.util.List;
-import java.util.concurrent.Executors;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import com.jsoft.pos.domain.Category;
@@ -12,6 +12,7 @@ import com.jsoft.pos.repo.CategoryRepo;
 import com.jsoft.pos.repo.ItemRepo;
 import com.jsoft.pos.repo.retrofit.impl.CategoryRepoImpl;
 import com.jsoft.pos.repo.retrofit.impl.ItemRepoImpl;
+import com.jsoft.pos.util.GlobalExecutor;
 import com.jsoft.pos.util.OperationCallback;
 
 import javafx.beans.property.BooleanProperty;
@@ -59,7 +60,7 @@ public class ItemFormViewModel {
 		task.setOnSucceeded(evt -> {
 			pushMessage(task.getValue());
 			loading.unbind();
-			if (onFinishedListener != null) {
+			if (Objects.nonNull(onFinishedListener)) {
 				onFinishedListener.finished();
 			}
 		});
@@ -69,7 +70,7 @@ public class ItemFormViewModel {
 			loading.unbind();
 		});
 		
-		Executors.newSingleThreadExecutor().submit(task);
+		GlobalExecutor.get().submit(task);
 	}
 	
 	private void loadCategories() {
@@ -83,7 +84,7 @@ public class ItemFormViewModel {
 		task.setOnSucceeded(evt -> {
 			categories.set(FXCollections.observableArrayList(task.getValue()));
 			Category category = wrapper.categoryProperty().get();
-			if (category != null) {
+			if (Objects.nonNull(category)) {
 				wrapper.categoryProperty().set(null);
 				wrapper.categoryProperty().set(category);
 			} else {
@@ -95,7 +96,7 @@ public class ItemFormViewModel {
 			pushMessage(task.getException().getMessage());
 		});
 		
-		Executors.newSingleThreadExecutor().submit(task);
+		GlobalExecutor.get().submit(task);
 	}
 	
 	public void upload(File image, OperationCallback callback) {
@@ -114,11 +115,11 @@ public class ItemFormViewModel {
 			pushMessage(task.getException().getMessage());
 		});
 		
-		Executors.newSingleThreadExecutor().submit(task);
+		GlobalExecutor.get().submit(task);
 	}
 	
 	private void pushMessage(String message) {
-		if (onMessage != null) {
+		if (Objects.nonNull(onMessage)) {
 			onMessage.accept(message);
 		}
 	}

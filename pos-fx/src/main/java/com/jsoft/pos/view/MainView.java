@@ -39,7 +39,7 @@ public class MainView implements Initializable {
 				"Customers", "Suppliers", "Pos", "Purchase", "Reports",
 				"Analysis", "Logout");
 		list.setDepth(0);
-		list.getSelectionModel().select(1);
+		list.getSelectionModel().select(0);
 		
 		Navigator.setContentView(container);
 		Navigator.setTitle(naviPath);

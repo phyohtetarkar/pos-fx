@@ -1,41 +1,47 @@
 package com.jsoft.pos.view.custom;
 
+import java.util.Objects;
+
 import javafx.scene.control.TableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
-public class ImageCell<S> extends TableCell<S, String>{
-	
+public class ImageCell<S> extends TableCell<S, String> {
+
 	private ImageView imageView;
 	private VBox frame;
-	
+
 	public ImageCell(String placeholder) {
 		frame = new VBox();
-		frame.setMaxSize(82, 82);
-		
-		imageView = new ImageView(new Image(ImageCell.class.getResource(placeholder.concat(".png")).toExternalForm(), 80, 80, true, true));
-		imageView.setFitHeight(82);
-		imageView.setFitWidth(82);
-		
+		frame.setMaxSize(100, 100);
+
+		imageView = new ImageView(new Image(ImageCell.class.getResource(placeholder.concat(".png")).toExternalForm(), true));
+		imageView.setFitHeight(100);
+		imageView.setFitWidth(100);
+		imageView.setSmooth(true);
+
 		frame.getChildren().add(imageView);
 	}
 
 	@Override
 	protected void updateItem(String item, boolean empty) {
 		super.updateItem(item, empty);
-		
+
 		if (!empty) {
 			
-			if (item != null && !item.isEmpty()) {
-				imageView.setImage(new Image(item, 80, 80, true, true, true));
+			if (Objects.nonNull(item) && !item.isEmpty()) {
+				// BufferedImage image = ImageIO.read(new URL(item));
+				// SwingFXUtils.toFXImage(image, null);
+				imageView.setImage(new Image(item, true));
+
 			}
-			
+
 			setGraphic(frame);
 		} else {
 			setGraphic(null);
 		}
-		
+
 	}
-	
+
 }

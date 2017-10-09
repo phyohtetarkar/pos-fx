@@ -20,7 +20,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 public class CategoriesView implements Initializable {
-	
+
 	private static final String CREATE_HEADING = "Create New Category";
 	private static final String EDIT_HEADING = "Edit Category";
 	private static final String INPUT_PLACEHOLDER = "Category Name";
@@ -28,11 +28,15 @@ public class CategoriesView implements Initializable {
 	@FXML
 	protected TableView<Category> tableView;
 	@FXML
-	protected JFXSpinner spinner;
+	private TableColumn<Category, String> createUser;
+	@FXML
+	private TableColumn<Category, String> updateUser;
 	@FXML
 	private TableColumn<Category, String> createDate;
 	@FXML
 	private TableColumn<Category, String> updateDate;
+	@FXML
+	protected JFXSpinner spinner;
 	@FXML
 	private JFXTextField filter;
 
@@ -41,33 +45,33 @@ public class CategoriesView implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		model = new CategoriesViewModel();
-		
+
 		tableView.itemsProperty().bind(model.listProperty());
 		tableView.setPlaceholder(new Label(""));
-		tableView.setContextMenu(ActionMenu.builder()
-				.onEdit(e -> {
-					Category category = tableView.getSelectionModel().getSelectedItem();
-					InputView.show(EDIT_HEADING, INPUT_PLACEHOLDER, category, c -> {
-						model.save((Category) c);
-					});
-				})
-				.onDelete(e -> {
-					Category c = tableView.getSelectionModel().getSelectedItem();
-					if (AlertUtil.showConfirm("Are you sure to delete?")) {
-						model.delete(c);
-					}
-				})
-				.build());
+		tableView.setContextMenu(ActionMenu.builder().onEdit(e -> {
+			Category category = tableView.getSelectionModel().getSelectedItem();
+			InputView.show(EDIT_HEADING, INPUT_PLACEHOLDER, category, c -> {
+				model.save((Category) c);
+			});
+		}).onDelete(e -> {
+			Category c = tableView.getSelectionModel().getSelectedItem();
+			if (AlertUtil.showConfirm("Are you sure to delete?")) {
+				model.delete(c);
+			}
+		}).build());
 		
+		createUser.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getSecurity().getCreateUser()));
+		updateUser.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getSecurity().getModifiedUser()));
+
 		createDate.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getSecurity().getCreateDate()));
 		updateDate.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getSecurity().getUpdateDate()));
 
 		filter.textProperty().addListener((a, b, c) -> model.filter(c.toLowerCase()));
-		
+
 		spinner.visibleProperty().bind(model.loadingProperty());
-		
+
 		Navigator.setRefreshAction(e -> model.load());
-		
+
 		model.setOnMessage(AlertUtil::queueToast);
 		model.load();
 	}

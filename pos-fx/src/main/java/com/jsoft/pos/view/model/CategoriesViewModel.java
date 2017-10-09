@@ -1,13 +1,14 @@
 package com.jsoft.pos.view.model;
 
 import java.util.List;
-import java.util.concurrent.Executors;
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import com.jsoft.pos.domain.Category;
 import com.jsoft.pos.repo.CategoryRepo;
 import com.jsoft.pos.repo.retrofit.impl.CategoryRepoImpl;
+import com.jsoft.pos.util.GlobalExecutor;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ListProperty;
@@ -53,7 +54,7 @@ public class CategoriesViewModel {
 			loading.unbind();
 		});
 		
-		Executors.newSingleThreadExecutor().submit(task);
+		GlobalExecutor.get().submit(task);
 	}
 	
 	public void delete(Category category) {
@@ -82,11 +83,11 @@ public class CategoriesViewModel {
 			loading.unbind();
 		});
 		
-		Executors.newSingleThreadExecutor().submit(task);
+		GlobalExecutor.get().submit(task);
 	}
 	
 	public void filter(String text) {
-		if (copyList != null) {
+		if (Objects.nonNull(copyList)) {
 			list.set(FXCollections.observableArrayList(copyList.stream()
 					.filter(c -> c.getName().toLowerCase().startsWith(text))
 					.collect(Collectors.toList())));
@@ -94,7 +95,7 @@ public class CategoriesViewModel {
 	}
 	
 	private void pushMessage(String message) {
-		if (onMessage != null) {
+		if (Objects.nonNull(onMessage)) {
 			onMessage.accept(message);
 		}
 	}

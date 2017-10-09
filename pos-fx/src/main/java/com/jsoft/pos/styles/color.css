@@ -1,10 +1,10 @@
 .root {
-	-color-primary: #2196F3;
-	-color-primary-dark: #1976D2;
-	-color-accent: #EF5350;
+	-color-primary: #3F51B5;
+	-color-primary-dark: #303F9F;
+	-color-accent: #F06292;
 	-color-highlight: #f2f2f2;
 	-color-white: white;
-	-color-back: #E3F2FD;
+	-color-back: #E8EAF6;
 	-color-ripple: #e2e2e2;
 	-color-transparent: rgba(0, 0, 0, 0);
 	-color-transparent-lo: rgba(0, 0, 0, 0.7);

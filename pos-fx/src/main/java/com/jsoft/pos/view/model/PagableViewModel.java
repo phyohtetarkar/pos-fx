@@ -1,5 +1,6 @@
 package com.jsoft.pos.view.model;
 
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import javafx.beans.property.BooleanProperty;
@@ -13,7 +14,7 @@ import javafx.beans.property.StringProperty;
 
 public abstract class PagableViewModel<T> {
 	
-	protected int limit = 2;
+	protected int limit = 20;
 	protected int count = 0;
 	
 	protected ListProperty<T> list = new SimpleListProperty<>();
@@ -30,7 +31,7 @@ public abstract class PagableViewModel<T> {
 	public abstract void searchPage();
 	
 	protected void pushMessage(String message) {
-		if (onMessage != null) {
+		if (Objects.nonNull(onMessage)) {
 			onMessage.accept(message);
 		}
 	}

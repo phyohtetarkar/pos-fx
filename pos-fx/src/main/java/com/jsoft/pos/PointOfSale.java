@@ -3,6 +3,7 @@ package com.jsoft.pos;
 import java.io.IOException;
 
 import com.jfoenix.controls.JFXDecorator;
+import com.jsoft.pos.util.RetrofitSingleton;
 import com.jsoft.pos.view.LoginView;
 
 import javafx.application.Application;
@@ -16,6 +17,12 @@ public class PointOfSale extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);
+	}
+	
+	@Override
+	public void init() throws Exception {
+		super.init();
+		RetrofitSingleton.getInstance();
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package com.jsoft.pos.view.form;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -100,7 +101,7 @@ public class ItemFormView implements Initializable {
 
 	public void setItem(Item item) {
 		model.itemWrapper().setItem(item);
-		if (item.getPhoto() != null) {
+		if (Objects.nonNull(item.getPhoto())) {
 			imageView.setImage(new Image(model.itemWrapper().photoProperty().get(), true));
 		}
 	}

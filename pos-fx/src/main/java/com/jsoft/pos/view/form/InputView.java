@@ -2,6 +2,7 @@ package com.jsoft.pos.view.form;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
@@ -47,7 +48,7 @@ public class InputView implements Initializable {
 			context.heading.setText(heading);
 			context.input.setPromptText(placeholder);
 			
-			if (entity.getName() != null) {
+			if (Objects.nonNull(entity.getName())) {
 				Platform.runLater(() -> context.input.setText(entity.getName())); 
 			}
 			

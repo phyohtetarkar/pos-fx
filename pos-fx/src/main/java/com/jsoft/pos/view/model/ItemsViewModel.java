@@ -1,7 +1,6 @@
 package com.jsoft.pos.view.model;
 
 import java.util.List;
-import java.util.concurrent.Executors;
 
 import com.jsoft.pos.domain.Category;
 import com.jsoft.pos.domain.Item;
@@ -9,6 +8,7 @@ import com.jsoft.pos.repo.CategoryRepo;
 import com.jsoft.pos.repo.ItemRepo;
 import com.jsoft.pos.repo.retrofit.impl.CategoryRepoImpl;
 import com.jsoft.pos.repo.retrofit.impl.ItemRepoImpl;
+import com.jsoft.pos.util.GlobalExecutor;
 
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
@@ -63,7 +63,7 @@ public class ItemsViewModel extends PagableViewModel<Item> {
 			loading.unbind();
 		});
 		
-		Executors.newSingleThreadExecutor().submit(task);
+		GlobalExecutor.get().submit(task);
 	}
 
 	@Override
@@ -93,7 +93,7 @@ public class ItemsViewModel extends PagableViewModel<Item> {
 			loading.unbind();
 		});
 		
-		Executors.newSingleThreadExecutor().submit(task);
+		GlobalExecutor.get().submit(task);
 	}
 
 	private void loadCategories() {
@@ -112,7 +112,7 @@ public class ItemsViewModel extends PagableViewModel<Item> {
 			pushMessage(task.getException().getMessage());
 		});
 		
-		Executors.newSingleThreadExecutor().submit(task);
+		GlobalExecutor.get().submit(task);
 
 	}
 	
@@ -140,7 +140,7 @@ public class ItemsViewModel extends PagableViewModel<Item> {
 			loading.unbind();
 		});
 		
-		Executors.newSingleThreadExecutor().submit(task);
+		GlobalExecutor.get().submit(task);
 	}
 
 	public final ListProperty<Category> categoriesProperty() {

@@ -1,6 +1,7 @@
 package com.jsoft.pos.util;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import com.jfoenix.controls.JFXRippler;
 import com.jsoft.pos.view.MainView;
@@ -75,7 +76,7 @@ public class Navigator {
 	}
 	
 	public static void setRefreshAction(EventHandler<MouseEvent> evt) {
-		if (refresh != null) {
+		if (Objects.nonNull(refresh)) {
 			refresh.setOnMouseClicked(evt);
 		}
 	}
@@ -84,7 +85,7 @@ public class Navigator {
 
 		try {
 			
-			if (refresh != null) {
+			if (Objects.nonNull(refresh)) {
 				refresh.setOnMouseClicked(null);
 			}
 			
@@ -92,10 +93,10 @@ public class Navigator {
 			String viewName = String.format("%s.fxml", action);
 			
 			FXMLLoader loader = new FXMLLoader(MainView.class.getResource(viewName));
-
-			view.getChildren().clear();
+			
 			Node node = loader.load();
 			//play(node);
+			view.getChildren().clear();
 			view.getChildren().add(node);
 			
 			return loader.getController();
@@ -110,7 +111,7 @@ public class Navigator {
 	
 	@SuppressWarnings("unused")
 	private static void play(Node node) {
-		TranslateTransition trans = new TranslateTransition(Duration.millis(500), node);
+		TranslateTransition trans = new TranslateTransition(Duration.millis(300), node);
 		trans.setFromX(-contentView.getWidth());
 		trans.setToX(contentView.getLayoutBounds().getMinX());
 		

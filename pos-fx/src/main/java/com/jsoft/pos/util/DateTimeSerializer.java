@@ -3,6 +3,7 @@ package com.jsoft.pos.util;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -20,7 +21,7 @@ public class DateTimeSerializer extends StdSerializer<LocalDateTime> {
 	@Override
 	public void serialize(LocalDateTime val, JsonGenerator gen, SerializerProvider sp) 
 			throws IOException {
-		if (null != val) {
+		if (Objects.nonNull(val)) {
 			gen.writeString(val.format(formatter));
 		}
 		
