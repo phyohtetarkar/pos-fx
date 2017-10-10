@@ -2,64 +2,109 @@ package com.jsoft.pos.domain;
 
 import java.io.Serializable;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 @SuppressWarnings("serial")
 public abstract class Person implements Serializable {
-
-	private int id;
+	
+	/*private int id;
 	private String name;
 	private String photo;
 	private String remark;
 	private Contact contact;
 
-	private boolean deleted;
-	private Security security;
+	private boolean deleted;*/
 
-	public int getId() {
-		return id;
+	private IntegerProperty id = new SimpleIntegerProperty();
+	private StringProperty name = new SimpleStringProperty();
+	private StringProperty photo = new SimpleStringProperty();
+	private StringProperty remark = new SimpleStringProperty();
+	private ObjectProperty<Contact> contact = new SimpleObjectProperty<>();
+	private BooleanProperty deleted = new SimpleBooleanProperty();
+
+	private Security security;
+	
+	public Person() {
+		security = new Security();
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public IntegerProperty idProperty() {
+		return this.id;
+	}
+
+	public int getId() {
+		return this.idProperty().get();
+	}
+
+	public void setId(final int id) {
+		this.idProperty().set(id);
+	}
+
+	public StringProperty nameProperty() {
+		return this.name;
 	}
 
 	public String getName() {
-		return name;
+		return this.nameProperty().get();
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setName(final String name) {
+		this.nameProperty().set(name);
+	}
+
+	public StringProperty photoProperty() {
+		return this.photo;
 	}
 
 	public String getPhoto() {
-		return photo;
+		return this.photoProperty().get();
 	}
 
-	public void setPhoto(String photo) {
-		this.photo = photo;
+	public void setPhoto(final String photo) {
+		this.photoProperty().set(photo);
+	}
+
+	public StringProperty remarkProperty() {
+		return this.remark;
 	}
 
 	public String getRemark() {
-		return remark;
+		return this.remarkProperty().get();
 	}
 
-	public void setRemark(String remark) {
-		this.remark = remark;
+	public void setRemark(final String remark) {
+		this.remarkProperty().set(remark);
+	}
+
+	public ObjectProperty<Contact> contactProperty() {
+		return this.contact;
 	}
 
 	public Contact getContact() {
-		return contact;
+		return this.contactProperty().get();
 	}
 
-	public void setContact(Contact contact) {
-		this.contact = contact;
+	public void setContact(final Contact contact) {
+		this.contactProperty().set(contact);
+	}
+
+	public BooleanProperty deletedProperty() {
+		return this.deleted;
 	}
 
 	public boolean isDeleted() {
-		return deleted;
+		return this.deletedProperty().get();
 	}
 
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
+	public void setDeleted(final boolean deleted) {
+		this.deletedProperty().set(deleted);
 	}
 
 	public Security getSecurity() {
@@ -72,6 +117,7 @@ public abstract class Person implements Serializable {
 
 	@Override
 	public String toString() {
-		return name;
+		return name.get();
 	}
+
 }

@@ -2,44 +2,63 @@ package com.jsoft.pos.domain;
 
 import java.io.Serializable;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 @SuppressWarnings("serial")
 public class Contact implements Serializable {
 
-	private String phone;
+	/*private String phone;
 	private String email;
-	private String address;
+	private String address;*/
 
+	private StringProperty phone = new SimpleStringProperty();
+	private StringProperty email = new SimpleStringProperty();
+	private StringProperty address = new SimpleStringProperty();
+	
+	public StringProperty phoneProperty() {
+		return this.phone;
+	}
+	
 	public String getPhone() {
-		return phone;
+		return this.phoneProperty().get();
 	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
+	
+	public void setPhone(final String phone) {
+		this.phoneProperty().set(phone);
 	}
-
+	
+	public StringProperty emailProperty() {
+		return this.email;
+	}
+	
 	public String getEmail() {
-		return email;
+		return this.emailProperty().get();
 	}
-
-	public void setEmail(String email) {
-		this.email = email;
+	
+	public void setEmail(final String email) {
+		this.emailProperty().set(email);
 	}
-
+	
+	public StringProperty addressProperty() {
+		return this.address;
+	}
+	
 	public String getAddress() {
-		return address;
+		return this.addressProperty().get();
 	}
-
-	public void setAddress(String address) {
-		this.address = address;
+	
+	public void setAddress(final String address) {
+		this.addressProperty().set(address);
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((address == null) ? 0 : address.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
+		result = prime * result + ((address.get() == null) ? 0 : address.get().hashCode());
+		result = prime * result + ((email.get() == null) ? 0 : email.get().hashCode());
+		result = prime * result + ((phone.get() == null) ? 0 : phone.get().hashCode());
 		return result;
 	}
 
@@ -52,22 +71,22 @@ public class Contact implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Contact other = (Contact) obj;
-		if (address == null) {
-			if (other.address != null)
+		if (address.get() == null) {
+			if (other.address.get() != null)
 				return false;
-		} else if (!address.equals(other.address))
+		} else if (!address.get().equals(other.address.get()))
 			return false;
-		if (email == null) {
-			if (other.email != null)
+		if (email.get() == null) {
+			if (other.email.get() != null)
 				return false;
-		} else if (!email.equals(other.email))
+		} else if (!email.get().equals(other.email.get()))
 			return false;
-		if (phone == null) {
-			if (other.phone != null)
+		if (phone.get() == null) {
+			if (other.phone.get() != null)
 				return false;
-		} else if (!phone.equals(other.phone))
+		} else if (!phone.get().equals(other.phone.get()))
 			return false;
 		return true;
 	}
-
+	
 }

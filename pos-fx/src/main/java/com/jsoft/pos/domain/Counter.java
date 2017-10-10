@@ -4,41 +4,65 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 @SuppressWarnings("serial")
 public class Counter implements Serializable, Nameable {
 
-	private int id;
-	private String code;
+	/*
+	  private int id; private String code;	  
+	  private boolean deleted;
+	 */
+	
+	private IntegerProperty id = new SimpleIntegerProperty();
+	private StringProperty code = new SimpleStringProperty();
+	private BooleanProperty deleted = new SimpleBooleanProperty();
 
-	private boolean deleted;
 	private Security security;
 
 	public Counter() {
 		security = new Security();
 	}
 
-	public int getId() {
-		return id;
+	public IntegerProperty idProperty() {
+		return this.id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public int getId() {
+		return this.idProperty().get();
+	}
+
+	public void setId(final int id) {
+		this.idProperty().set(id);
+	}
+
+	public StringProperty codeProperty() {
+		return this.code;
 	}
 
 	public String getCode() {
-		return code;
+		return this.codeProperty().get();
 	}
 
-	public void setCode(String code) {
-		this.code = code;
+	public void setCode(final String code) {
+		this.codeProperty().set(code);
+	}
+
+	public BooleanProperty deletedProperty() {
+		return this.deleted;
 	}
 
 	public boolean isDeleted() {
-		return deleted;
+		return this.deletedProperty().get();
 	}
 
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
+	public void setDeleted(final boolean deleted) {
+		this.deletedProperty().set(deleted);
 	}
 
 	public Security getSecurity() {
@@ -52,24 +76,24 @@ public class Counter implements Serializable, Nameable {
 	@JsonIgnore
 	@Override
 	public String getName() {
-		return code;
+		return code.get();
 	}
 
 	@Override
 	public void setName(String name) {
-		this.code = name;
+		setCode(name);
 	}
 
 	@Override
 	public String toString() {
-		return code;
+		return code.get();
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+		result = prime * result + id.get();
 		return result;
 	}
 
@@ -82,7 +106,7 @@ public class Counter implements Serializable, Nameable {
 		if (getClass() != obj.getClass())
 			return false;
 		Counter other = (Counter) obj;
-		if (id != other.id)
+		if (id.get() != other.getId())
 			return false;
 		return true;
 	}

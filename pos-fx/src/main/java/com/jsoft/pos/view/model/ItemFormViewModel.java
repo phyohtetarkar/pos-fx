@@ -6,7 +6,6 @@ import java.util.function.Consumer;
 
 import com.jsoft.pos.domain.Category;
 import com.jsoft.pos.domain.Item;
-import com.jsoft.pos.domain.wrapper.ItemWrapper;
 import com.jsoft.pos.repo.CategoryRepo;
 import com.jsoft.pos.repo.ItemRepo;
 import com.jsoft.pos.util.GlobalExecutor;
@@ -31,12 +30,12 @@ public class ItemFormViewModel {
 	private Consumer<String> onMessage;
 	private OnFinishedListener onFinishedListener;
 	
-	private ItemWrapper wrapper;
+	private Item item;
 	private ItemRepo repo;
 	private CategoryRepo catRepo;
 
 	public ItemFormViewModel() {
-		wrapper = new ItemWrapper();
+		item = new Item();
 		repo = RepositoryFactory.create(ItemRepo.class, Provider.RETROFIT);
 		catRepo = RepositoryFactory.create(CategoryRepo.class, Provider.RETROFIT);
 	}
@@ -49,7 +48,6 @@ public class ItemFormViewModel {
 		Task<String> task = new Task<String>() {
 			@Override
 			protected String call() throws Exception {
-				Item item = wrapper.build();
 				return repo.save(item);
 			}
 		};
@@ -82,12 +80,12 @@ public class ItemFormViewModel {
 		
 		task.setOnSucceeded(evt -> {
 			categories.set(FXCollections.observableArrayList(task.getValue()));
-			Category category = wrapper.categoryProperty().get();
+			Category category = item.getCategory();
 			if (category != null) {
-				wrapper.categoryProperty().set(null);
-				wrapper.categoryProperty().set(category);
+				item.setCategory(null);
+				item.setCategory(category);
 			} else {
-				wrapper.categoryProperty().set(categories.get(0));
+				item.setCategory(categories.get(0));
 			}
 		});
 		
@@ -152,8 +150,12 @@ public class ItemFormViewModel {
 		this.onFinishedListener = onFinishedListener;
 	}
 	
-	public final ItemWrapper itemWrapper() {
-		return wrapper;
+	public Item getItem() {
+		return item;
+	}
+	
+	public void setItem(Item item) {
+		this.item = item;
 	}
 	
 	public final ListProperty<Category> categoriesProperty() {

@@ -2,41 +2,73 @@ package com.jsoft.pos.domain;
 
 import java.io.Serializable;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 @SuppressWarnings("serial")
 public class Category implements Serializable, Nameable {
 
-	private int id;
+	/*private int id;
 	private String name;
 
-	private boolean deleted;
+	private boolean deleted;*/
+	
+	private IntegerProperty id = new SimpleIntegerProperty();
+	private StringProperty name = new SimpleStringProperty();
+	private BooleanProperty deleted = new SimpleBooleanProperty();
+	
 	private Security security;
 
 	public Category() {
 		security = new Security();
 	}
+	
+	public IntegerProperty idProperty() {
+		return this.id;
+	}
+	
 
 	public int getId() {
-		return id;
+		return this.idProperty().get();
 	}
+	
 
-	public void setId(int id) {
-		this.id = id;
+	public void setId(final int id) {
+		this.idProperty().set(id);
 	}
+	
+
+	public StringProperty nameProperty() {
+		return this.name;
+	}
+	
 
 	public String getName() {
-		return name;
+		return this.nameProperty().get();
 	}
+	
 
-	public void setName(String name) {
-		this.name = name;
+	public void setName(final String name) {
+		this.nameProperty().set(name);
 	}
+	
+
+	public BooleanProperty deletedProperty() {
+		return this.deleted;
+	}
+	
 
 	public boolean isDeleted() {
-		return deleted;
+		return this.deletedProperty().get();
 	}
+	
 
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
+	public void setDeleted(final boolean deleted) {
+		this.deletedProperty().set(deleted);
 	}
 
 	public Security getSecurity() {
@@ -49,14 +81,14 @@ public class Category implements Serializable, Nameable {
 
 	@Override
 	public String toString() {
-		return name;
+		return name.get();
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+		result = prime * result + id.get();
 		return result;
 	}
 
@@ -69,7 +101,7 @@ public class Category implements Serializable, Nameable {
 		if (getClass() != obj.getClass())
 			return false;
 		Category other = (Category) obj;
-		if (id != other.id)
+		if (id.get() != other.getId())
 			return false;
 		return true;
 	}

@@ -2,10 +2,19 @@ package com.jsoft.pos.domain;
 
 import java.io.Serializable;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 @SuppressWarnings("serial")
 public class Item implements Serializable {
-
-	private int id;
+	
+	/*private int id;
 	private String code;
 	private String name;
 	private int purchasePrice;
@@ -15,91 +24,143 @@ public class Item implements Serializable {
 	private String remark;
 	private Category category;
 
-	private boolean deleted;
+	private boolean deleted;*/
+
+	private IntegerProperty id = new SimpleIntegerProperty();
+	private StringProperty code = new SimpleStringProperty();
+	private StringProperty name = new SimpleStringProperty();
+	private StringProperty purchasePrice = new SimpleStringProperty();
+	private StringProperty retailPrice = new SimpleStringProperty();
+	private StringProperty quantity = new SimpleStringProperty();
+	private StringProperty photo = new SimpleStringProperty();
+	private StringProperty remark = new SimpleStringProperty();
+	private ObjectProperty<Category> category = new SimpleObjectProperty<>();
+	private BooleanProperty deleted = new SimpleBooleanProperty();
+
 	private Security security;
-	
+
 	public Item() {
 		security = new Security();
 	}
 
-	public int getId() {
-		return id;
+	public IntegerProperty idProperty() {
+		return this.id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public int getId() {
+		return this.idProperty().get();
+	}
+
+	public void setId(final int id) {
+		this.idProperty().set(id);
+	}
+
+	public StringProperty codeProperty() {
+		return this.code;
 	}
 
 	public String getCode() {
-		return code;
+		return this.codeProperty().get();
 	}
 
-	public void setCode(String code) {
-		this.code = code;
+	public void setCode(final String code) {
+		this.codeProperty().set(code);
+	}
+
+	public StringProperty nameProperty() {
+		return this.name;
 	}
 
 	public String getName() {
-		return name;
+		return this.nameProperty().get();
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setName(final String name) {
+		this.nameProperty().set(name);
+	}
+
+	public StringProperty purchasePriceProperty() {
+		return this.purchasePrice;
 	}
 
 	public int getPurchasePrice() {
-		return purchasePrice;
+		return Integer.parseInt(this.purchasePriceProperty().get());
 	}
 
-	public void setPurchasePrice(int purchasePrice) {
-		this.purchasePrice = purchasePrice;
+	public void setPurchasePrice(final int purchasePrice) {
+		this.purchasePriceProperty().set(String.valueOf(purchasePrice));
+	}
+
+	public StringProperty retailPriceProperty() {
+		return this.retailPrice;
 	}
 
 	public int getRetailPrice() {
-		return retailPrice;
+		return Integer.parseInt(this.retailPriceProperty().get());
 	}
 
-	public void setRetailPrice(int retailPrice) {
-		this.retailPrice = retailPrice;
+	public void setRetailPrice(final int retailPrice) {
+		this.retailPriceProperty().set(String.valueOf(retailPrice));
 	}
 
-	public String getPhoto() {
-		return photo;
-	}
-
-	public void setPhoto(String photo) {
-		this.photo = photo;
+	public StringProperty quantityProperty() {
+		return this.quantity;
 	}
 
 	public int getQuantity() {
-		return quantity;
+		return Integer.parseInt(this.quantityProperty().get());
 	}
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public void setQuantity(final int quantity) {
+		this.quantityProperty().set(String.valueOf(quantity));
+	}
+
+	public StringProperty photoProperty() {
+		return this.photo;
+	}
+
+	public String getPhoto() {
+		return this.photoProperty().get();
+	}
+
+	public void setPhoto(final String photo) {
+		this.photoProperty().set(photo);
+	}
+
+	public StringProperty remarkProperty() {
+		return this.remark;
 	}
 
 	public String getRemark() {
-		return remark;
+		return this.remarkProperty().get();
 	}
 
-	public void setRemark(String remark) {
-		this.remark = remark;
+	public void setRemark(final String remark) {
+		this.remarkProperty().set(remark);
+	}
+
+	public ObjectProperty<Category> categoryProperty() {
+		return this.category;
 	}
 
 	public Category getCategory() {
-		return category;
+		return this.categoryProperty().get();
 	}
 
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setCategory(final Category category) {
+		this.categoryProperty().set(category);
+	}
+
+	public BooleanProperty deletedProperty() {
+		return this.deleted;
 	}
 
 	public boolean isDeleted() {
-		return deleted;
+		return this.deletedProperty().get();
 	}
 
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
+	public void setDeleted(final boolean deleted) {
+		this.deletedProperty().set(deleted);
 	}
 
 	public Security getSecurity() {

@@ -10,10 +10,15 @@ import com.jsoft.pos.util.DateTimeDeSerializer;
 import com.jsoft.pos.util.DateTimeSerializer;
 import com.jsoft.pos.util.Utils;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 @SuppressWarnings("serial")
 public class Security implements Serializable {
 
-	@JsonSerialize(using = DateTimeSerializer.class)
+	/*@JsonSerialize(using = DateTimeSerializer.class)
 	@JsonDeserialize(using = DateTimeDeSerializer.class)
 	private LocalDateTime creation;
 	private String createUser;
@@ -21,58 +26,85 @@ public class Security implements Serializable {
 	@JsonSerialize(using = DateTimeSerializer.class)
 	@JsonDeserialize(using = DateTimeDeSerializer.class)
 	private LocalDateTime modification;
-	private String modifiedUser;
+	private String modifiedUser;*/
 
-	public LocalDateTime getCreation() {
-		return creation;
-	}
-
-	public void setCreation(LocalDateTime creation) {
-		this.creation = creation;
-	}
-
-	public String getCreateUser() {
-		return createUser;
-	}
-
-	public void setCreateUser(String createUser) {
-		this.createUser = createUser;
-	}
-
-	public LocalDateTime getModification() {
-		return modification;
-	}
-
-	public void setModification(LocalDateTime modification) {
-		this.modification = modification;
-	}
-
-	public String getModifiedUser() {
-		return modifiedUser;
-	}
-
-	public void setModifiedUser(String modifiedUser) {
-		this.modifiedUser = modifiedUser;
-	}
+	private ObjectProperty<LocalDateTime> creation = new SimpleObjectProperty<>();
+	private StringProperty createUser = new SimpleStringProperty();
 	
+	private ObjectProperty<LocalDateTime> modification = new SimpleObjectProperty<>();
+	private StringProperty modifiedUser = new SimpleStringProperty();
+	
+
 	@JsonIgnore
 	public String getCreateDate() {
-		return creation.format(Utils.dateTimeFormatter);
+		return getCreation().format(Utils.dateTimeFormatter);
 	}
 	
 	@JsonIgnore
 	public String getUpdateDate() {
-		return modification.format(Utils.dateTimeFormatter);
+		return getModification().format(Utils.dateTimeFormatter);
+	}
+	
+	public ObjectProperty<LocalDateTime> creationProperty() {
+		return this.creation;
+	}
+	
+	@JsonSerialize(using = DateTimeSerializer.class)
+	public LocalDateTime getCreation() {
+		return this.creationProperty().get();
+	}
+	
+	@JsonDeserialize(using = DateTimeDeSerializer.class)
+	public void setCreation(final LocalDateTime creation) {
+		this.creationProperty().set(creation);
+	}
+	
+	public StringProperty createUserProperty() {
+		return this.createUser;
+	}
+	
+	public String getCreateUser() {
+		return this.createUserProperty().get();
+	}
+	
+	public void setCreateUser(final String createUser) {
+		this.createUserProperty().set(createUser);
+	}
+	
+	public ObjectProperty<LocalDateTime> modificationProperty() {
+		return this.modification;
+	}
+	
+	@JsonSerialize(using = DateTimeSerializer.class)
+	public LocalDateTime getModification() {
+		return this.modificationProperty().get();
+	}
+	
+	@JsonDeserialize(using = DateTimeDeSerializer.class)
+	public void setModification(final LocalDateTime modification) {
+		this.modificationProperty().set(modification);
+	}
+	
+	public StringProperty modifiedUserProperty() {
+		return this.modifiedUser;
+	}
+	
+	public String getModifiedUser() {
+		return this.modifiedUserProperty().get();
+	}
+	
+	public void setModifiedUser(final String modifyUser) {
+		this.modifiedUserProperty().set(modifyUser);
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((createUser == null) ? 0 : createUser.hashCode());
-		result = prime * result + ((creation == null) ? 0 : creation.hashCode());
-		result = prime * result + ((modification == null) ? 0 : modification.hashCode());
-		result = prime * result + ((modifiedUser == null) ? 0 : modifiedUser.hashCode());
+		result = prime * result + ((createUser.get() == null) ? 0 : createUser.get().hashCode());
+		result = prime * result + ((creation.get() == null) ? 0 : creation.get().hashCode());
+		result = prime * result + ((modification.get() == null) ? 0 : modification.get().hashCode());
+		result = prime * result + ((modifiedUser.get() == null) ? 0 : modifiedUser.get().hashCode());
 		return result;
 	}
 
@@ -85,27 +117,26 @@ public class Security implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Security other = (Security) obj;
-		if (createUser == null) {
-			if (other.createUser != null)
+		if (createUser.get() == null) {
+			if (other.createUser.get() != null)
 				return false;
-		} else if (!createUser.equals(other.createUser))
+		} else if (!createUser.get().equals(other.createUser.get()))
 			return false;
-		if (creation == null) {
-			if (other.creation != null)
+		if (creation.get() == null) {
+			if (other.creation.get() != null)
 				return false;
-		} else if (!creation.equals(other.creation))
+		} else if (!creation.get().equals(other.creation.get()))
 			return false;
-		if (modification == null) {
-			if (other.modification != null)
+		if (modification.get() == null) {
+			if (other.modification.get() != null)
 				return false;
-		} else if (!modification.equals(other.modification))
+		} else if (!modification.get().equals(other.modification.get()))
 			return false;
-		if (modifiedUser == null) {
-			if (other.modifiedUser != null)
+		if (modifiedUser.get() == null) {
+			if (other.modifiedUser.get() != null)
 				return false;
-		} else if (!modifiedUser.equals(other.modifiedUser))
+		} else if (!modifiedUser.get().equals(other.modifiedUser.get()))
 			return false;
 		return true;
 	}
-
 }

@@ -2,7 +2,6 @@ package com.jsoft.pos.view.form;
 
 import java.io.File;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -58,14 +57,7 @@ public class ItemFormView implements Initializable {
 		model = new ItemFormViewModel();
 
 		setupValidators();
-
-		model.itemWrapper().nameProperty().bindBidirectional(name.textProperty());
-		model.itemWrapper().codeProperty().bindBidirectional(code.textProperty());
-		model.itemWrapper().purchasePriceProperty().bindBidirectional(purchasePrice.textProperty());
-		model.itemWrapper().retailPriceProperty().bindBidirectional(retailPrice.textProperty());
-		model.itemWrapper().quantityProperty().bindBidirectional(quantity.textProperty());
-		model.itemWrapper().remarkProperty().bindBidirectional(remark.textProperty());
-		model.itemWrapper().categoryProperty().bindBidirectional(categories.valueProperty());
+		bindItem();
 		
 		categories.itemsProperty().bind(model.categoriesProperty());
 		progress.progressProperty().bind(model.uploadProperty());
@@ -74,16 +66,26 @@ public class ItemFormView implements Initializable {
 		LoadingDialogView.init("Saving...", model.loadingProperty());
 
 		Platform.runLater(name::requestFocus);
-
-		model.itemWrapper().photoProperty().addListener((v, ov, nv) -> {
-			imageView.setImage(new Image(nv, true));
-		});
 		
 		model.setOnSaveComplete(this::back);
 		model.setOnMessage(AlertUtil::queueToast);
 		model.init();
 	}
-
+	
+	private void bindItem() {
+		model.getItem().nameProperty().bindBidirectional(name.textProperty());
+		model.getItem().codeProperty().bindBidirectional(code.textProperty());
+		model.getItem().purchasePriceProperty().bindBidirectional(purchasePrice.textProperty());
+		model.getItem().retailPriceProperty().bindBidirectional(retailPrice.textProperty());
+		model.getItem().quantityProperty().bindBidirectional(quantity.textProperty());
+		model.getItem().remarkProperty().bindBidirectional(remark.textProperty());
+		model.getItem().categoryProperty().bindBidirectional(categories.valueProperty());
+		
+		model.getItem().photoProperty().addListener((v, ov, nv) -> {
+			imageView.setImage(new Image(nv, true));
+		});
+	}
+	
 	private void setupValidators() {
 		name.getValidators().add(Utils.requiredValidator());
 		code.getValidators().add(Utils.requiredValidator());
@@ -97,13 +99,19 @@ public class ItemFormView implements Initializable {
 		retailPrice.textProperty().addListener((v, ov, nv) -> retailPrice.validate());
 		quantity.textProperty().addListener((v, ov, nv) -> quantity.validate());
 	}
-
+	
 	public void setItem(Item item) {
-		model.itemWrapper().setItem(item);
-		if (Objects.nonNull(item.getPhoto())) {
-			imageView.setImage(new Image(model.itemWrapper().photoProperty().get(), true));
-		}
+		model.getItem().setId(item.getId());
+		model.getItem().setCode(item.getCode());
+		model.getItem().setName(item.getName());
+		model.getItem().setPurchasePrice(item.getPurchasePrice());
+		model.getItem().setRetailPrice(item.getRetailPrice());
+		model.getItem().setQuantity(item.getQuantity());
+		model.getItem().setPhoto(item.getPhoto());
+		model.getItem().setRemark(item.getRemark());
+		model.getItem().setCategory(item.getCategory());
 	}
+
 
 	public void save() {
 		if (name.validate() & 

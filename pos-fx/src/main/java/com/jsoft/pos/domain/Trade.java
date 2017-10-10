@@ -2,21 +2,27 @@ package com.jsoft.pos.domain;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.jsoft.pos.util.DateDeSerializer;
-import com.jsoft.pos.util.DateSerializer;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableList;
 
 @SuppressWarnings("serial")
 public abstract class Trade implements Serializable {
-	
+
 	public enum Payment {
 		CASH, CREDIT
 	}
-
-	private long id;
+	
+	/*private long id;
 	@JsonSerialize(using = DateSerializer.class)
 	@JsonDeserialize(using = DateDeSerializer.class)
 	private LocalDate eventDate;
@@ -25,63 +31,104 @@ public abstract class Trade implements Serializable {
 	private Employee employee;
 	private Payment payment;
 
-	private boolean deleted;
-	private Security security;
+	private boolean deleted;*/
 
-	public long getId() {
-		return id;
+	private LongProperty id = new SimpleLongProperty();
+	private ObjectProperty<LocalDate> eventDate = new SimpleObjectProperty<>();
+	private StringProperty remark = new SimpleStringProperty();
+	private ListProperty<TradeDetail> tradeDetail = new SimpleListProperty<>();
+	private ObjectProperty<Employee> employee = new SimpleObjectProperty<>();
+	private ObjectProperty<Payment> payment = new SimpleObjectProperty<>();
+	private BooleanProperty deleted = new SimpleBooleanProperty();
+
+	private Security security;
+	
+	public Trade() {
+		security = new Security();
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public LongProperty idProperty() {
+		return this.id;
+	}
+
+	public long getId() {
+		return this.idProperty().get();
+	}
+
+	public void setId(final long id) {
+		this.idProperty().set(id);
+	}
+
+	public ObjectProperty<LocalDate> eventDateProperty() {
+		return this.eventDate;
 	}
 
 	public LocalDate getEventDate() {
-		return eventDate;
+		return this.eventDateProperty().get();
 	}
 
-	public void setEventDate(LocalDate eventDate) {
-		this.eventDate = eventDate;
+	public void setEventDate(final LocalDate eventDate) {
+		this.eventDateProperty().set(eventDate);
+	}
+
+	public StringProperty remarkProperty() {
+		return this.remark;
 	}
 
 	public String getRemark() {
-		return remark;
+		return this.remarkProperty().get();
 	}
 
-	public void setRemark(String remark) {
-		this.remark = remark;
+	public void setRemark(final String remark) {
+		this.remarkProperty().set(remark);
 	}
 
-	public List<TradeDetail> getTradeDetail() {
-		return tradeDetail;
+	public ListProperty<TradeDetail> tradeDetailProperty() {
+		return this.tradeDetail;
 	}
 
-	public void setTradeDetail(List<TradeDetail> tradeDetail) {
-		this.tradeDetail = tradeDetail;
+	public ObservableList<TradeDetail> getTradeDetail() {
+		return this.tradeDetailProperty().get();
+	}
+
+	public void setTradeDetail(final ObservableList<TradeDetail> tradeDetail) {
+		this.tradeDetailProperty().set(tradeDetail);
+	}
+
+	public ObjectProperty<Employee> employeeProperty() {
+		return this.employee;
 	}
 
 	public Employee getEmployee() {
-		return employee;
+		return this.employeeProperty().get();
 	}
 
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
+	public void setEmployee(final Employee employee) {
+		this.employeeProperty().set(employee);
+	}
+
+	public ObjectProperty<Payment> paymentProperty() {
+		return this.payment;
 	}
 
 	public Payment getPayment() {
-		return payment;
+		return this.paymentProperty().get();
 	}
 
-	public void setPayment(Payment payment) {
-		this.payment = payment;
+	public void setPayment(final Payment payment) {
+		this.paymentProperty().set(payment);
+	}
+
+	public BooleanProperty deletedProperty() {
+		return this.deleted;
 	}
 
 	public boolean isDeleted() {
-		return deleted;
+		return this.deletedProperty().get();
 	}
 
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
+	public void setDeleted(final boolean deleted) {
+		this.deletedProperty().set(deleted);
 	}
 
 	public Security getSecurity() {
