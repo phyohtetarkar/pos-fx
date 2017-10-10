@@ -9,6 +9,8 @@ public class TextWrapCell<S> extends TableCell<S, String> {
 	
 	public TextWrapCell() {
 		text = new Text();
+		setPrefHeight(Control.USE_COMPUTED_SIZE);
+		text.wrappingWidthProperty().bind(widthProperty().subtract(35));
 	}
 
 	@Override
@@ -17,8 +19,6 @@ public class TextWrapCell<S> extends TableCell<S, String> {
 
 		if (!empty) {
 			try {
-				setPrefHeight(Control.USE_COMPUTED_SIZE);
-				text.wrappingWidthProperty().bind(widthProperty().subtract(35));
 				text.textProperty().setValue(item);
 				setGraphic(text);
 			} catch (Exception e) {

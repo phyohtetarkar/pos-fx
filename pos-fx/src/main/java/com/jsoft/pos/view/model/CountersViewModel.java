@@ -22,7 +22,7 @@ public class CountersViewModel {
 	private List<Counter> copyList;
 
 	private ListProperty<Counter> list = new SimpleListProperty<>();
-	private final BooleanProperty loading = new SimpleBooleanProperty();
+	private BooleanProperty loading = new SimpleBooleanProperty();
 	
 	private Consumer<String> onMessage;
 

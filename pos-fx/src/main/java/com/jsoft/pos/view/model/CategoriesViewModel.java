@@ -22,7 +22,7 @@ public class CategoriesViewModel {
 	private List<Category> copyList;
 
 	private ListProperty<Category> list = new SimpleListProperty<>();
-	private final BooleanProperty loading = new SimpleBooleanProperty();
+	private BooleanProperty loading = new SimpleBooleanProperty();
 	
 	private Consumer<String> onMessage;
 

@@ -44,7 +44,7 @@ public class AlertUtil {
 		Alert alert = buildAlert(AlertType.CONFIRMATION, message, ok, cancel);
 		Optional<ButtonType> type = alert.showAndWait();
 		
-		return type.get() == ok ? true : false;
+		return type.get() == ok;
 	}
 
 	private static Alert buildAlert(AlertType alertType, String message) {
