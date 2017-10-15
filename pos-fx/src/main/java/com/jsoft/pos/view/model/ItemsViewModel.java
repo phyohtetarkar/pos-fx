@@ -43,8 +43,6 @@ public class ItemsViewModel extends PagableViewModel<Item> {
 
 	@Override
 	public void search() {
-		loading.set(true);
-		
 		Task<Long> task = new Task<Long>() {
 			@Override
 			protected Long call() throws Exception {
