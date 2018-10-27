@@ -1,6 +1,6 @@
-/* @font-face {
+/*@font-face {
     font-family: Myanmar3;
-    src: url("../font/myanmar/Myanmar3.ttf");
+    src: url("Myanmar3.ttf");
 }*/
 
 @font-face {
@@ -56,13 +56,13 @@
 	-fx-font-size: 48px;
 }
 
-.jfx-combo-box,
-.jfx-password-field,
-.jfx-text-area,
-.jfx-text-field,
-.jfx-button,
-Label {
-	-fx-font-family: "sans-serif";
+.root {
+	-fx-font-family: "Myanmar3";
+	
+}
+
+.jfx-text-field {
+	
 }
 
 .font-normal {

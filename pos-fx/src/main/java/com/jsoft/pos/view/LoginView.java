@@ -12,21 +12,21 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.StackPane;
 
 public class LoginView implements Initializable {
-	
+
 	@FXML
-    private JFXTextField loginId;
-    @FXML
-    private JFXPasswordField password;
-    @FXML
-    private StackPane primaryContainer;
-    
-    @Override
+	private JFXTextField loginId;
+	@FXML
+	private JFXPasswordField password;
+	@FXML
+	private StackPane primaryContainer;
+
+	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		Navigator.setPrimaryContainer(primaryContainer);
 	}
 
-    public void login() {
-    		Navigator.login();
-    }
+	public void login() {
+		Navigator.login();
+	}
 
 }
